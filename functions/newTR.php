@@ -6,7 +6,7 @@
 			unset($_POST['transactions']);
 			$nber=$_POST['dayo'];
 		}else{
-			$nber=2;
+			$nber=1;
 		}
 		test($nber,'o');
 		echo "\n    <form action=\"" . $_SERVER['PHP_SELF']."\" method=\"post\">";
