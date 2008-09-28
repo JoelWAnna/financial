@@ -112,7 +112,7 @@ else{
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-		if(submitTransaction($new)){
+		if(submitItem('trans',$new)){
 			reloadPHP();
 			unset($_POST[$X]);
 		}
@@ -134,7 +134,7 @@ else{
 		. "\"></td></form>\n  </tr>";
 	if($new > 0){
 		if (isset($_POST[$new])){
-			editItem('trans',$page,$acounts,$new,true);
+			editItem('trans',$page,$accounts,$new,true);
 		}
 	}
 
@@ -153,7 +153,7 @@ else{
 			$X = "X";
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
-				if(submitTransaction($rowdata['number'])){
+				if(submitItem('trans',$rowdata['number'])){
 					reloadPHP();
 				}
 			unset($_POST[$X]);

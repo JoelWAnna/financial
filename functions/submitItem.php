@@ -15,8 +15,14 @@
 		echo ' You did not enter a description ';
 		return false;
 	}
+	if($type=='bill'){
+		$updateQ ="Insert Into `".DATABASENAME
+			."`.`".PREFIX.BILLS."` SET `"
+			.PREFIX.BILLS."`.`number` ='"
+			. $number . "', ";
+	}
 if($type=='trans'){
-if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
+	if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
 		echo ' Accounts cannot be the same ';
 		return false;
 	}
@@ -24,13 +30,10 @@ if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
 		$temp = $_POST[$TOACCOUNT];
 		$_POST[$TOACCOUNT] = $_POST[$FROMACCOUNT];
 		$_POST[$FROMACCOUNT] = $temp;
-	//	if(!$negative){
 		$_POST[$AMOUNT] = -$_POST[$AMOUNT];
-	//	}
 	}
-
 	$checkChanges = "SELECT * FROM `".PREFIX.TRANSACTIONS."` WHERE `".PREFIX.TRANSACTIONS."`.`number` ="
-					. $trNum. " LIMIT 1";
+					. $number. " LIMIT 1";
 	$changesResult = mysql_query($checkChanges)
 		or die('Error in query: $checkChanges.' . mysql_error());
 	if (mysql_num_rows($changesResult) > 0){
@@ -42,67 +45,46 @@ if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
 				| ($_POST[$AMOUNT] != $changesR['amount'])
 				| ($_POST[$TOACCOUNT] != $changesR['to account'])
 				| ($_POST[$FROMACCOUNT] != $changesR['from account'])
-				)
-			{
+			){
 				$changed = true;
-				$updateQ ="UPDATE `".DATABASENAME."`.`".PREFIX.TRANSACTIONS."` SET ";
+				$updateQ ="UPDATE `" . DATABASENAME
+						. "`.`" . PREFIX . TRANSACTIONS
+						. "` SET ";
 			}else{
 				echo "no changes";
 				return false;
 			}
 		}
-	}else{
-	if($trNum == 0){echo "HELLLLLL";}
-	$updateQ ="Insert Into `".DATABASENAME."`.`".PREFIX.TRANSACTIONS."` SET `".PREFIX.TRANSACTIONS."`.`number` ='" . $trNum . "', ";
 	}
-	mysql_free_result($changesResult);
-
-	$connect2 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
+	else{
+		if($number == 0){
+			echo'transaction number cannot be 0';
+		}
+		$updateQ ="Insert Into `". DATABASENAME
+				. "`.`".PREFIX . TRANSACTIONS
+				. "` SET `". PREFIX . TRANSACTIONS
+				. "`.`number` ='" . $number . "', ";
+	}	mysql_free_result($changesResult);
+}	$updateQ .= "`month` = '" . $_POST[$MONTH]
+		. "', `day` = '" . $_POST[$DAY]
+		. "', `year` = '" . $_POST[$YEAR]
+		. "', `description` = '" . $_POST[$DESCRIPTION]
+		. "', `amount` = '" . $_POST[$AMOUNT]
+		. "', `to account` = '" . $_POST[$TOACCOUNT]. "'";
+if($type=='trans'){
+	$updateQ .= ", `from account` = '" . $_POST[$FROMACCOUNT] . "'";
+	if($changed){
+		$updateQ .= " WHERE `".PREFIX.TRANSACTIONS."`.`number` =". $number ." LIMIT 1";
+	}
+}	mysql_close($connect);
+	$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
 	mysql_select_db(DATABASENAME)
 		or die('Unable to select database! DATABASENAME');	
-	
-	
-	$updateQ .= "`month` = '"
-			. $_POST[$MONTH] . "', `day` = '". $_POST[$DAY] . "', `year` = '"
-			. $_POST[$YEAR] . "', `description` = '". $_POST[$DESCRIPTION]
-			. "', `amount` = '" . $_POST[$AMOUNT] ."', `from account` = '"
-			. $_POST[$FROMACCOUNT] . "', `to account` = '" . $_POST[$TOACCOUNT]. "'";
-
-	if($changed){
-		$updateQ .= " WHERE `".PREFIX.TRANSACTIONS."`.`number` =". $trNum ." LIMIT 1";
-	}
 	$Result = mysql_query($updateQ)
-		or die('Error in query: $updateQ.' . mysql_error());
-	mysql_close($connect2);
-}
-else{
-	if(1){
-		$connect4 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
-			or die('Unable to connect!');
-
-		mysql_select_db(DATABASENAME)
-			or die('Unable to select database! DATABASENAME');	
-		
-		$updateQ ="Insert Into `".DATABASENAME."`.`".PREFIX.BILLS."` SET `".PREFIX.BILLS."`.`number` ='" . $billNum . "', ";
-		$updateQ .= "`month` = '"
-				. $_POST[$MONTH] . "', `day` = '". $_POST[$DAY] . "', `year` = '"
-				. $_POST[$YEAR] . "', `description` = '". $_POST[$DESCRIPTION]
-				. "', `amount` = '" . $_POST[$AMOUNT] ."', `to account` = '" . $_POST[$TOACCOUNT]. "'";
-		$Result = mysql_query($updateQ)
-			or die('Error in query: $updateQ.' . mysql_error());
-		mysql_close($connect4);
-	}
-}
-	
-	
-	
-	
-	
-	
-	
+		or die("Error in query: $updateQ." . mysql_error());
+	mysql_close($connect);
 	$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die('Unable to connect!');
 	return true;
-}
-?>
+}?>

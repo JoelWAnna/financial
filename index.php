@@ -1,5 +1,5 @@
 <html>
-<head><title>Financial 0.9.5.3.2b</title>
+<head><title>Financial 0.9.5.3.5b</title>
 
 <?php
 require_once("f-config.php");
@@ -30,11 +30,7 @@ require_once("f-config.php");
 	$page = $_GET['page'];
 	$accounttype;
 	$accounts;
-	//setupSql();
-	dateDropdowns(d,2,25);
-	dateDropdowns(m,2,9);
-	dateDropdowns(Y,2,2007);
-	 
+
 	 
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die('Unable to connect !');
@@ -43,9 +39,6 @@ require_once("f-config.php");
 	pagelayout($page,$accounttype,$accounts);
 	mysql_close($connection); 
 ?>
-<?php function setupSql(){
-	echo 'poop';
-}
-?>
+
 </body>
 </html>

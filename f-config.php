@@ -9,5 +9,5 @@ define('DATABASENAME','financial');
 define('ACCOUNTS','accounts');
 define('TRANSACTIONS','transactions');
 define('BILLS','bills');
-define('PREFIX','wp_');
+define('PREFIX','');//wp_
 ?>

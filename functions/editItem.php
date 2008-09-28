@@ -1,28 +1,31 @@
 <?php function editItem($type,&$page,&$accounts,$number,$newtrans,
 /*$type= bill or trans*/			$noforms, $month, $day, $year,
-						$description,$toAcc,$fromAcc,$amount){
+						$description,$fromAcc,$toAcc,$amount){
 
 
 	if($type == 'trans'){
 		if(!$noforms){
 		echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
-			. $page . "\" method=\"post\">";}
+			. $page . "\" method=\"post\">";
+		}
 	}
-	
+
 	echo "<td width=55>";
-	dateDropdowns(m,$number,$month);
+	dropDown(m,$number,$month);
 	echo "</td><td width=50>";
-	dateDropdowns(d,$number,$day);
+	dropDown(d,$number,$day);
 	echo "</td><td width=55>";
-	dateDropdowns(Y,$number,$year);
+	dropDown(Y,$number,$year);
 	echo "</td><td width=142>";
-	inputBox('description',$number,$description);
+	dropDown('words',$number,$description);
 	echo "</td><td width=145>";
-	accountdropdown('from',$toAcc,$accounts,$page,$number);
-	echo "</td><td width=143>";
-	accountdropdown('to',$fromAcc,$accounts,$page,$number);
+	if($type == 'trans'){	
+		dropDown('account',$number,'from',$fromAcc,$page,$accounts);
+		echo "</td><td width=143>";
+	}
+	dropDown('account',$number,'to',$toAcc,$page,$accounts);
 	echo "</td><td width=50>";
-	inputBox('amount',$number,$amount);
+	dropDown('amount',$number,$amount);
 	echo "</td>";
 	
 	
