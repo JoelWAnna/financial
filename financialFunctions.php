@@ -30,11 +30,16 @@
 	include("functions/newTR.php");
 	//Calls to newestTransaction, edittrans, daydropdown, submitTransaction, reloadPHP
 	//Called by pagelayout
+	include("functions/billsDue.php");
+	//
+	//
+	//Called by pagelayout
 	include("functions/pagelayout.php");
 	//Calls to balanceRemaining, currentAmount, negativeRed
 	//Calls to newTR, newestTransaction, submitTransaction
-	//Calls to reloadPHP, edittrans, isZero
+	//Calls to reloadPHP, edittrans, isZero, billsDue
 	//Called by index
+	include("functions/paid.php");
 	include("functions/reloadPHP.php");
 	//Calls nothing, Called by newTR, pagelayout
 	include("functions/selected.php");

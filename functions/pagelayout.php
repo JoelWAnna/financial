@@ -12,7 +12,8 @@
 	$count=4;
 	$i=0;
 	$index=0;
-
+	billsDue($accounts);
+	billsDue($accounts,1);
 	echo "<table width=98% border=3>";
 	
 	echo"\n  <tr>\n    <td align=center width=48%>\n      ";
