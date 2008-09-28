@@ -1,0 +1,87 @@
+.aBills {/*
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: lowercase;
+	color: #FFF;
+	/*text-decoration: underline overline line-through blink;
+	background-attachment: fixed;
+	background-color: #396;
+	background-image: url(../My%20Documents/Unnamed%20Site%202/Blue_fan.gif);
+	background-repeat: repeat;
+	background-position: left center;
+	letter-spacing: normal;
+	text-align: left;
+	vertical-align: baseline;
+	word-spacing: normal;
+	white-space: normal;
+	display: inline;
+	clear: left;
+	float: left;
+	height: auto;
+	width: auto;
+	cursor: crosshair;
+	filter: Light;*/
+}
+
+.Main {
+	/* width: 60%; */
+
+
+
+}
+
+}
+.Bills {
+	width: 19%;
+	margin-right: 0%;
+	margin-left: 1%;
+	/*	position:relative;*/
+	height: auto;
+	
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 8px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: capitalize;
+	/*color: #000FFF;
+	/*text-decoration: underline overline line-through blink;*/
+}
+.Bills li{
+	font-size: 9px;
+	color: #000;
+	background-color:#FFF;
+	text-align: right;
+	list-style: none;
+}
+.Bills table{
+	border-width: 3;
+	/*width: 20%;*/
+	
+}
+.Bills input{
+/*style=\"height: 1.5em; width: 4.5em\"
+style=\"height: 1.5em; width: 3em\"*/
+	font-size: 9px;
+	height: 1.5em;
+	width: 3em;
+	
+}
+.Bills table tr{
+
+	text-align:left;
+	
+}
+ 
+.Bills table td{
+
+	font-size: 9px;
+	color: #000;
+	background-color:#FFF;
+
+}

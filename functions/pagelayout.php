@@ -1,9 +1,9 @@
 <?php function mainPage($page,&$accounttype,&$accounts,&$accounts2,&$accounts3){
-	$tor = false; //width=60% align=center
-	echo "<table border=3 width=100%>\n  <tr>";
+	?><div group="Main"><?$tor = false;
+	echo "<table border=3>\n  <tr>";
 	for($sides=1;$sides !=-3;$sides -=2){ //LEFT & RIGHT HAND SIDE, SETS WHETHER SIDE IS NEGATIVE OR POSITIVE
 		$index=0;
-		$tor = !$tor; // width=48%
+		$tor = !$tor;
 		echo "\n    <td align=center>\n      ";
 		echo "<table>\n";
 		while($accounttype[$index]){
@@ -63,6 +63,6 @@
 		echo "</table>";
 		echo"</td>";
 	}
-	echo "</tr></table>";
+	echo "</tr></table></div>";
 }
 ?>

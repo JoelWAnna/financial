@@ -17,9 +17,11 @@ define('TRo','\n  <tr');
 
 ?>
 <html>
-<head><title>Financial 0.9.6.5.2b</title>
- 	<!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
---> </head>
+<head><title>Financial 0.9.7.0.0</title>
+ 	<!--<link href="<?php// echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">-->
+		
+	<link href="resources/financialstyles.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 <?php
 	if($page=='setup'){
@@ -30,14 +32,14 @@ define('TRo','\n  <tr');
 		}
 	if($page > 0){pagelayout2($page,$accounttype,$accounts);}
 	else{if(!$setup){?>
-		<table><tr><TD width=19% valign=top><?
+		<?
 		billsDue($accounts2,$page);
-	?>	</td><TD width=60%>
+	?>	<!-- <table><tr><TD  width=19% valign=top></td><TD width=60%> -->
 	<?	mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
-	?>	</td><td width=19% valign=top>
-	<?	totals($accounts,$accounts3,$accounttype);
-	?>	</td></tr></table>
-	<?	newTR(0,$accounts);
+	?>	<!-- </td><td width=19% valign=top> -->
+	<?	//totals($accounts,$accounts3,$accounttype);
+	?>	<!-- </td></tr></table> -->
+	<?	//newTR(0,$accounts);
 		}
 	if($page){
 		echo "<table border=3 align=center><tr>";
