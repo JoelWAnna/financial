@@ -98,7 +98,7 @@
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-		if(myEnterTrans($new)){
+		if(($new)){
 			$new = $_GET['new'];
 			reloadPHP();
 			unset($_POST[$X]);
@@ -140,7 +140,11 @@
 			$X = "X";
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
-				if(myEnterTrans($rowdata['number'])){
+				$foo=false;
+				if($_POST['amount'] < 0){
+					$foo=true;
+				}
+				if(submitTransaction($rowdata['number'],$foo)){
 					reloadPHP();
 				}
 			unset($_POST[$X]);
@@ -167,9 +171,6 @@
 				negativeRed($CurrentAm);
 				echo $CurrentAm;
 				$CurrentAm += $rowdata['amount'];
-				if($debug){
-					echo "</td><td>" . $CurrentAm 
-						 . "</td><td>". -$rowdata['amount'];}
 			}
 			
 			else{
@@ -181,10 +182,6 @@
 					echo $CurrentAm;
 				}
 				$CurrentAm	-= $rowdata['amount'];
-				if($debug){
-					echo "</td><td>" . $CurrentAm
-						. "</td><td>". $rowdata['amount'];
-				}
 			}
 			
 			echo "</td>\n    ";
