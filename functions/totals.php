@@ -1,5 +1,5 @@
 <?php function totals(&$accounts,&$accounts3,&$accounttype){
-	echo "<table border=3 width=49% height=28.5% align=LEFT>";
+	echo "<table border=3 width=19% align=right>";
 	for($index=0;$index < 100; $index++){
 	
 	$acc[$accounttype[$index]] =0;

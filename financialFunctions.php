@@ -31,6 +31,10 @@
 	include("functions/setupAcc.php");
 	//Calls nothing
 	//Called by index
+	include("functions/submitAcc.php");
+
+	include("functions/editAcc.php");
+
 	include("functions/submitItem.php");
 	//Called by newTR, pagelayout
 	include("functions/sumMonth.php");

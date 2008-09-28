@@ -1,10 +1,10 @@
 <?php function mainPage($page,&$accounttype,&$accounts,&$accounts2,&$accounts3){
 	$tor = false;
-	echo "<table width=98% border=3>\n  <tr>";
+	echo "<table width=60% border=3 align=center>\n  <tr>";
 	for($sides=1;$sides !=-3;$sides -=2){ //LEFT & RIGHT HAND SIDE, SETS WHETHER SIDE IS NEGATIVE OR POSITIVE
 		$index=0;
-		$tor = !$tor;
-		echo "\n    <td align=center width=48%>\n      ";
+		$tor = !$tor; // width=48%
+		echo "\n    <td align=center>\n      ";
 		echo "<table>\n";
 		while($accounttype[$index]){
 			if(leftPage($accounttype[$index], $tor,-$page-$sides)){
@@ -32,8 +32,8 @@
 								. "\" method=\"post\">\n    <td><input type=\"submit\" name=\""
 								. $j."\" value=\"edit" . "\">" . "</td>\n    </form>";	
 						}
-						echo "\n    <td><lis><a href =\"". $_SERVER['PHP_SELF'] ."?page="
-							. $j . "\"><span>". $accounts[$j] . "</span></a></lis></td>";
+						echo "\n    <td><li><a href =\"". $_SERVER['PHP_SELF'] ."?page="
+							. $j . "\"><span>". $accounts[$j] . "</span></a></li></td>";
 						if($accounttype[$index]== "Loan"){$tor = !$tor; $sides = -$sides;}
 						$CurrentFunds[$j] = currentAmount($j,!$tor) *$sides;
 						if($accounttype[$index]== "Loan"){$tor = !$tor;$sides = -$sides;}

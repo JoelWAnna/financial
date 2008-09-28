@@ -1,4 +1,7 @@
 <?php
+define('TR','\n  <tr>');
+define('TR_','\n  </tr>');
+define('TRo','\n  <tr');
 	error_reporting(0);
 	if(!file_exists("f-config.php")){
 		header('Location: setup/');
@@ -14,7 +17,7 @@
 
 ?>
 <html>
-<head><title>Financial 0.9.6b</title>
+<head><title>Financial 0.9.6.5.1b</title>
  	<!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
 --> </head>
 <body>
@@ -27,11 +30,12 @@
 		}
 	if($page > 0){pagelayout2($page,$accounttype,$accounts);}
 	else{if(!$setup){?>
-		<table width=98%><tr><TD><?
-		billsDue($accounts,$page);
-		totals($accounts,$accounts3,$accounttype);
-	?>	</tr></td></table>
-	<?	mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
+		<!-- table width=98%><tr><TD--><?
+		billsDue($accounts2,$page);
+		
+	?>	<!--/tr></td></table -->
+	<?	totals($accounts,$accounts3,$accounttype);
+		mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
 		newTR(0,$accounts);
 		}
 	if($page){
