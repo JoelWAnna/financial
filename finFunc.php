@@ -117,17 +117,16 @@
 ?>
 
 <?php function edittrans($transNumber,$month, $day, $year, $description,
-						$toAcc,$fromAcc,$amount,$poop){
-	global $debug2;global $newtransa;
-	$transNum = 'X'.$transNumber;
+						$toAcc,$fromAcc,$amount){
+	global $debug2;global $newtransa;global $X;
 	global $page;
 /* 	if($debug2){
 	echo "<form action=\"" . $_SERVER['PHP_SELF'] . "\" method=\"post\">"
 		. "<table bordercolor=\"000\" border=2><tr>";
 	} */
-	if (isset($_POST[$transNumber])){if($poop='poop'){
+	
 	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
-					. $page . "\" method=\"post\">";}
+					. $page . "\" method=\"post\">";
 ///	echo "</td></tr></table>";
 	/* echo $transNum. "<br>". $transNumber; */
 	echo "<td>";
@@ -146,7 +145,7 @@
 	amountbox($amount);
 	echo "</td>"
 		. "<td colSpan=\"2\" align=center><input type=\"submit\""
-		. "name=\"".$transNum . "\" value=\"";
+		. " name=\"".$X.$transNumber. "\" value=\"";
 	if($newtransa){
 		echo "Add new Transaction";
 	}
@@ -157,14 +156,9 @@
 
 	
 	
-}	
-if($poop='poop'){
-echo "</form></tr>";}
-if (isset($_POST[$transNum]))
-{
+	
 
-	echo $transNum. "<br>". $transNumber;}
-
+echo "</form></tr>";
 }
 ?>
 
@@ -246,5 +240,6 @@ $newQ = " SELECT `number` FROM `transactions` ORDER BY `transactions`.`number` D
 		
 		return $return[0]+1;
 	}
-	else return -1;
+	else{return -1;}
 }
+?>

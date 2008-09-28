@@ -84,6 +84,7 @@
 	}
 	echo"</table>";
 	}
+
 ?>
 
 
@@ -105,28 +106,27 @@
 		. $tdform.$w."55>balance</td>"
 		. "<form action=\"" . $_SERVER['PHP_SELF']
 		. "?page=". $page . "\" method=\"post\">"
-		. $tdform."><input type=\"submit\""
+		. $tdform."><input type=\"submit\" "
 		. "name=\"".$new."\" value=\""
 		. "Start new transaction"
 		. "\"></td></form>\n  </tr>";
 	if($new > 0){
+		if (isset($_POST[$new])){
+			$newtransa =true;
+			edittrans($new);
+			$newtransa =false;
+		}
+		$X = "X";
+		$X .= $new;
+		if (isset($_POST[$X])){
+			echo $X ;}
+	}
 		
-		//edittrans($new);
+		
+		
+		
+		
 	
-	if (isset($_POST[$new])){
-		$newtransa =true;
-		echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']
-			. "?page=" . $page . "\" method=\"post\">";
-		edittrans($new);
-		echo "</form></tr>"; 
-		$newtransa =false;
-	}
-		
-		
-		
-		
-		
-	}
 	$CurrentAm= currentAmount();
 	
 	 $queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
@@ -141,7 +141,7 @@
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
 	
-		if (mysql_num_rows($resultAcc) > 0){
+	if (mysql_num_rows($resultAcc) > 0){
 		while($rowdata = mysql_fetch_assoc($resultAcc)){
 			
 			
@@ -197,10 +197,18 @@
 				echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
 					. $page . "\" method=\"post\">"; */
 				
-				edittrans($rowdata['number'],(int)$rowdata['month'],
-						$rowdata['day'],$rowdata['year'],
-						$rowdata['description'],$rowdata['from account'],
-						$rowdata['to account'],$rowdata['amount'],'poop');
+				if (isset($_POST[$rowdata['number']])){
+					edittrans($rowdata['number'],(int)$rowdata['month'],
+							$rowdata['day'],$rowdata['year'],
+							$rowdata['description'],$rowdata['from account'],
+							$rowdata['to account'],$rowdata['amount'],'poop');
+				}
+				$X = "X";
+				$X .= $rowdata['number'];
+				if (isset($_POST[$X])){
+				echo $X; }
+			
+			
 						
 			/* 	echo "</form></tr>";
 			} */
