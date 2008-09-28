@@ -1,7 +1,5 @@
-<?php function setupAcc(){
+<?php function setupAcc(&$accounttype,&$accounts){
 		$index=0;
-		global $accounttype;
-		global $accounts;
 	$databaseFin='financial';
 	mysql_select_db($databaseFin)
 		or die('Unable to select database! $databaseFin');
@@ -47,7 +45,9 @@
 ?>
 
 <?php function monthdropdown($month){
-	global $months;
+	$months = array(0,Jan,Feb,Mar,Apr,
+					May,June,July,Aug,
+					Sep,Oct,Nov,Dec);
 	$j= date("m");
 	echo "<select name=\"month\">\n";
 	for($i=1;$i<13;$i++){
@@ -95,9 +95,8 @@
 	}
 ?>
 
-<?php function accountdropdown($where,$which){
-	global $accounts;
-	global $page;
+<?php function accountdropdown($where,$which,&$accounts,&$page){
+
 	echo "<select name=\"" . $where . "account\">\n";
 	$i=1;
 	while($accounts[$i]){
