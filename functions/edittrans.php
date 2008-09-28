@@ -4,8 +4,8 @@
 		$newtransa++;
 	}
 	if(!$noforms){
-	echo "\n    <tr><form action=\"" . $PHP_SELF. "?page="
-		. $page . "&new=".$newtransa."\" method=\"post\">";}
+	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
+		. $page . "\" method=\"post\">";}
 	echo "<td width=55>";
 	monthdropdown($month,$transNumber);
 	echo "</td><td width=50>";

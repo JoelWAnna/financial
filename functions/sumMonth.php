@@ -18,6 +18,6 @@
 	. " && `year` =" . $year	. ") OR ("
 	. "`month` =" . $month2 . " && `day` > " . $day
 	. " && `year` =" . $year2 . ")) && ( "
-	. "`" . $toOrFrom . " account` =". $account . " ))";// LIMIT 0 , 30 ";
+	. "`" . $toOrFrom . " account` =". $account . " ))";
 }
 ?>

@@ -12,7 +12,7 @@
 	$count=4;
 	$i=0;
 	$index=0;
-	
+
 	echo "<table width=98% border=3>";
 	
 	echo"\n  <tr>\n    <td align=center width=48%>\n      ";
@@ -40,7 +40,7 @@
 				$j=$rowAcc[0];
 				echo "\n  <tr>"
 					. $tdform .">"
-					."<lis><a href =\"financial.php?page="
+					."<lis><a href =\"". $_SERVER['PHP_SELF'] ."?page="
 					. $j . "\"><span>"
 					. $accounts[$j] . "</span></a></lis>"
 					."</td>";
@@ -82,12 +82,12 @@
 				$j=$rowAcc[0];
 				echo "\n  <tr>"
 					. $tdform .">"
-					."<lis><a href =\"financial.php?page="
+					."<lis><a href =\"" . $_SERVER['PHP_SELF'] . "?page="
 					. $j . "\"><span>"
 					. $accounts[$j] . "</span></a></lis>"
 					."</td>";
 					$e=true;
-					$CurrentFunds[$j] = -currentAmount($j,$e); //[F:\xampp\htdocs\finFunc.php] Line 74 :
+					$CurrentFunds[$j] = -currentAmount($j,$e);
 				echo $tdform . " width=75px align=right>";
 				negativeRed($CurrentFunds[$j]);
 				echo	$CurrentFunds[$j]. $tdform .">\n  </tr>\n";		
@@ -111,12 +111,11 @@ else{
 	$X .= $new;
 	if (isset($_POST[$X])){
 		if(submitTransaction($new)){
-			$new = $_GET['new'];
 			reloadPHP();
 			unset($_POST[$X]);
 		}
 	}	
-	echo "<a href=financial.php?page=0>Back to main</a>";
+	echo "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a>";
 	echo "<Br><B>".$accounts[$page]."</B>";
 	echo "<table bordercolor=\"000\" border=2>\n  ";
 	echo "<tr align=center>\n    <td width=165 colSpan=\"3\">date</td>"
@@ -125,8 +124,8 @@ else{
 		. $tdform.$w."143>to account</td>"
 		. $tdform.$w."50>amount</td>"
 		. $tdform.$w."55>balance</td>"
-		. "<form action=\"" . $PHP_SELF
-		. "?page=". $page . "&new=".$new."\" method=\"post\">"
+		. "<form action=\"" . $_SERVER['PHP_SELF']
+		. "?page=". $page ."\" method=\"post\">"
 		. $tdform."><input type=\"submit\" "
 		. "name=\"".$new."\" value=\""
 		. "Start new transaction"
@@ -157,7 +156,6 @@ else{
 				}
 			unset($_POST[$X]);
 			} 
-			//else{
 			
 			echo "\n  <tr align=center>" . $tdform . $w. "55>"
 				. $months[(int)$rowdata['month']]. $tdformat2. $w. "50>"
@@ -179,9 +177,6 @@ else{
 				negativeRed($CurrentAm);
 				echo $CurrentAm;
 				$CurrentAm += $rowdata['amount'];
-				if($debug){
-					echo "</td><td>" . $CurrentAm 
-						 . "</td><td>". -$rowdata['amount'];}
 			}
 			
 			else{
@@ -193,24 +188,15 @@ else{
 					echo $CurrentAm;
 				}
 				$CurrentAm	-= $rowdata['amount'];
-				if($debug){
-					echo "</td><td>" . $CurrentAm
-						. "</td><td>". $rowdata['amount'];
-				}
 			}
 			
 			echo "</td>\n    ";
 			echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $page 
-				. "&new=".$new."\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
+				. "\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
 				. $rowdata['number']."\" value=\"". "Edit transaction " . $rowdata['number']
 				. " \">" . "</td>\n    </form>";
 			echo "\n  </tr>";
 			
-			/* if (isset($_POST[$rowdata['number']])){
-				//echo $_POST[$rowdata['number']];
-				echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
-					. $page . "\" method=\"post\">"; */
-			//}	
 			if (isset($_POST[$rowdata['number']])){
 				edittrans(false,$page,$accounts,0,$rowdata['number'],(int)$rowdata['month'],
 						$rowdata['day'],$rowdata['year'],
@@ -221,8 +207,6 @@ else{
 	}else{echo '<b>Error No transactions found</b>';}
 	echo "\n</table>";
 		mysql_free_result($resultAcc);
-/* 	if($_GET['nedw']){} 
-*/
 	}
 	
 	

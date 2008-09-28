@@ -9,7 +9,6 @@
 	$_POST[$AMOUNT]=(float)$_POST[$AMOUNT];
 	if (!$_POST[$AMOUNT]){
 		echo 'You did not enter a valid amount ';
-		
 		return false;
 	}
 	if (!$_POST[$DESCRIPTION]){
