@@ -1,7 +1,7 @@
 <?php function newTR(&$page,&$accounts){
 	echo "<table border=3 align=center>";
-	$new = newestTransaction();
-	$bill = newestBill();
+	$new = newest('Transaction');
+	$bill = newest('Bill');
 		if (isset($_POST['transactions']) | isset($_POST['Bills'])){
 			unset($_POST['transactions']);
 			$nber=$_POST['dayo'];
@@ -16,7 +16,7 @@
 		if (isset($_POST['Bills'])){		
 			unset($_POST['Bills']);		
 			for($tt=0;$tt<$nber;$tt++){
-				editBill($page,$accounts,$bill+$tt);
+				editItem('bill',$page,$accounts,$bill+$tt);
 				echo "</tr>";
 			}
 			echo "<tr>";
@@ -32,8 +32,7 @@
 			
 			
 			for($tt=0;$tt<$nber;$tt++){
-			
-				edittrans(true,$page,$accounts,$new+$tt,$new+$tt);
+				editItem('trans',$page,$accounts,$new+$tt,true,true);
 				echo "</tr>";
 			}		
 			echo "<tr>";
@@ -63,7 +62,8 @@
 
 <?php function test($nber,$letter){
 	echo "<tr><form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\"><td colspan=7 align=center>";
-	daydropdown($nber,$letter,10);
+
+	dateDropdowns(d,$letter,$nber,10);
 	echo "<input type=\"submit\""
 		. " name=\"transactions\" value=\"";
 	echo "more transactions";

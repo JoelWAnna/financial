@@ -14,11 +14,11 @@
 		echo ' You did not enter a description ';
 		return false;
 	}
-	$connect4 = mysql_connect('localhost','financial')
+	$connect4 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
-	$databaseFin='financial';
-	mysql_select_db($databaseFin)
-		or die('Unable to select database! $databaseFin');	
+
+	mysql_select_db(DATABASENAME)
+		or die('Unable to select database! DATABASENAME');	
 	
 	$updateQ ="Insert Into `".DATABASENAME."`.`".PREFIX.BILLS."` SET `".PREFIX.BILLS."`.`number` ='" . $billNum . "', ";
 	$updateQ .= "`month` = '"

@@ -7,19 +7,21 @@
 	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
 		. $page . "\" method=\"post\">";}
 	echo "<td width=55>";
-	monthdropdown($month,$transNumber);
+	dateDropdowns(m,$transNumber,$month);
 	echo "</td><td width=50>";
-	daydropdown($day,$transNumber);
+	dateDropdowns(d,$transNumber,$day);
 	echo "</td><td width=55>";
-	yeardropdown($year,0,0,$transNumber);
+	dateDropdowns(Y,$transNumber,$year);
 	echo "</td><td width=142>";
-	descriptionbox($description,$transNumber);
+	inputBox('description',$transNumber,$description);
+//	descriptionbox($description,$transNumber);
 	echo "</td><td width=145>";
 	accountdropdown('from',$toAcc,$accounts,$page,$transNumber);
 	echo "</td><td width=143>";
 	accountdropdown('to',$fromAcc,$accounts,$page,$transNumber);
 	echo "</td><td width=50>";
-	amountbox($amount,$transNumber);
+	//amountbox($amount,$transNumber);
+	inputBox('amount',$transNumber,$amount);
 	echo "</td>";
 	if(!$noforms){
 

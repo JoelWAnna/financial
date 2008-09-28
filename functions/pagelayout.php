@@ -108,7 +108,7 @@
 	newTR($page,$accounts);
 }
 else{
-	$new = newestTransaction();
+	$new = newest('Transaction');
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
@@ -134,7 +134,7 @@ else{
 		. "\"></td></form>\n  </tr>";
 	if($new > 0){
 		if (isset($_POST[$new])){
-			edittrans(false,$page,$accounts,$new,$new);
+			editItem('trans',$page,$acounts,$new,true);
 		}
 	}
 
@@ -200,10 +200,10 @@ else{
 			echo "\n  </tr>";
 			
 			if (isset($_POST[$rowdata['number']])){
-				edittrans(false,$page,$accounts,0,$rowdata['number'],(int)$rowdata['month'],
-						$rowdata['day'],$rowdata['year'],
+				editItem('trans',$page,$accounts,$rowdata['number'],false,false,
+						(int)$rowdata['month'],$rowdata['day'],$rowdata['year'],
 						$rowdata['description'],$rowdata['from account'],
-						$rowdata['to account'],$rowdata['amount'],'poop');
+						$rowdata['to account'],$rowdata['amount']);
 			}
 		}
 	}else{echo '<b>Error No transactions found</b>';}
