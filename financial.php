@@ -4,7 +4,6 @@
 	include("finFunc.php");
 	include("finFunc2.php");
 	include("finFunc3.php");
-	include("finalFunctions.php");
 ?>
 <?php
 	error_reporting(0);
@@ -31,7 +30,7 @@
 </head>
 
 <?php //Initialize
-	
+	//$debug = true;	//$debug2 =true;
 	$page = $_GET['page'];
 	$accounttype;
 	$accounts;

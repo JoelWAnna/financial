@@ -12,7 +12,7 @@
 	$count=4;
 	$i=0;
 	$index=0;
-	echo "<table width=98%>\n  <tr>\n    <td align=center width=48%>\n      ";
+	echo "<table width=98% border=3>\n  <tr>\n    <td align=center width=48%>\n      ";
 	echo "<table>\n";
 	while($accounttype[$index]){
 		if(($accounttype[$index]== "Checking")
@@ -21,14 +21,17 @@
 			| ($accounttype[$index]== "Loan"))
 		{
 		echo "  <tr>" . $tdform . "><u><B>" . $accounttype[$index]
-			. " Accounts</B></u></td>" . "\n  </tr>";
+			. " Accounts</B></u></td>" . $tdform . ">\n";
 		$queryAccount = " SELECT number FROM `accounts` "
 				. "WHERE `Type` = CONVERT( _utf8 '"
 				. $accounttype[$index]."' "
 				. "USING latin1 ) COLLATE latin1_swedish_ci LIMIT 0 , 30";
 		$resultAccount = mysql_query($queryAccount)
 			or die('Error in query: line 66.' . mysql_error());
-		
+		if($accounttype[$index]== "Credit Card"){
+			balanceRemaining($accounts[$index]);
+		}
+		echo "\n  </tr>";
 		if (mysql_num_rows($resultAccount) > 0){
 			while($rowAcc = mysql_fetch_row($resultAccount)){
 				$j=$rowAcc[0];
@@ -41,7 +44,12 @@
 					$CurrentFunds[$j] = currentAmount($j);
 				echo $tdform . " width=75px align=right>";
 				negativeRed($CurrentFunds[$j]);
-				echo	$CurrentFunds[$j]. $tdform .">\n  </tr>\n";		
+				echo	$CurrentFunds[$j]. "\n    </td>\n"; /* ". $tdform . ">\n */
+				if($accounttype[$index]== "Credit Card"){
+				//echo $CurrentFunds[$j];
+					balanceRemaining($accounts[$j],$CurrentFunds[$j] ,true);
+				}
+				echo "\n  </tr>\n";		
 			}
 		}else{
 			echo '<b>Error Line 97</b>';
@@ -76,7 +84,7 @@
 					. $j . "\"><span>"
 					. $accounts[$j] . "</span></a></lis>"
 					."</td>";
-					$CurrentFunds[$j] = currentAmount($j);
+					$CurrentFunds[$j] = -currentAmount($j); //[F:\xampp\htdocs\finFunc.php] Line 74 :
 				echo $tdform . " width=75px align=right>";
 				negativeRed($CurrentFunds[$j]);
 				echo	$CurrentFunds[$j]. $tdform .">\n  </tr>\n";		
@@ -98,7 +106,7 @@
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-		if(($new)){
+		if(myEnterTrans($new)){
 			$new = $_GET['new'];
 			reloadPHP();
 			unset($_POST[$X]);
@@ -140,11 +148,7 @@
 			$X = "X";
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
-				$foo=false;
-				if($_POST['amount'] < 0){
-					$foo=true;
-				}
-				if(submitTransaction($rowdata['number'],$foo)){
+				if(myEnterTrans($rowdata['number'])){
 					reloadPHP();
 				}
 			unset($_POST[$X]);
@@ -171,6 +175,9 @@
 				negativeRed($CurrentAm);
 				echo $CurrentAm;
 				$CurrentAm += $rowdata['amount'];
+				if($debug){
+					echo "</td><td>" . $CurrentAm 
+						 . "</td><td>". -$rowdata['amount'];}
 			}
 			
 			else{
@@ -182,6 +189,10 @@
 					echo $CurrentAm;
 				}
 				$CurrentAm	-= $rowdata['amount'];
+				if($debug){
+					echo "</td><td>" . $CurrentAm
+						. "</td><td>". $rowdata['amount'];
+				}
 			}
 			
 			echo "</td>\n    ";
