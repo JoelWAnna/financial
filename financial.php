@@ -26,11 +26,9 @@
 -->	
 </head>
 <body>
-
 <?php //Initialize
-	//$debug = true;
-	//$debug2 =true;
-	$index=0;
+	//$debug = true;	//$debug2 =true;
+	//$index=0;
 	$page = $_GET['page'];
 	$months = array(0,Jan,Feb,Mar,Apr,
 					May,June,July,Aug,
@@ -39,62 +37,44 @@
 	$tdformat2 = "</td>".$tdform;
 	$tdformat = $tdformat2.">";
 	$w = " width=";
+	$accounttype;
+	$accounts;
+	
+	
 	$connection = mysql_connect('localhost','guest')
 		or die('Unable to connect!');
-	$databaseFin='financial';
-	mysql_select_db($databaseFin)
-		or die('Unable to select database! $databaseFin');
-	
-	$querytype ="SELECT DISTINCT `Type` FROM `accounts` LIMIT 0 , 30";
-	$queryname ="SELECT number, name, type FROM `accounts`";
-	
-	$typeresult = mysql_query($querytype)
-		or die('Error in query: $querytype.' . mysql_error());
-	$resultname = mysql_query($queryname)
-		or die('Error in query: $queryname.' . mysql_error());
-	
-	if (mysql_num_rows($typeresult) > 0){
-		while($row = mysql_fetch_row($typeresult)){		
-			$accounttype[$index++]=$row[0];
-		}
-	}else{
-		echo '<b>Error Line 53</b>';}
-	if (mysql_num_rows($resultname) > 0){
-		while($row = mysql_fetch_row($resultname)){		
-			$accounts[$row[0]]= $row[1];
-		}
-	}else{
-		echo '<b>Error Line 59</b>';
-	}
-	mysql_free_result($resultname);
-	mysql_free_result($typeresult);
-	$index=0;
+	setupAcc();
 ?>
 
 <?php //Main Page
 	if($page==0){
 	$count=4;
 	$i=0;
+	$index=0;
 	echo "<table>\n";
 	while(/*$accounttype[$index]*/$count--){
-		echo "  <tr>\n    <td><u><B>".$accounttype[$index]." Accounts</B></u>\n    </td>\n  </tr>";
-		$query = " SELECT number FROM `accounts` WHERE `Type` = CONVERT( _utf8 '"
+		echo "  <tr>" . $tdform . "><u><B>" . $accounttype[$index]
+			. " Accounts</B></u></td>" . "\n  </tr>";
+		$queryAccount = " SELECT number FROM `accounts` "
+				. "WHERE `Type` = CONVERT( _utf8 '"
 				. $accounttype[$index]."' "
 				. "USING latin1 ) COLLATE latin1_swedish_ci LIMIT 0 , 30";
-		$result = mysql_query($query)
-			or die('Error in query: $query.' . mysql_error());
-		if (mysql_num_rows($result) > 0){
-			while($row = mysql_fetch_row($result)){	
+		$resultAccount = mysql_query($queryAccount)
+			or die('Error in query: line 66.' . mysql_error());
+		
+		if (mysql_num_rows($resultAccount) > 0){
+			while($rowAcc = mysql_fetch_row($resultAccount)){
+				$j=$rowAcc[0];
 				echo "\n  <tr>"
 					. $tdform .">"
 					."<lis><a href =\"financial.php?page="
-					. $row[0] . "\"><span>"
-					. $accounts[$row[0]] . "</span></a></lis>"
+					. $j . "\"><span>"
+					. $accounts[$j] . "</span></a></lis>"
 					."</td>";
-					$CurrentFunds[$row[0]] = currentAmount($row[0]);
+					$CurrentFunds[$j] = currentAmount($j);
 				echo $tdform . " width=75px align=right>";
-				negativeRed($CurrentFunds[$row[0]]);
-				echo	$CurrentFunds[$row[0]]. $tdform .">\n  </tr>\n";		
+				negativeRed($CurrentFunds[$j]);
+				echo	$CurrentFunds[$j]. $tdform .">\n  </tr>\n";		
 			}
 		}else{
 			echo '<b>Error Line 97</b>';
@@ -113,7 +93,7 @@
 
 <?php 
 	if($page > 0){
-
+	$new = newestTransaction();
 	echo "<a href=financial.php?page=0>Back to main</a>";
 	echo "<B>".$accounts[$page]."</B>";
 	echo "<table bordercolor=\"000\" border=2>\n  ";
@@ -123,25 +103,44 @@
 		. $tdform.$w."143>to account</td>"
 		. $tdform.$w."50>amount</td>"
 		. $tdform.$w."55>balance</td>"
+		. "<form action=\"" . $_SERVER['PHP_SELF']
+		. "?page=". $page . "\" method=\"post\">"
 		. $tdform."><input type=\"submit\""
-		. "name=\"submit\" value=\""
+		. "name=\"".$new."\" value=\""
 		. "Start new transaction"
-		. "\"></td>\n  </tr>";
+		. "\"></td></form>\n  </tr>";
+	if($new > 0){
+		
+		//edittrans($new);
 	
+	if (isset($_POST[$new])){
+		$newtransa =true;
+		echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']
+			. "?page=" . $page . "\" method=\"post\">";
+		edittrans($new);
+		echo "</form></tr>"; 
+		$newtransa =false;
+	}
+		
+		
+		
+		
+		
+	}
 	$CurrentAm= currentAmount();
 	
-	$queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
+	 $queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
 				. $page." OR `To Account` =".$page." ORDER BY `transactions`.`number` DESC";// LIMIT 0 , 30 ";
-	 
-	$reslts = mysql_query($queryAcc)
+	//LOOK@@ 
+/* 	$reslts = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
 	if (mysql_num_rows($reslts) > 0){
 		$rowss = mysql_fetch_assoc($reslts);
-		//$CurrentAm -=$rowss['amount'];
-	}	
+		//$CurrentAm -=$rowss['amount']; 
+	}	 */
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
-
+	
 		if (mysql_num_rows($resultAcc) > 0){
 		while($rowdata = mysql_fetch_assoc($resultAcc)){
 			
@@ -193,18 +192,18 @@
 				. " \">" . "</td>\n    </form>";
 			echo "\n  </tr>";
 			
-			if (isset($_POST[$rowdata['number']])){
+			/* if (isset($_POST[$rowdata['number']])){
 				//echo $_POST[$rowdata['number']];
 				echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
-					. $page . "\" method=\"post\">";
+					. $page . "\" method=\"post\">"; */
 				
-				edittrans((int)$rowdata['month'],
+				edittrans($rowdata['number'],(int)$rowdata['month'],
 						$rowdata['day'],$rowdata['year'],
 						$rowdata['description'],$rowdata['from account'],
-						$rowdata['to account'],$rowdata['amount']);
+						$rowdata['to account'],$rowdata['amount'],'poop');
 						
-				echo "</form></tr>";
-			}
+			/* 	echo "</form></tr>";
+			} */
 			// echo "<tr><td>&nbsp</td></tr>";
 			// echo $row['path'];
 			// $accounttype[$index++]=$row[0];
@@ -225,7 +224,7 @@
 
 <?php
 edittrans();
-edittrans(1,2,2009,sdfsadfsadf);
+edittrans(55555,1,2,2009,sdfsadfsadf);
 ?>
 
 </td></tr></table>

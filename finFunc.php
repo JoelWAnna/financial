@@ -1,3 +1,37 @@
+<?php function setupAcc(){
+		$index=0;
+		global $accounttype;
+		global $accounts;
+	$databaseFin='financial';
+	mysql_select_db($databaseFin)
+		or die('Unable to select database! $databaseFin');
+	
+	$querytype ="SELECT DISTINCT `Type` FROM `accounts` LIMIT 0 , 30";
+	$queryname ="SELECT number, name, type FROM `accounts`";
+	
+	$typeresult = mysql_query($querytype)
+		or die('Error in query: $querytype.' . mysql_error());
+	$resultname = mysql_query($queryname)
+		or die('Error in query: $queryname.' . mysql_error());
+	
+	if (mysql_num_rows($typeresult) > 0){
+		while($row = mysql_fetch_row($typeresult)){		
+			$accounttype[$index++]=$row[0];
+		}
+	}else{
+		echo '<b>Error Line 53</b>';}
+	if (mysql_num_rows($resultname) > 0){
+		while($row = mysql_fetch_row($resultname)){		
+			$accounts[$row[0]]= $row[1];
+		}
+	}else{
+		echo '<b>Error Line 59</b>';
+	}
+	mysql_free_result($resultname);
+	mysql_free_result($typeresult);
+	}
+?>
+
 <?php function selected($i,$j,$s){
 	if($s){
 			if($s == $i){
@@ -63,11 +97,12 @@
 
 <?php function accountdropdown($where,$which){
 	global $accounts;
+	global $page;
 	echo "<select name=\"" . $where . " account\">\n";
 	$i=1;
 	while($accounts[$i]){
 		echo "\t<option value=\"".$i."\"";
-		selected($i,0,$which);
+		selected($i,$page,$which);
 		echo ">".$accounts[$i++]."</option>\n";
 	}
 	echo "</select>\n";
@@ -81,13 +116,20 @@
 }
 ?>
 
-<?php function edittrans($month, $day, $year,$description,
-					$toAcc,$fromAcc,$amount){
-	global $debug2;
-	if($debug2){
+<?php function edittrans($transNumber,$month, $day, $year, $description,
+						$toAcc,$fromAcc,$amount,$poop){
+	global $debug2;global $newtransa;
+	$transNum = 'X'.$transNumber;
+	global $page;
+/* 	if($debug2){
 	echo "<form action=\"" . $_SERVER['PHP_SELF'] . "\" method=\"post\">"
 		. "<table bordercolor=\"000\" border=2><tr>";
-	}
+	} */
+	if (isset($_POST[$transNumber])){if($poop='poop'){
+	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
+					. $page . "\" method=\"post\">";}
+///	echo "</td></tr></table>";
+	/* echo $transNum. "<br>". $transNumber; */
 	echo "<td>";
 	monthdropdown($month);
 	echo "</td><td>";
@@ -102,7 +144,27 @@
 	accountdropdown('to',$fromAcc);
 	echo "</td><td>";
 	amountbox($amount);
-	echo "</td>";
+	echo "</td>"
+		. "<td colSpan=\"2\" align=center><input type=\"submit\""
+		. "name=\"".$transNum . "\" value=\"";
+	if($newtransa){
+		echo "Add new Transaction";
+	}
+	else{
+		echo "Submit Changes";
+	}	
+	echo "\" style=\"background-color: abcdef;\"></td>\n  </tr>";
+
+	
+	
+}	
+if($poop='poop'){
+echo "</form></tr>";}
+if (isset($_POST[$transNum]))
+{
+
+	echo $transNum. "<br>". $transNumber;}
+
 }
 ?>
 
@@ -173,3 +235,16 @@
 	}
 }
 ?>
+
+<?php function newestTransaction(){
+$newQ = " SELECT `number` FROM `transactions` ORDER BY `transactions`.`number` DESC LIMIT 0,1 ";
+	 
+	$newR = mysql_query($newQ)
+		or die('Error in query: $newQ.' . mysql_error());
+	if (mysql_num_rows($newR) > 0){
+		$return = mysql_fetch_row($newR);
+		
+		return $return[0]+1;
+	}
+	else return -1;
+}
