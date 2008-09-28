@@ -160,17 +160,17 @@
 	
 	echo "<a href=financial.php?page=0>Back to main</a>";
 	echo "<B>".$accounts[$page]."</B>";
-	echo "<table bordercolor=\"000\" border=2>";
-	echo "<tr align=center><td width=165 colSpan=\"3\">date</td>"
-		. "<td width=142>description</td>"
-		. "<td width=145>from account</td>"
-		. "<td width=143>to account</td>"
-		. "<td width=50>amount</td>"
-		. "<td  width=55>balance</td>"
-		. "<th><input type=\"submit\""
+	echo "<table bordercolor=\"000\" border=2>\n  ";
+	echo "<tr align=center>\n    <td width=165 colSpan=\"3\">date</td>"
+		. "\n    <td width=142>description</td>"
+		. "\n    <td width=145>from account</td>"
+		. "\n    <td width=143>to account</td>"
+		. "\n    <td width=50>amount</td>"
+		. "\n    <td  width=55>balance</td>"
+		. "\n    <th><input type=\"submit\""
 		. "name=\"submit\" value=\""
 		. "Start new transaction"
-		. "\"></th></tr>";
+		. "\"></th>\n  </tr>";
 	
 	$summinus = 'SELECT SUM( `Amount` )'
 			. ' FROM `transactions`'
@@ -213,30 +213,30 @@
 		or die('Error in query: $queryAcc.' . mysql_error());
 	if (mysql_num_rows($resultAcc) > 0){
 		while($rowdata = mysql_fetch_assoc($resultAcc)){		
-			echo "<tr align=center><td width=55>";
+			echo "\n  <tr align=center>\n    <td width=55>";
 			echo "&nbsp ";
 			echo $months[((int)$rowdata['month'])];
-			echo "</td><td width=50>";
+			echo "\n    </td>\n    <td width=50>";
 			echo $rowdata['day'];
-			echo "</td><td width=55>";
+			echo "\n    </td>\n    <td width=55>";
 			echo $rowdata['year'];
 			echo "&nbsp";
-			echo "</td><td width=142>";
+			echo "\n    </td>\n    <td>";
 			echo $rowdata['description'];
-			echo "</td><td width=145>";
+			echo "\n    </td>\n    <td>";
 			//echo $rowdata['3'];
 			
 			echo $accounts[$rowdata['from account']];
 			//echo $rowdata['4'];//echo $rowdata['from account'];
-			echo "</td><td width=143>";
+			echo "\n    </td>\n    <td>";
 			echo $accounts[$rowdata['to account']];
 			//echo $rowdata['5'];//echo $rowdata['to account'];
-			echo "</td><td width=50>";
+			echo "\n    </td>\n    <td>";
 			if($rowdata['from account']==$page){
 			echo "<font color = red>";
 			echo -$rowdata['amount'];
 			}else{echo $rowdata['amount'];}
-			echo "</td><td>";
+			echo "\n    </td>\n    <td>";
 			if($rowdata['from account']==$page){
 					if($CurrentAm < -.01){
 				echo "<font color = red>";}
@@ -252,15 +252,15 @@
 				$CurrentAm	-= $rowdata['amount'];
 				if($debug){echo "</td><td>".$CurrentAm . "</td><td>". $rowdata['amount'];}
 			}
-			echo "<th><input type=\"submit\" name=\"submit\" value=\""
-				. "Edit transaction " . $rowdata['number'] ." \"></th>";
-			echo "</td></tr>";
+			echo "\n    <th><input type=\"submit\" name=\"submit\" value=\""
+				. "Edit transaction " . $rowdata['number'] ." \">\n    </th>";
+			echo "\n    </td>\n  </tr>";
 			// echo "<tr><td>&nbsp</td></tr>";
 			// echo $row['path'];
 			// $accounttype[$index++]=$row[0];
 		}
 	}else{echo '<b>Error No transactions found</b>';}
-	echo "</table>";
+	echo "\n</table>";
 	mysql_free_result($resultAcc);
 }
 ?>
