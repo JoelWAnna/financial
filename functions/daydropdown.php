@@ -1,8 +1,9 @@
-<?php function daydropdown($day){
+<?php function daydropdown($day,$transNumber,$max){
+	if(!$max){$max=31;}
 	$j= date("d");
-	echo "<select name=\"day\">\n";
+	echo "<select name=\"day" . $transNumber . "\">\n";
 	$i=0;
-	while(++$i <32){
+	while(++$i < $max+1){
 		echo "\t<option value=\"".$i."\"";		
 		selected($i,$j,$day);		
 		echo ">" .$i."</option>\n";

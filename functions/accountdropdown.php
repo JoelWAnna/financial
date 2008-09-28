@@ -1,6 +1,6 @@
-<?php function accountdropdown($where,$which,&$accounts,&$page){
+<?php function accountdropdown($where,$which,&$accounts,&$page,$transNumber){
 
-	echo "<select name=\"" . $where . "account\">\n";
+	echo "<select name=\"" . $where . "account" . $transNumber . "\">\n";
 	$i=1;
 	while($accounts[$i]){
 		echo "\t<option value=\"".$i."\"";

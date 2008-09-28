@@ -1,25 +1,32 @@
 <?php function submitTransaction($trNum,$negative){
-
-	$_POST['amount']=(float)$_POST['amount'];
-	if (!$_POST['amount']){
+	$AMOUNT = 'amount' . $trNum;
+	$DESCRIPTION = 'description' . $trNum;
+	$TOACCOUNT = 'toaccount'. $trNum;
+	$FROMACCOUNT = 'fromaccount' . $trNum;
+	$MONTH = 'month' . $trNum;
+	$DAY = 'day' . $trNum;
+    $YEAR = 'year' . $trNum;
+	$_POST[$AMOUNT]=(float)$_POST[$AMOUNT];
+	if (!$_POST[$AMOUNT]){
 		echo 'You did not enter a valid amount ';
+		
 		return false;
 	}
-	if (!$_POST['description']){
+	if (!$_POST[$DESCRIPTION]){
 		echo ' You did not enter a description ';
 		return false;
 	}
-	if ($_POST['toaccount'] == $_POST['fromaccount']){
+	if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
 		echo ' Accounts cannot be the same ';
 		return false;
 	}
-	if($_POST['amount'] < 0){
-		$temp = $_POST['toaccount'];
-		$_POST['toaccount'] = $_POST['fromaccount'];
-		$_POST['fromaccount'] = $temp;
-		if(!$negative){
-		$_POST['amount'] = -$_POST['amount'];
-		}
+	if($_POST[$AMOUNT] < 0){
+		$temp = $_POST[$TOACCOUNT];
+		$_POST[$TOACCOUNT] = $_POST[$FROMACCOUNT];
+		$_POST[$FROMACCOUNT] = $temp;
+	//	if(!$negative){
+		$_POST[$AMOUNT] = -$_POST[$AMOUNT];
+	//	}
 	}
 
 	$checkChanges = "SELECT * FROM `transactions` WHERE `transactions`.`number` ="
@@ -28,13 +35,13 @@
 		or die('Error in query: $checkChanges.' . mysql_error());
 	if (mysql_num_rows($changesResult) > 0){
 		while($changesR = mysql_fetch_assoc($changesResult)){
-			if(($_POST['month'] != $changesR['month'])
-				| ($_POST['day'] != $changesR['day'])
-				| ($_POST['year'] != $changesR['year'])
-				| ($_POST['description'] != $changesR['description'])
-				| ($_POST['amount'] != $changesR['amount'])
-				| ($_POST['toaccount'] != $changesR['to account'])
-				| ($_POST['fromaccount'] != $changesR['from account'])
+			if(($_POST[$MONTH] != $changesR['month'])
+				| ($_POST[$DAY] != $changesR['day'])
+				| ($_POST[$YEAR] != $changesR['year'])
+				| ($_POST[$DESCRIPTION] != $changesR['description'])
+				| ($_POST[$AMOUNT] != $changesR['amount'])
+				| ($_POST[$TOACCOUNT] != $changesR['to account'])
+				| ($_POST[$FROMACCOUNT] != $changesR['from account'])
 				)
 			{
 				$changed = true;
@@ -58,10 +65,10 @@
 	
 	
 	$updateQ .= "`month` = '"
-			. $_POST['month'] . "', `day` = '". $_POST['day'] . "', `year` = '"
-			. $_POST['year'] . "', `description` = '". $_POST['description']
-			. "', `amount` = '" . $_POST['amount'] ."', `from account` = '"
-			. $_POST['fromaccount'] . "', `to account` = '" . $_POST['toaccount']. "'";
+			. $_POST[$MONTH] . "', `day` = '". $_POST[$DAY] . "', `year` = '"
+			. $_POST[$YEAR] . "', `description` = '". $_POST[$DESCRIPTION]
+			. "', `amount` = '" . $_POST[$AMOUNT] ."', `from account` = '"
+			. $_POST[$FROMACCOUNT] . "', `to account` = '" . $_POST[$TOACCOUNT]. "'";
 
 	if($changed){
 		$updateQ .= " WHERE `transactions`.`number` =". $trNum ." LIMIT 1";

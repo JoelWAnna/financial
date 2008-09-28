@@ -1,34 +1,41 @@
-<?php function edittrans(&$page,&$accounts,$newtransa,$transNumber,$month, $day, $year, $description,
+<?php function edittrans($noforms,&$page,&$accounts,$newtransa,$transNumber,$month, $day, $year, $description,
 						$toAcc,$fromAcc,$amount){
 	if($newtransa > 0){
 		$newtransa++;
 	}
+	if(!$noforms){
 	echo "\n    <tr><form action=\"" . $PHP_SELF. "?page="
-		. $page . "&new=".$newtransa."\" method=\"post\">";
-	echo "<td>";
-	monthdropdown($month);
-	echo "</td><td>";
-	daydropdown($day);
-	echo "</td><td>";
-	yeardropdown($year);
-	echo "</td><td>";
-	descriptionbox($description);
-	echo "</td><td>";
-	accountdropdown('from',$toAcc,$accounts,$page);
-	echo "</td><td>";
-	accountdropdown('to',$fromAcc,$accounts,$page);
-	echo "</td><td>";
-	amountbox($amount);
-	echo "</td>"
-		. "<td colSpan=\"2\" align=center><input type=\"submit\""
+		. $page . "&new=".$newtransa."\" method=\"post\">";}
+	echo "<td width=55>";
+	monthdropdown($month,$transNumber);
+	echo "</td><td width=50>";
+	daydropdown($day,$transNumber);
+	echo "</td><td width=55>";
+	yeardropdown($year,0,0,$transNumber);
+	echo "</td><td width=142>";
+	descriptionbox($description,$transNumber);
+	echo "</td><td width=145>";
+	accountdropdown('from',$toAcc,$accounts,$page,$transNumber);
+	echo "</td><td width=143>";
+	accountdropdown('to',$fromAcc,$accounts,$page,$transNumber);
+	echo "</td><td width=50>";
+	amountbox($amount,$transNumber);
+	echo "</td>";
+	if(!$noforms){
+
+	echo "<td colSpan=\"2\" align=center>";
+	
+	echo"<input type=\"submit\""
 		. " name=\"X".$transNumber. "\" value=\"";
-	if($newtransa /*  > 0 */){
-		echo "Add New Transaction";
+	if($newtransa){
+		echo "Add New Transaction ";
 	}
 	else{
-		echo "Submit Changes";
+		echo "Submit Changes to ";
 	}	
-	echo "\" style=\"background-color: abcdef;\"></td>\n  ";
-	echo "</form></tr>";
+	echo  $transNumber . "\" style=\"background-color: abcdef;\"></td>\n  ";
+	echo "</form>";
+	echo "</tr>";
+	}
 }
 ?>

@@ -12,7 +12,10 @@
 	$count=4;
 	$i=0;
 	$index=0;
-	echo "<table width=98% border=3>\n  <tr>\n    <td align=center width=48%>\n      ";
+	
+	echo "<table width=98% border=3>";
+	
+	echo"\n  <tr>\n    <td align=center width=48%>\n      ";
 	echo "<table>\n";
 	while($accounttype[$index]){
 		if(($accounttype[$index]== "Checking")
@@ -44,9 +47,8 @@
 					$CurrentFunds[$j] = currentAmount($j);
 				echo $tdform . " width=75px align=right>";
 				negativeRed($CurrentFunds[$j]);
-				echo	$CurrentFunds[$j]. "\n    </td>\n"; /* ". $tdform . ">\n */
+				echo	$CurrentFunds[$j]. "\n    </td>\n";
 				if($accounttype[$index]== "Credit Card"){
-				//echo $CurrentFunds[$j];
 					balanceRemaining($accounts[$j],$CurrentFunds[$j] ,true);
 				}
 				echo "\n  </tr>\n";		
@@ -100,14 +102,15 @@
 	
 	
 	
-	echo "</td></tr></table>";
-	}else{
-	//if($page > 0){
+	echo "</td></tr></table></table>";
+	newTR($page,$accounts);
+}
+else{
 	$new = newestTransaction();
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-		if(myEnterTrans($new)){
+		if(submitTransaction($new)){
 			$new = $_GET['new'];
 			reloadPHP();
 			unset($_POST[$X]);
@@ -130,7 +133,7 @@
 		. "\"></td></form>\n  </tr>";
 	if($new > 0){
 		if (isset($_POST[$new])){
-			edittrans($page,$accounts,$new,$new);
+			edittrans(false,$page,$accounts,$new,$new);
 		}
 	}
 
@@ -149,7 +152,7 @@
 			$X = "X";
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
-				if(myEnterTrans($rowdata['number'])){
+				if(submitTransaction($rowdata['number'])){
 					reloadPHP();
 				}
 			unset($_POST[$X]);
@@ -209,7 +212,7 @@
 					. $page . "\" method=\"post\">"; */
 			//}	
 			if (isset($_POST[$rowdata['number']])){
-				edittrans($page,$accounts,0,$rowdata['number'],(int)$rowdata['month'],
+				edittrans(false,$page,$accounts,0,$rowdata['number'],(int)$rowdata['month'],
 						$rowdata['day'],$rowdata['year'],
 						$rowdata['description'],$rowdata['from account'],
 						$rowdata['to account'],$rowdata['amount'],'poop');

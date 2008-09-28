@@ -8,7 +8,6 @@
 	include("functions/edittrans.php");
 	include("functions/isZero.php");
 	include("functions/monthdropdown.php");
-	include("functions/myEnterTrans.php");
 	include("functions/negativeRed.php");
 	include("functions/newestTransaction.php");
 	include("functions/pagelayout.php");
@@ -18,6 +17,7 @@
 	include("functions/submitTransaction.php");
 	include("functions/sumMonth.php");
 	include("functions/yeardropdown.php");
+	include("functions/newTR.php");
 ?>
 
 
