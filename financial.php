@@ -94,7 +94,9 @@
 
 <?php 
 	if($page > 0){
+	//$new = 0;
 	$new = newestTransaction();
+	//echo $new;
 	echo "<a href=financial.php?page=0>Back to main</a>";
 	echo "<B>".$accounts[$page]."</B>";
 	echo "<table bordercolor=\"000\" border=2>\n  ";
@@ -116,11 +118,14 @@
 			edittrans($new);
 			$newtransa =false;
 		}
+		
+		
 		$X = "X";
 		$X .= $new;
 		if (isset($_POST[$X])){
-			myEnterTrans();}
-
+			myEnterTrans($new);
+			unset($_POST[$X]);}			
+		
 	}
 		
 		
@@ -132,19 +137,21 @@
 	
 	 $queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
 				. $page." OR `To Account` =".$page." ORDER BY `transactions`.`number` DESC";// LIMIT 0 , 30 ";
-	//LOOK@@ 
-/* 	$reslts = mysql_query($queryAcc)
-		or die('Error in query: $queryAcc.' . mysql_error());
-	if (mysql_num_rows($reslts) > 0){
-		$rowss = mysql_fetch_assoc($reslts);
-		//$CurrentAm -=$rowss['amount']; 
-	}	 */
+
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
 	
 	if (mysql_num_rows($resultAcc) > 0){
 		while($rowdata = mysql_fetch_assoc($resultAcc)){
+
 			
+			$X = "X";
+			$X .= $rowdata['number'];
+			if (isset($_POST[$X])){
+				myEnterTrans($rowdata['number']);
+			unset($_POST[$X]);
+			} 
+			//else{
 			
 			echo "\n  <tr align=center>" . $tdform . $w. "55>"
 				. $months[(int)$rowdata['month']]. $tdformat2. $w. "50>"
@@ -197,54 +204,22 @@
 				//echo $_POST[$rowdata['number']];
 				echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
 					. $page . "\" method=\"post\">"; */
-				
-				if (isset($_POST[$rowdata['number']])){
-					edittrans($rowdata['number'],(int)$rowdata['month'],
-							$rowdata['day'],$rowdata['year'],
-							$rowdata['description'],$rowdata['from account'],
-							$rowdata['to account'],$rowdata['amount'],'poop');
-				}
-				$X = "X";
-				$X .= $rowdata['number'];
-				if (isset($_POST[$X])){
-					myEnterTrans();
-				}
-
-			
-			
-						
-			/* 	echo "</form></tr>";
-			} */
-			// echo "<tr><td>&nbsp</td></tr>";
-			// echo $row['path'];
-			// $accounttype[$index++]=$row[0];
+			//}	
+			if (isset($_POST[$rowdata['number']])){
+				edittrans($rowdata['number'],(int)$rowdata['month'],
+						$rowdata['day'],$rowdata['year'],
+						$rowdata['description'],$rowdata['from account'],
+						$rowdata['to account'],$rowdata['amount'],'poop');
+			}
 		}
 	}else{echo '<b>Error No transactions found</b>';}
 	echo "\n</table>";
-	mysql_free_result($resultAcc);
+			mysql_free_result($resultAcc);
 }
 ?>
 <?php mysql_close($connection);
 ?>
-
-
-
-
-
-
-
-<?php/* 
-edittrans();
-edittrans(55555,1,2,2009,sdfsadfsadf); */
-?>
-
 </td></tr></table>
-
-
 </form>
-
-
-
-
 </body>
 </html>

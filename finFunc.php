@@ -80,8 +80,8 @@
 	$len -= $rlen;
 	$j= (int)date("Y");
 	echo "<select name=\"year\">\n";
-	for($i=($j-$rlen);$i < ($j+$len);$i++){
-		echo "\t<option value=\"".($i + $j)."\"";
+	for($i=($j-$rlen);$i < ((int)$j+$len);$i++){
+		echo "\t<option value=\"".$i."\"";
 		selected($i,$j,$year);/* if($i==0){echo " selected=\"selected\" ";} */
 		echo ">" .($i)."</option>\n";
 	}
@@ -111,7 +111,7 @@
 
 <?php function amountbox($amount){
 	echo "<input type=\"number\" name=\"amount\""
-		. " maxlength=\"6\" size=\"5\" value=\""
+		. " maxlength=\"9\" size=\"5\" value=\""
 		. $amount . "\" showlength=\"4\">\n";
 }
 ?>
@@ -232,32 +232,169 @@ echo "</form></tr>";
 ?>
 
 <?php function newestTransaction(){
-$newQ = " SELECT `number` FROM `transactions` ORDER BY `transactions`.`number` DESC LIMIT 0,1 ";
+$newQ = " SELECT `number` FROM `transactions` ORDER BY `transactions`.`number` DESC LIMIT 1 ";
 	 
 	$newR = mysql_query($newQ)
 		or die('Error in query: $newQ.' . mysql_error());
 	if (mysql_num_rows($newR) > 0){
 		$return = mysql_fetch_row($newR);
 		
-		return $return[0]+1;
+		return ((int)$return[0]+1);
 	}
 	else{return -1;}
 }
 ?>
 
-<?php function myEnterTrans(){
-
-if (!$_POST['month'] | !$_POST['day'] | !$_POST['year'] | !$_POST['description']
-	| !$_POST['amount'] | !$_POST["toaccount"] | !$_POST['fromaccount'])
-{
-	echo 'You did not complete all of the required fields';
-	return null;
-}
-if ($_POST['toaccount'] == $_POST['fromaccount']){
-	echo 'accounts cannot be the same';
-	return null;
+<?php function myEnterTrans($trNum){
+	$_POST['amount']=(float)$_POST['amount'];
+	if (!$_POST['amount']){
+		echo 'You did not enter a valid amount ';
+		return null;
+		}
+	if (!$_POST['month'] | !$_POST['day'] | !$_POST['year'] | !$_POST['description']
+		| !$_POST['toaccount'] | !$_POST['fromaccount'])
+	{
+		echo ' You did not complete all of the required fields';
+		return null;
 	}
-echo 'Nothing here uet';
+	if ($_POST['toaccount'] == $_POST['fromaccount']){
+		echo ' accounts cannot be the same';
+		return null;
+		}
+		
+	if($_POST['amount'] < 0){
+		if($debug){echo $_POST['toaccount']. "BR".$_POST['fromaccount']."<BR>";}
+		$temp = $_POST['toaccount'];
+		$_POST['toaccount'] = $_POST['fromaccount'];
+		$_POST['fromaccount'] = $temp;
+		if($debug){echo $_POST['toaccount']. "BR".$_POST['fromaccount'];
+		echo $_POST['amount']. "<br>";}
+		$_POST['amount'] = -$_POST['amount'];
+		if($debug){echo $_POST['amount']. "<br>";}
+		}
+		
+		
+		
+	$checkChanges = "SELECT * FROM `transactions` WHERE `transactions`.`number` ="
+					. $trNum. " LIMIT 1";
+	$changesResult = mysql_query($checkChanges)
+		or die('Error in query: $checkChanges.' . mysql_error());
+	if (mysql_num_rows($changesResult) > 0){
+		while($changesR = mysql_fetch_assoc($changesResult)){
+			$changed = false;
+			if($_POST['month'] != $changesR['month']){
+				if($debug){echo $_POST['month'] . "<br>".$changesR['month'];}
+				$changed = true; }
+			if($_POST['day'] != $changesR['day']){
+				if($debug){echo $_POST['day'] . "<br>".$changesR['day'];}
+				$changed = true; }
+			if($_POST['year'] != $changesR['year']){
+				if($debug){echo $_POST['year'] . "<br>".$changesR['year'];}
+				$changed = true; }	
+			if($_POST['description'] != $changesR['description']){
+				if($debug){echo $_POST['description'] . "<br>".$changesR['description'];}
+				$changed = true; }		
+			if($_POST['amount'] != $changesR['amount']){
+				if($debug){echo $_POST['amount'] . "<br>".$changesR['amount'];}
+				$changed = true; }
+			if($_POST['toaccount'] != $changesR['to account']){
+				if($debug){echo $_POST['to account'] . "<br>".$changesR['to account'];}
+				$changed = true; }	
+			if($_POST['fromaccount'] != $changesR['from account']){
+				if($debug){echo $_POST['fromaccount'] . "<br>".$changesR['from account'];}
+				$changed = true; }			
+			if($changed == false){
+				echo "no changes";
+				return null;
+			}
+			else{$updateQ ="UPDATE `financial`.`transactions` SET ";
+				
+			}
+		}
+	}else{
+		if($trNum == 0)echo "HELLLLLL";
+		$updateQ ="Insert Into `financial`.`transactions` SET `transactions`.`number` ='" . $trNum . "', ";
+		$new= true;
+	}
+	mysql_free_result($changesResult);
 
+	$connect2 = mysql_connect('localhost','financial')
+		or die('Unable to connect!');
+	$databaseFin='financial';
+	mysql_select_db($databaseFin)
+		or die('Unable to select database! $databaseFin');	
+	
+	$updateQ .= "`month` = '"
+			. $_POST['month'] . "', `day` = '". $_POST['day'] . "', `year` = '"
+			. $_POST['year'] . "', `description` = '". $_POST['description']
+			. "', `amount` = '" . $_POST['amount'] ."', `from account` = '"
+			. $_POST['fromaccount'] . "', `to account` = '" . $_POST['toaccount']. "'";
+	if($changed){
+		$updateQ .= " WHERE `transactions`.`number` =". $trNum ." LIMIT 1";
+	}
+	//echo $updateQ;
+	$Result = mysql_query($updateQ)
+		or die('Error in query: $updateQ.' . mysql_error());
+	
+	global $tdform;
+	global $tdformat2;
+	global $tdformat;
+	global $w;
+	global $page;
+	global $CurrentAm;
+	$months = array(0,Jan,Feb,Mar,Apr,
+					May,June,July,Aug,
+					Sep,Oct,Nov,Dec);
+	global $accounts;
+
+	if(!$new){echo "\n  <tr align=center>" . $tdform . $w. "55>"
+				. $months[(int)$_POST['month']]. $tdformat2. $w. "50>"
+				. $_POST['day'] . $tdformat2. $w. "55>"
+				. $_POST['year'] . $tdformat
+				. $_POST['description'] . $tdformat
+				. $accounts[$_POST['fromaccount']] . $tdformat
+				. $accounts[$_POST['toaccount']]	. $tdformat;
+			
+			if($_POST['fromaccount']==$page){
+				negativeRed(-1);
+				echo "-";
+			}
+			echo $_POST['amount'];
+			
+			echo $tdformat;
+			
+			if($_POST['fromaccount']==$page){
+				negativeRed($CurrentAm);
+				echo $CurrentAm;
+				$CurrentAm += $_POST['amount'];
+				if($debug){
+					echo "</td><td>" . $CurrentAm 
+						 . "</td><td>". -$_POST['amount'];}
+			}
+			
+			else{
+				if(isZero($CurrentAm)){
+					echo 0;
+				}
+				else{
+					negativeRed($CurrentAm);
+					echo $CurrentAm;
+				}
+				$CurrentAm	-= $_POST['amount'];
+				if($debug){
+					echo "</td><td>" . $CurrentAm
+						. "</td><td>". $_POST['amount'];
+				}
+			}
+			echo "</td>\n    ";
+			echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $page 
+				. "\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
+				. $trNum . "\" value=\"". "Edit transaction " . $trNum
+				. " \">" . "</td>\n    </form>";
+			echo "\n  </tr>";
+	}	
+	mysql_close($connect2);
+	$connect = mysql_connect('localhost','guest')
+		or die('Unable to connect!');
 }
 ?>
