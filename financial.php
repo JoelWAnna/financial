@@ -1,6 +1,7 @@
 <html>
 <head><title>test</title>
 <?php
+	include("finFunc.php");
 	error_reporting(0);
 	extract($_POST);extract($_SERVER);
 	$host = "127.0.0.1";$local = true;$timeout = "1";
@@ -28,15 +29,21 @@
 
 <?php //Initialize
 	//$debug = true;
+	//$debug2 =true;
 	$index=0;
-	$months = array(0,Jan,Feb,Mar,Apr,May,June,July,Aug,Sep,Oct,Nov,Dec);
 	$page = $_GET['page'];
+	$months = array(0,Jan,Feb,Mar,Apr,
+					May,June,July,Aug,
+					Sep,Oct,Nov,Dec);
+	$tdform = "\n    <td";
+	$tdformat2 = "</td>".$tdform;
+	$tdformat = $tdformat2.">";
+	$w = " width=";
 	$connection = mysql_connect('localhost','guest')
 		or die('Unable to connect!');
 	$databaseFin='financial';
 	mysql_select_db($databaseFin)
 		or die('Unable to select database! $databaseFin');
-	
 	
 	$querytype ="SELECT DISTINCT `Type` FROM `accounts` LIMIT 0 , 30";
 	$queryname ="SELECT number, name, type FROM `accounts`";
@@ -74,59 +81,23 @@
 		$query = " SELECT number FROM `accounts` WHERE `Type` = CONVERT( _utf8 '"
 				. $accounttype[$index]."' "
 				. "USING latin1 ) COLLATE latin1_swedish_ci LIMIT 0 , 30";
-		$querynum ="SELECT current FROM accounts";
 		$result = mysql_query($query)
 			or die('Error in query: $query.' . mysql_error());
-		$resultnum = mysql_query($querynum)
-			or die('Error in query: $querynum.' . mysql_error());
-		if (mysql_num_rows($resultnum) > 0){
-			while($rownumdata = mysql_fetch_row($resultnum)){
-				$CurrentFunds[++$i]= $rownumdata[0];
-			}
-		}else{
-			echo '<b>Error No start found</b>';
-		}
-		mysql_free_result($resultnum);
 		if (mysql_num_rows($result) > 0){
 			while($row = mysql_fetch_row($result)){	
-				echo "\n  <tr>\n    <td><lis><a href =\"financial.php?page=".$row[0]."\"><span>"
-					. $accounts[$row[0]] . "</span></a></lis>"."\n    </td>";
-
-				$summinus = 'SELECT SUM( `Amount` )'
-				        . ' FROM `transactions`'
-				        . ' WHERE `From Account` ='.$row[0];
-				$sumplus = 'SELECT SUM( `Amount` )'
-				        . ' FROM `transactions`'
-				        . ' WHERE `To Account` ='.$row[0];
-				$resultminus = mysql_query($summinus)
-					or die('Error in query: $summinus.' . mysql_error());
-				$resultplus = mysql_query($sumplus)
-					or die('Error in query: $sumplus.' . mysql_error());
-
-				if (mysql_num_rows($resultplus) > 0){
-					while($rowplus = mysql_fetch_row($resultplus)){		
-						$CurrentFunds[$row[0]] += $rowplus[0];
-					}
-				}else{
-					echo 'error line 110';
-				}
-				if (mysql_num_rows($resultminus) > 0){
-					while($rowminus = mysql_fetch_row($resultminus)){		
-						$CurrentFunds[$row[0]] -= $rowminus[0];
-					}
-				}else{
-					echo 'error line 117';
-				}
-				mysql_free_result($resultplus);
-				mysql_free_result($resultminus);
-				echo 	"\n    <td width=75px align=right>";
-				if($CurrentFunds[$row[0]] < 0){
-					echo "<font color = red>";
-				}
-				echo	$CurrentFunds[$row[0]]."\n    </td>\n  </tr>\n";		
+				echo "\n  <tr>"
+					. $tdform .">"
+					."<lis><a href =\"financial.php?page="
+					. $row[0] . "\"><span>"
+					. $accounts[$row[0]] . "</span></a></lis>"
+					."</td>";
+					$CurrentFunds[$row[0]] = currentAmount($row[0]);
+				echo $tdform . " width=75px align=right>";
+				negativeRed($CurrentFunds[$row[0]]);
+				echo	$CurrentFunds[$row[0]]. $tdform .">\n  </tr>\n";		
 			}
 		}else{
-			echo '<b>Error Line 128</b>';
+			echo '<b>Error Line 97</b>';
 		}
 		mysql_free_result($result);
 		$index++;
@@ -140,65 +111,27 @@
 
 
 
-
-
 <?php 
-	if($page >0){
-	$querynum = "SELECT current FROM accounts Where number =" . $page;
-	$resultnum = mysql_query($querynum)
-		or die('Error in query: $querynum.' . mysql_error());
-	if (mysql_num_rows($resultnum) > 0){
-		while($rownumdata = mysql_fetch_row($resultnum)){
-			$CurrentAm = $rownumdata[0];
-		}
-	}else{
-		echo '<b>Error No start found</b>';
-	}
-	mysql_free_result($resultnum);
-	
-	
-	
+	if($page > 0){
+
 	echo "<a href=financial.php?page=0>Back to main</a>";
 	echo "<B>".$accounts[$page]."</B>";
 	echo "<table bordercolor=\"000\" border=2>\n  ";
 	echo "<tr align=center>\n    <td width=165 colSpan=\"3\">date</td>"
-		. "\n    <td width=142>description</td>"
-		. "\n    <td width=145>from account</td>"
-		. "\n    <td width=143>to account</td>"
-		. "\n    <td width=50>amount</td>"
-		. "\n    <td  width=55>balance</td>"
-		. "\n    <th><input type=\"submit\""
+		. $tdform.$w."142>description</td>"
+		. $tdform.$w."145>from account</td>"
+		. $tdform.$w."143>to account</td>"
+		. $tdform.$w."50>amount</td>"
+		. $tdform.$w."55>balance</td>"
+		. $tdform."><input type=\"submit\""
 		. "name=\"submit\" value=\""
 		. "Start new transaction"
-		. "\"></th>\n  </tr>";
+		. "\"></td>\n  </tr>";
 	
-	$summinus = 'SELECT SUM( `Amount` )'
-			. ' FROM `transactions`'
-			. ' WHERE `From Account` ='.$page;
-	$sumplus = 'SELECT SUM( `Amount` )'
-			. ' FROM `transactions`'
-			. ' WHERE `To Account` ='.$page;
-	$resultminus = mysql_query($summinus)
-		or die('Error in query: $summinus.' . mysql_error());
-	$resultplus = mysql_query($sumplus)
-		or die('Error in query: $sumplus.' . mysql_error());
-
-	if (mysql_num_rows($resultplus) > 0){
-		while($rowplus = mysql_fetch_row($resultplus)){		
-			$CurrentAm += $rowplus[0];
-		}
-	}else{echo 'error line 117';}
-	if (mysql_num_rows($resultminus) > 0){
-		while($rowminus = mysql_fetch_row($resultminus)){		
-			$CurrentAm -= $rowminus[0];
-		}
-	}else{echo 'error line 122';}
-	mysql_free_result($resultplus);
-	mysql_free_result($resultminus);
+	$CurrentAm= currentAmount();
 	
-	
-	
-	$queryAcc =" SELECT * FROM `transactions` WHERE `From Account` =".$page." OR `To Account` =".$page." ORDER BY `transactions`.`number` DESC";// LIMIT 0 , 30 ";
+	$queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
+				. $page." OR `To Account` =".$page." ORDER BY `transactions`.`number` DESC";// LIMIT 0 , 30 ";
 	 
 	$reslts = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
@@ -206,55 +139,72 @@
 		$rowss = mysql_fetch_assoc($reslts);
 		//$CurrentAm -=$rowss['amount'];
 	}	
-	
-		
-		
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
-	if (mysql_num_rows($resultAcc) > 0){
-		while($rowdata = mysql_fetch_assoc($resultAcc)){		
-			echo "\n  <tr align=center>\n    <td width=55>";
-			echo "&nbsp ";
-			echo $months[((int)$rowdata['month'])];
-			echo "\n    </td>\n    <td width=50>";
-			echo $rowdata['day'];
-			echo "\n    </td>\n    <td width=55>";
-			echo $rowdata['year'];
-			echo "&nbsp";
-			echo "\n    </td>\n    <td>";
-			echo $rowdata['description'];
-			echo "\n    </td>\n    <td>";
-			//echo $rowdata['3'];
+
+		if (mysql_num_rows($resultAcc) > 0){
+		while($rowdata = mysql_fetch_assoc($resultAcc)){
 			
-			echo $accounts[$rowdata['from account']];
-			//echo $rowdata['4'];//echo $rowdata['from account'];
-			echo "\n    </td>\n    <td>";
-			echo $accounts[$rowdata['to account']];
-			//echo $rowdata['5'];//echo $rowdata['to account'];
-			echo "\n    </td>\n    <td>";
+			
+			echo "\n  <tr align=center>" . $tdform . $w. "55>"
+				. $months[(int)$rowdata['month']]. $tdformat2. $w. "50>"
+				. $rowdata['day'] . $tdformat2. $w. "55>"
+				. $rowdata['year'] . $tdformat
+				. $rowdata['description'] . $tdformat
+				. $accounts[$rowdata['from account']] . $tdformat
+				. $accounts[$rowdata['to account']]	. $tdformat;
+			
 			if($rowdata['from account']==$page){
-			echo "<font color = red>";
-			echo -$rowdata['amount'];
-			}else{echo $rowdata['amount'];}
-			echo "\n    </td>\n    <td>";
+				negativeRed(-1);
+				echo "-";
+			}
+			echo $rowdata['amount'];
+			
+			echo $tdformat;
+			
 			if($rowdata['from account']==$page){
-					if($CurrentAm < -.01){
-				echo "<font color = red>";}
+				negativeRed($CurrentAm);
 				echo $CurrentAm;
 				$CurrentAm += $rowdata['amount'];
-				if($debug){echo "</td><td>".$CurrentAm . "</td><td>". -$rowdata['amount'];}
-			}else{
-				if($CurrentAm < .001 && $CurrentAm < .002){echo 0;}
-				else{
-				if($CurrentAm < 0){
-				echo "<font color = red>";}
-				echo $CurrentAm;}
-				$CurrentAm	-= $rowdata['amount'];
-				if($debug){echo "</td><td>".$CurrentAm . "</td><td>". $rowdata['amount'];}
+				if($debug){
+					echo "</td><td>" . $CurrentAm 
+						 . "</td><td>". -$rowdata['amount'];}
 			}
-			echo "\n    <th><input type=\"submit\" name=\"submit\" value=\""
-				. "Edit transaction " . $rowdata['number'] ." \">\n    </th>";
-			echo "\n    </td>\n  </tr>";
+			
+			else{
+				if(isZero($CurrentAm)){
+					echo 0;
+				}
+				else{
+					negativeRed($CurrentAm);
+					echo $CurrentAm;
+				}
+				$CurrentAm	-= $rowdata['amount'];
+				if($debug){
+					echo "</td><td>" . $CurrentAm
+						. "</td><td>". $rowdata['amount'];
+				}
+			}
+			
+			echo "</td>\n    ";
+			echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $page 
+				. "\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
+				. $rowdata['number']."\" value=\"". "Edit transaction " . $rowdata['number']
+				. " \">" . "</td>\n    </form>";
+			echo "\n  </tr>";
+			
+			if (isset($_POST[$rowdata['number']])){
+				//echo $_POST[$rowdata['number']];
+				echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
+					. $page . "\" method=\"post\">";
+				
+				edittrans((int)$rowdata['month'],
+						$rowdata['day'],$rowdata['year'],
+						$rowdata['description'],$rowdata['from account'],
+						$rowdata['to account'],$rowdata['amount']);
+						
+				echo "</form></tr>";
+			}
 			// echo "<tr><td>&nbsp</td></tr>";
 			// echo $row['path'];
 			// $accounttype[$index++]=$row[0];
@@ -268,65 +218,20 @@
 ?>
 
 
-<!--form action="" -->
-<table bordercolor=\"000\" border=2><tr><td>
+
+
+
+
+
 <?php
-	$j= date("M");
-	$months = array(0,Jan,Feb,Mar,Apr,May,June,July,Aug,Sep,Oct,Nov,Dec);
-	echo "<select name=\"month\">\n";
-	for($i=1;$i<13;$i++){
-		echo "\t<option value=\"";
-		if($i<10){ echo "0";}
-		echo $i. "\"";
-		if($months[$i] == $j){echo " selected=\"selected\"";}
-		echo ">". $months[$i]."</option>\n";
-	}
-	echo  "</select>\n";
-
-	$j= date("d");
-	echo "<select name=\"day\">\n";
-	$i=0;
-	while(++$i <32){
-		echo "\t<option value=\"".$i."\"";
-		if($i==$j){echo " selected=\"selected\"";}
-		echo ">" .$i."</option>\n";
-	}
-	echo "</select>\n";
-
-	echo "<select name=\"year\">\n";
-	for($i=-1;$i < 2;$i++){
-		$j= date("Y");
-		echo "\t<option value=\"".($i + $j)."\"";
-		if($i==0){
-			echo " selected=\"selected\" ";
-		}
-		echo ">" .($i + $j)."</option>\n";
-	}
-	echo "</select>\n";
-
-	echo "<input type=\"text\" name=\"description\" maxlength=\"10\" value=\"\">\n";
-	
-	echo "<select name=\"to account\">\n";
-	$i=1;
-	while($accounts[$i]){
-		echo "\t<option value=\"".$i."\">".$accounts[$i++]."</option>\n";
-	}
-	echo "</select>\n";
-
-	echo "<select name=\"from account\">\n";
-	$i=1;
-	while($accounts[$i]){
-		echo "\t<option value=\"".$i."\">".$accounts[$i++]."</option>\n";
-	}
-	echo "</select>\n";
-
-	echo "<input type=\"number\" name=\"amount\""
-		. " maxlength=\"10\" size=\"5\" value=\"\" showlength=\"4\">\n";
+edittrans();
+edittrans(1,2,2009,sdfsadfsadf);
 ?>
+
 </td></tr></table>
 
 
-<!--/form -->
+</form>
 
 
 
