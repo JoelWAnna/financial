@@ -99,15 +99,21 @@
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-	echo "<body onload=\"window.setTimeout('window.location.reload()',1000);\">";
-		echo "FUUUUUUUUUCK";
+	echo "<body onload=\"load()\">";//window.setTimeout('window.location.reload()',1000);\">";
+	echo "<script type=\"text/javascript\">"
+		. "function load()"
+		. "{"
+		. "window.location.replace(\"\");"
+		. "}"
+		. "</script>";
+	echo "FUUUUUUUUUCK";
 		if(myEnterTrans($new)){
 		echo "22FUUUUUUUUUCK";
 		$new = $_GET['new'];
 		echo "2233FUUUUUUUUUCK";
 		unset($_POST[$X]);
 		}
-	}
+	}else{ echo"<body>";}
 	
 	
 	
