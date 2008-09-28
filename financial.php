@@ -1,9 +1,8 @@
 <html>
 <head><title>Financial 0.9.2</title>
 <?php
-	include("finFunc.php");
-	include("finFunc2.php");
-	include("finFunc3.php");
+	include("financialFunctions.php");
+
 ?>
 <?php
 	error_reporting(0);

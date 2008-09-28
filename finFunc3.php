@@ -84,7 +84,8 @@
 					. $j . "\"><span>"
 					. $accounts[$j] . "</span></a></lis>"
 					."</td>";
-					$CurrentFunds[$j] = -currentAmount($j); //[F:\xampp\htdocs\finFunc.php] Line 74 :
+					$e=true;
+					$CurrentFunds[$j] = -currentAmount($j,$e); //[F:\xampp\htdocs\finFunc.php] Line 74 :
 				echo $tdform . " width=75px align=right>";
 				negativeRed($CurrentFunds[$j]);
 				echo	$CurrentFunds[$j]. $tdform .">\n  </tr>\n";		
