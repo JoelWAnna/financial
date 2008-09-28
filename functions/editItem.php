@@ -39,9 +39,9 @@
 <?php function editAcc($number,&$accountType){
 	if($number == 'new'){
 	$new =true;
-	echo "<td>Number</td>";
+	echo "<td align=\"center\">Number</td>";
 	}
-	echo "<td align=\"center\">Name</td><td align=\"center\">Type</td><td>Interest Rate</td><td>Budget</td><td>start</td></tr>";
+	echo "<td align=\"center\">Name</td><td align=\"center\">Type</td><td>Interest Rate</td><td>Budget</td><td align=\"center\">start</td></tr>";
 	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']
 			. "?page=-1\" method=\"post\"><td align=\"center\">";
 	if($new){
@@ -72,8 +72,14 @@
 
 		dropDown('words','Name'.$number,$pppR['Name']);
 		echo "</td><td>";
-		if(!$new){dropDown('accounttype','Type'.$number,'','',$type,$accountType);}
-		else{echo "<select name=\"Type".$number."\">\n";
+		if(!$new){
+		dropDown('accounttype','Type'.$number,'','',$type,$accountType);
+		}
+		else{
+			echo "<input type=\"text\" size=12 name=\"Type".$number."\"><br>";
+			dropDown('accounttype','2Type'.$number,'','',$type,$accountType);
+			echo "<br><select name=\"3Type".$number."\">";
+			echo "\t<option value=\"\"></option>\n";
 			echo "\t<option value=\"Checking\">Checking</option>\n";
 			echo "\t<option value=\"Savings\">Savings</option>\n";
 			echo "\t<option value=\"Credit Card\">Credit Card</option>\n";
@@ -89,8 +95,7 @@
 		dropDown('amount','start'.$number,$pppR['start']);	
 		
 		echo "</td><td>";
-		echo"<input type=\"submit\" name=\"account".$number."\" value=\"Submit Changes to ";
-		echo  $number . "\" style=\"background-color: "
+		echo"<input type=\"submit\" name=\"account".$number."\" value=\"Add account\" style=\"background-color: "
 			. "abcdef;\"></td>\n  </form></tr><tr>";
 //}
 		mysql_free_result($Rppp);
@@ -101,6 +106,8 @@
 
 $NAME = "descriptionName".$number;
 $TYPE = "Type".$number;
+$TYPE2 = "2Type".$number;
+$TYPE3 = "3Type".$number;
 $IRATE = "amountIRate".$number;
 $BUDGET = "amountBudget".$number;
 $START = "amountstart".$number;
@@ -114,10 +121,25 @@ $START = "amountstart".$number;
 		echo ' You did not enter a name ';
 		return false;
 	}
+	if($new =='new'){
+		if($_POST[$TYPE]){
+		$type = $_POST[$TYPE];
+		}else if($_POST[$TYPE2]){
+			$type = $_POST[$TYPE2];
+		}else if($_POST[$TYPE3]){
+			$type = $_POST[$TYPE3];
+		}else {	
+		echo ' You did not enter a type ';
+		return false;
+		}
+	
+	}else{
 	if (!$_POST[$TYPE]){
 		echo ' You did not enter a type ';
 		return false;
+	}else{$type = $_POST[$TYPE];}
 	}
+
 	if($new == 'new'){
 	$query ="Insert Into `".DATABASENAME
 			."`.`".PREFIX.ACCOUNTS."` SET `"
@@ -126,7 +148,7 @@ $START = "amountstart".$number;
 	}else{
 		$query = "UPDATE `" . DATABASENAME. "`.`" . PREFIX . ACCOUNTS. "` SET ";
 	}
-	$query .= "`Name` = '" . $_POST[$NAME]	. "', `Type` = '" . $_POST[$TYPE]
+	$query .= "`Name` = '" . $_POST[$NAME]	. "', `Type` = '" . $type
 		. "', `Interest Rate` = '" . $_POST[$IRATE]	. "', `Budget` = '" . $_POST[$BUDGET]
 		. "', `start` = '" . $_POST[$START] ."'";
 	if(!($new == 'new')){

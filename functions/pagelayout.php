@@ -64,17 +64,5 @@
 		echo"</td>";
 	}
 	echo "</tr></table>";
-	if($page){
-		echo "<table border=3 align=center><tr>";
-		$i =editAcc('new',$accounttype);
-		$foo = "account" . $i;
-		if(isset($_POST[$foo])){
-			if(submitAcc($i,'new')){
-				reloadPHP();
-			}
-		}
-		echo "</tr></table>";
-	}
-
 }
 ?>

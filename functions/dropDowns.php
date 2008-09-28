@@ -15,6 +15,7 @@
 	if($type=='accounttype'){
 		$i = 0;
 		echo "<select name=\"" ./*  $current . $type. */ $transNumber . "\">\n";
+		echo "\t<option value=\"\"></option>\n";
 		while($accounts[$i]){
 			echo "\t<option value=\"".$accounts[$i]."\"";
 			selected($accounts[$i],$reverseLen,$max);

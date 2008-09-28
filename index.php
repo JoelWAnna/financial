@@ -1,17 +1,17 @@
 <?php
 	error_reporting(0);
 	if(!file_exists("f-config.php")){
-		header('Location: setup/setup-config.php');
+		header('Location: setup/');
 	}
 	require_once("f-config.php");
 	$page = $_GET['page'];
 	$accounttype;
 	$accounts;	$accounts2;	$accounts3;
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-		or die('Unable to connect !');
+		or die("Unable to connect !\n is your database set up?<a href=\"setup\">setup</a>");
 	mysql_select_db(DATABASENAME)
-		or die('Unable to select database! DATABASENAME');
-	setupAcc($accounttype,$accounts,$accounts2,$accounts3);
+		or die('Unable to select database! DATABASENAME\n is your database set up?<a href=\"setup\">setup</a>');
+
 ?>
 <html>
 <head><title>Financial 0.9.6b</title>
@@ -19,13 +19,32 @@
 --> </head>
 <body>
 <?php
+	if($page=='setup'){
+		$page=-1;
+		$setup=true;
+	}else{
+		setupAcc($accounttype,$accounts,$accounts2,$accounts3);
+		}
 	if($page > 0){pagelayout2($page,$accounttype,$accounts);}
-	else{?><table width=98%><tr><TD><?
+	else{if(!$setup){?>
+		<table width=98%><tr><TD><?
 		billsDue($accounts,$page);
 		totals($accounts,$accounts3,$accounttype);
 	?>	</tr></td></table>
 	<?	mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
 		newTR(0,$accounts);
+		}
+	if($page){
+		echo "<table border=3 align=center><tr>";
+		$i =editAcc('new',$accounttype);
+		$foo = "account" . $i;
+		if(isset($_POST[$foo])){
+			if(submitAcc($i,'new')){
+				reloadPHP();
+			}
+		}
+		echo "</tr></table>";
+		}
 	}
 	mysql_close($connection); 
 ?></body>
