@@ -1,4 +1,20 @@
 
+<?php function reloadPHP(){
+	//$_GET[
+
+	echo "<script type=\"text/javascript\">"
+		. "function load()"
+		. "{"
+		. "window.location.replace(\"".$PHP_SELF ."\");"
+		. "}"
+		. "</script>";
+	echo "<script type=\"text/javascript\">"
+		. "load();"
+		. "</script>";
+}
+?>
+
+
 <?php function edittrans($newtransa,$transNumber,$month, $day, $year, $description,
 						$toAcc,$fromAcc,$amount){
 	global $debug2;
@@ -205,7 +221,8 @@ echo "</form></tr>";
 					Sep,Oct,Nov,Dec);
 	global $accounts;
 
-	if(!$newT){echo "\n  <tr align=center>" . $tdform . $w. "55>"
+	/* if(0){//!$newT){
+	echo "\n  <tr align=center>" . $tdform . $w. "55>"
 				. $months[(int)$_POST['month']]. $tdformat2. $w. "50>"
 				. $_POST['day'] . $tdformat2. $w. "55>"
 				. $_POST['year'] . $tdformat
@@ -251,10 +268,12 @@ echo "</form></tr>";
 				. " \">" . "</td>\n    </form>";
 			echo "\n  </tr>";
 	}
-	
+	 */
 	mysql_close($connect2);
 	$connect = mysql_connect('localhost','guest')
 		or die('Unable to connect!');
+	
+	//reloadPHP();
 	if($newT){return true;//new trans
 	}
 	return false;

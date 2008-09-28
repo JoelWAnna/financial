@@ -99,13 +99,9 @@
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-	echo "<body onload=\"load()\">";//window.setTimeout('window.location.reload()',1000);\">";
-	echo "<script type=\"text/javascript\">"
-		. "function load()"
-		. "{"
-		. "window.location.replace(\"\");"
-		. "}"
-		. "</script>";
+	echo "<body>";// onload=\"load()\">";//window.setTimeout('window.location.reload()',1000);\">";
+	reloadPHP();
+
 	echo "FUUUUUUUUUCK";
 		if(myEnterTrans($new)){
 		echo "22FUUUUUUUUUCK";
@@ -166,6 +162,9 @@
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
 				myEnterTrans($rowdata['number']);
+				echo "before";
+				reloadPHP();
+				echo "after";
 			unset($_POST[$X]);
 			} 
 			//else{
