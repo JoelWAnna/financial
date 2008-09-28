@@ -1,10 +1,11 @@
 <?php function mainPage($page,&$accounttype,&$accounts,&$accounts2,&$accounts3){
-	?><div group="Main"><?$tor = false;
-	echo "<table border=3>\n  <tr>";
+	?><?$tor = false;$a= "left";
+	echo "<div id=\"Main\"><table border=3 class=\"t1\">\n  <tr>";
 	for($sides=1;$sides !=-3;$sides -=2){ //LEFT & RIGHT HAND SIDE, SETS WHETHER SIDE IS NEGATIVE OR POSITIVE
 		$index=0;
 		$tor = !$tor;
 		echo "\n    <td align=center>\n      ";
+		
 		echo "<table>\n";
 		while($accounttype[$index]){
 			if(leftPage($accounttype[$index], $tor,-$page-$sides)){
@@ -13,7 +14,7 @@
 					echo "</td><td>";
 				}
 				echo "<u><B>" . $accounttype[$index]
-					. " Accounts</B></u></td>" . "\n    <td>\n";
+					. " Accounts</B></u></td>" . "\n";
 				$qAcc = " SELECT number FROM `".PREFIX.ACCOUNTS."` "
 					. "WHERE `Type` = CONVERT( _utf8 '" . $accounttype[$index]."' "
 					. "USING latin1 ) COLLATE latin1_swedish_ci LIMIT 0 , 30";
@@ -38,8 +39,9 @@
 						$CurrentFunds[$j] = currentAmount($j,!$tor) *$sides;
 						if($accounttype[$index]== "Loan"){$tor = !$tor;$sides = -$sides;}
 						echo "\n    <td width=75px align=right>";
-						negativeRed($CurrentFunds[$j]);
-						printf("%.2f</td>\n",$CurrentFunds[$j]);
+						echo "<div";
+						if($CurrentFunds[$j]<0){echo " id=\"negative\"";}
+						printf(">%.2f</div></td>\n",$CurrentFunds[$j]);
 						if($accounttype[$index]== "Credit Card")
 							{balanceRemaining($accounts2[$j],$CurrentFunds[$j] ,true);}
 						if(isset($_POST[$j])){
@@ -62,7 +64,9 @@
 		}
 		echo "</table>";
 		echo"</td>";
+		echo "</div>";
+		$a= "right";
 	}
-	echo "</tr></table></div>";
+echo "</tr></table>";
 }
 ?>

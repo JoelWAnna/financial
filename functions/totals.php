@@ -1,7 +1,6 @@
-<?php function totals(&$accounts,&$accounts3,&$accounttype){
-	// width=19% align=right
-	echo "<table border=3>";
-	for($index=0;$index < 100; $index++){
+<?php function totals(&$accounts,&$accounts3,&$accounttype){?>
+	<div id="Totals"><table border=3>
+<?	for($index=0;$index < 100; $index++){
 	
 	$acc[$accounttype[$index]] =0;
 		for($F=0;$F<20;$F++){
@@ -11,17 +10,21 @@
 		}
 		if($acc[$accounttype[$index]]){
 			$total += $acc[$accounttype[$index]];
-			negativeRed($acc[$accounttype[$index]]);
+			
 		?><tr><td align=center><?
-
+		echo "<div";
+		if($acc[$accounttype[$index]]<0){echo " id=\"negative\"";}else{echo ">";}
 		echo $acc[$accounttype[$index]];
-	
+		echo "</div>";
 		?></td><td align=center><?
-		negativeRed($total);
-	   echo $total;
-	   ?></td></font></tr><?
+		
+		echo "<div";
+		if($total<0){echo " id=\"negative\"";}else{echo ">";}
+		echo $total;
+		echo "</div>";		
+	   ?></td></tr><?
 		}
-	}
-	echo "</table>";
+	}?></table></div>
+<?
 }
 ?>

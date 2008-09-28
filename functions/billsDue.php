@@ -5,7 +5,7 @@
 /**/				. "USING latin1) COLLATE latin1_swedish_ci";
 /**/	} // width=19%    align=LEFT
 ?>
-<div class="Bills">
+<div id="Bills">
 <?
 	echo "<table border>";
 	$billsQ .= " ORDER BY `".PREFIX.BILLS."`.`month`, `".PREFIX.BILLS."`.`day`, `".PREFIX.BILLS."`.`year` ASC";
@@ -17,7 +17,7 @@
 		while($billRows = mysql_fetch_assoc($billsR)){
 			echo "\n  <tr><td";
 			if($allbills){
-			echo "colspan=2";
+			echo " colspan=2";
 			}
 			echo ">";
 			if($billRows['to account'] > 0){
@@ -26,19 +26,19 @@
 			else {
 				echo $billRows['description'];
 			}
-			echo "</td>\n    <td width=15%><li>";
+			echo "</td>\n    <td > <li>";
 			
 			$temp = $billRows['amount'];
 			$total += $temp;
 			echo $temp;
 		
-			echo "&nbsp </li></td></tr><tr>". "\n    <td><li>"
+			echo "&nbsp </li></td></tr><tr>". "\n    <td> <li>"
 			. $billRows['month'] . "/" 
 			. $billRows['day']. "/"
 			. $billRows['year'] . "</li></td>";
 			echo "\n    "
 			. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
-			. "\n      <td width=10><input type=\"submit\"name=\"paid" . $billRows['number'] . "\" value=\"Paid\""
+			. "\n      <td class=\"button\"><input type=\"submit\"name=\"paid" . $billRows['number'] . "\" value=\"Paid\""
 			." >"
 			. "</td>\n    </form>";
 /**/			if($allbills){
@@ -60,8 +60,7 @@
 		}
 	}
 	mysql_free_result($billsR);
-	?><tr><td
-	<?
+	echo "<tr><td";
 	if($allbills){	echo " colspan=2";	}
 	echo "></td>";	
 	printf("<td align=right>%.2f&nbsp </td><td></td></tr></table>\n",$total);

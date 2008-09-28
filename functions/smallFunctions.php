@@ -22,7 +22,9 @@
 <?php function negativeRed($i){
 	if($i < 0){
 		echo "<font color = red>";
+		return true;
 	}
+	return false;
 }
 ?>
 <?php function selected($i,$j,$s){

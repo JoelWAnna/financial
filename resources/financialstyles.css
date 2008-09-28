@@ -1,87 +1,85 @@
-.aBills {/*
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 10px;
-	font-style: normal;
-	line-height: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: lowercase;
-	color: #FFF;
-	/*text-decoration: underline overline line-through blink;
-	background-attachment: fixed;
-	background-color: #396;
-	background-image: url(../My%20Documents/Unnamed%20Site%202/Blue_fan.gif);
-	background-repeat: repeat;
-	background-position: left center;
-	letter-spacing: normal;
-	text-align: left;
-	vertical-align: baseline;
-	word-spacing: normal;
-	white-space: normal;
-	display: inline;
-	clear: left;
-	float: left;
+#negative {
+	color: #f00;
+}
+#small {
+	 font-size: 9px; 
+}
+#Main {
+	position:absolute;
+	left: 20%;
+	top: 0;
+	/* width: 300px; */
 	height: auto;
-	width: auto;
-	cursor: crosshair;
-	filter: Light;*/
-}
-
-.Main {
-	/* width: 60%; */
-
+	z-index:2;
 
 
 }
-
+#Main t1{/* */
+	/* width: 300px; */
 }
-.Bills {
+
+#Totals{
+	position:absolute;
+	left: 100%;
+	top: 0;
+	right: 1%;
+	/* width:100%; */
+	height: auto;
+	z-index:4;
+}
+#Bills {
+	position:absolute;
+	left: 1%;
+	top: 0;
+	width: 19%;
+	height: auto;
+	z-index:1;
+	/* 
 	width: 19%;
 	margin-right: 0%;
 	margin-left: 1%;
-	/*	position:relative;*/
-	height: auto;
+	/*	position:relative;s
+	height: auto; */
 	
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 8px;
-	font-style: normal;
+	/*font-family: Tahoma, Geneva, sans-serif;
+	/* font-size: 8px; */
+/* 	font-style: normal;
 	line-height: normal;
 	font-weight: normal;
-	font-variant: normal;
-	text-transform: capitalize;
+	font-variant: normal; */
+	/*text-transform: capitalize;
 	/*color: #000FFF;
 	/*text-decoration: underline overline line-through blink;*/
 }
-.Bills li{
-	font-size: 9px;
-	color: #000;
-	background-color:#FFF;
+#Bills li{
 	text-align: right;
 	list-style: none;
 }
-.Bills table{
+#Bills table{
 	border-width: 3;
-	/*width: 20%;*/
 	
 }
-.Bills input{
+#Bills input{
 /*style=\"height: 1.5em; width: 4.5em\"
 style=\"height: 1.5em; width: 3em\"*/
-	font-size: 9px;
-	height: 1.5em;
+	font-size: 6pt;
+	height: 1.7em;
 	width: 3em;
 	
 }
-.Bills table tr{
-
-	text-align:left;
+#Bills table tr{
+	font-size: 9px;
+	text-align:left; 
 	
 }
  
-.Bills table td{
+#Bills table td{
+	width: 20%;
+}
 
-	font-size: 9px;
-	color: #000;
-	background-color:#FFF;
-
+#newtr {
+	position:relative;
+	left: -20%;
+	height: auto;
+	z-index:5;
 }

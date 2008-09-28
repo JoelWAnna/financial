@@ -1,5 +1,5 @@
 <?php function newTR($page,&$accounts){
-	echo "<table border=3 align=center>";
+	?><div id="newtr"><table border=3 align=center><?
 	$nber=$_POST['dayo'];////////////////////////////////
 	if(!$nber){$nber=1;}
 	$billorTrans = 'trans';
@@ -26,7 +26,8 @@
 			submitItem($billorTrans,($num+$i));
 		}
 		reloadPHP();
-	}	
+	}
+	?></div><?
 }?>
 <?php function addMore($number,$letter){
 	echo "<tr><form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\"><td colspan=7 align=center>";

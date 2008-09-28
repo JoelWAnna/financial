@@ -1,7 +1,7 @@
 <?php function balanceRemaining($T,$A,$bool){
 	if(!$bool){
-		echo "<td align=right><font size=2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Available"
-			. "</td><td align=right><font size=2>&nbsp&nbsp&nbsp&nbsp Limit</td>";
+		echo "<td colspan=2 align=right><div id=\"small\">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Available</div></td>"
+			. "<td align=right><div id=\"small\">&nbsp&nbsp&nbsp&nbsp Limit</div></td>";
 		return;
 	}
 	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS."` WHERE `name` = '".$T."' LIMIT 1 ";
@@ -10,11 +10,11 @@
 		or die('Error in query: $bal.' . mysql_error());
 	if (mysql_num_rows($resultbal) > 0){
 		$row = mysql_fetch_row($resultbal);
-		echo "<td align=right><font size=2>" . "&nbsp&nbsp&nbsp&nbsp ";
+		echo "<td align=right><div id=\"small\">" . "&nbsp&nbsp&nbsp&nbsp ";
 			if($A){
 				printf("%.2f",$row[0] + $A);
 			}else{ echo $row[0];}
-		echo "</td><td align=right><font size=2>" . "&nbsp&nbsp&nbsp&nbsp ". $row[0] . "</td>";
+		echo "</div></td><td align=right><div id=\"small\">" . "&nbsp&nbsp&nbsp&nbsp ". $row[0] . "</div></td>";
 	}else{	die($bal);}
 	mysql_free_result($resultbal);
 }

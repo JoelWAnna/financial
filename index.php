@@ -37,9 +37,9 @@ define('TRo','\n  <tr');
 	?>	<!-- <table><tr><TD  width=19% valign=top></td><TD width=60%> -->
 	<?	mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
 	?>	<!-- </td><td width=19% valign=top> -->
-	<?	//totals($accounts,$accounts3,$accounttype);
-	?>	<!-- </td></tr></table> -->
-	<?	//newTR(0,$accounts);
+	<?	totals($accounts,$accounts3,$accounttype);
+	?><!-- 	</td></tr></table>-->
+	<?	newTR(0,$accounts);
 		}
 	if($page){
 		echo "<table border=3 align=center><tr>";

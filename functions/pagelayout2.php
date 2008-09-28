@@ -68,25 +68,31 @@
 				. $rowdata['description'] . $tdformat
 				. $accounts[$rowdata['from account']] . $tdformat
 				. $accounts[$rowdata['to account']]	. $tdformat;
-			
+			echo "<div";
 			if($rowdata['from account']==$page){
-				negativeRed(-1);
-				echo "-";
-			}
+				echo " id=\"negative\">-";
+			}else{echo ">";}
 			echo $rowdata['amount'];
+			echo "</div>";
 			
 			echo $tdformat;
 			
 			if($rowdata['from account']==$page){
-				negativeRed($CurrentAm);
+				echo "<div";
+				if($CurrentAm<0){echo " id=\"negative\"";}
+				echo ">";
 				printf("%.2f",$CurrentAm);
+				echo "</div>";
 				$CurrentAm += $rowdata['amount'];
 			}
 			
 			else{
 				$CurrentAm =round($CurrentAm,2);
-				negativeRed($CurrentAm);
+				echo "<div";
+				if($CurrentAm<0){echo " id=\"negative\"";}
+				echo ">";
 				printf("%.2f",$CurrentAm);
+				echo "</div>";
 				$CurrentAm	-= $rowdata['amount'];
 			}
 			
