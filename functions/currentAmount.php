@@ -10,7 +10,7 @@ function	currentAmount($accNumber,$recent,$day,$month,$year){
 			$rStartAmo = mysql_fetch_row($resStartAmo);
 			$returnAmount = $rStartAmo[0];
 		}else{
-			echo '<b>error no rows in $resStartAmo</b>';
+			//echo '<b>error no rows in $resStartAmo</b>';
 		}
 		$querySt = 'SELECT SUM( `Amount` ) FROM `'.PREFIX.TRANSACTIONS.'` WHERE `';		
 		$queryEnd =' Account` ='. $accNumber;

@@ -1,4 +1,4 @@
-<?php function newTR(&$page,&$accounts){
+<?php function newTR($page,&$accounts){
 	echo "<table border=3 align=center>";
 	$nber=$_POST['dayo'];////////////////////////////////
 	if(!$nber){$nber=1;}
