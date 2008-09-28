@@ -2,6 +2,7 @@
 <head><title>test</title>
 <?php
 	include("finFunc.php");
+	include("finFunc2.php");
 	error_reporting(0);
 	extract($_POST);extract($_SERVER);
 	$host = "127.0.0.1";$local = true;$timeout = "1";
@@ -25,7 +26,6 @@
 <link href="<?php //echo $app; ?>support/styles.css" rel="stylesheet" type="text/css">*/
 -->	
 </head>
-<body>
 <?php //Initialize
 	//$debug = true;	//$debug2 =true;
 	//$index=0;
@@ -48,6 +48,7 @@
 
 <?php //Main Page
 	if($page==0){
+	echo "<body>";
 	$count=4;
 	$i=0;
 	$index=0;
@@ -90,13 +91,32 @@
 
 
 
-
-
 <?php 
 	if($page > 0){
 	//$new = 0;
+	
 	$new = newestTransaction();
-	//echo $new;
+	$X = "X";
+	$X .= $new;
+	if (isset($_POST[$X])){
+	echo "<body onload=\"window.setTimeout('window.location.reload()',1000);\">";
+		echo "FUUUUUUUUUCK";
+		if(myEnterTrans($new)){
+		echo "22FUUUUUUUUUCK";
+		$new = $_GET['new'];
+		echo "2233FUUUUUUUUUCK";
+		unset($_POST[$X]);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	echo "<a href=financial.php?page=0>Back to main</a>";
 	echo "<B>".$accounts[$page]."</B>";
 	echo "<table bordercolor=\"000\" border=2>\n  ";
@@ -107,27 +127,18 @@
 		. $tdform.$w."50>amount</td>"
 		. $tdform.$w."55>balance</td>"
 		. "<form action=\"" . $_SERVER['PHP_SELF']
-		. "?page=". $page . "\" method=\"post\">"
+		. "?page=". $page . "&new=".$new."\" method=\"post\">"
 		. $tdform."><input type=\"submit\" "
 		. "name=\"".$new."\" value=\""
 		. "Start new transaction"
 		. "\"></td></form>\n  </tr>";
-	if($new > 0){
+
+				if($new > 0){
 		if (isset($_POST[$new])){
-			$newtransa =true;
-			edittrans($new);
-			$newtransa =false;
+			
+			edittrans($new,$new);
+			}
 		}
-		
-		
-		$X = "X";
-		$X .= $new;
-		if (isset($_POST[$X])){
-			myEnterTrans($new);
-			unset($_POST[$X]);}			
-		
-	}
-		
 		
 		
 		
@@ -195,7 +206,7 @@
 			
 			echo "</td>\n    ";
 			echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $page 
-				. "\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
+				. "&new=".$new."\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
 				. $rowdata['number']."\" value=\"". "Edit transaction " . $rowdata['number']
 				. " \">" . "</td>\n    </form>";
 			echo "\n  </tr>";
@@ -206,7 +217,7 @@
 					. $page . "\" method=\"post\">"; */
 			//}	
 			if (isset($_POST[$rowdata['number']])){
-				edittrans($rowdata['number'],(int)$rowdata['month'],
+				edittrans(0,$rowdata['number'],(int)$rowdata['month'],
 						$rowdata['day'],$rowdata['year'],
 						$rowdata['description'],$rowdata['from account'],
 						$rowdata['to account'],$rowdata['amount'],'poop');
@@ -214,9 +225,14 @@
 		}
 	}else{echo '<b>Error No transactions found</b>';}
 	echo "\n</table>";
-			mysql_free_result($resultAcc);
-}
+		mysql_free_result($resultAcc);
+/* 	if($_GET['nedw']){} 
+*/
+	}
 ?>
+
+
+
 <?php mysql_close($connection);
 ?>
 </td></tr></table>
