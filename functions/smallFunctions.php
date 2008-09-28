@@ -1,3 +1,22 @@
+<?php function leftPage($type, $equalTo){
+	if($type == "removed"){
+		return false;
+	}
+	if($equalTo){
+		if(($type== "Checking")| ($type== "Savings")
+				| ($type== "Credit Card")//| ($type== "Loan")
+				)
+				{return true;}
+	}else{
+		if(($type!= "Checking")& ($type!= "Savings")
+			& ($type!= "Credit Card")//& ($type!= "Loan")
+			)
+		{return true;}
+	}
+	return false;
+}
+?>
+
 
 <?php function negativeRed($i){
 	if($i < 0){

@@ -17,10 +17,7 @@
 			$type = $row['type'];
 			$accounts2[$number]= $name;
 			$accounts[$number]= $name;
-			if(($type == "Checking")
-				| ($type== "Savings")
-				| ($type== "Credit Card")
-				| ($type== "Loan")){
+			if(leftPage($type,true)){
 				$accounts[$number].= " ". $type;
 			}
 			$accounts3[$number]= $type;

@@ -1,5 +1,5 @@
 <?php function balanceRemaining($T,$A,$bool){
-	 if(!$bool){
+	if(!$bool){
 		echo "<td align=right>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Available"
 			. "</td><td align=right>&nbsp&nbsp&nbsp&nbsp Limit</td>";
 		return;

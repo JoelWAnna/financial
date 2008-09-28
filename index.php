@@ -1,5 +1,5 @@
 <html>
-<head><title>Financial 0.9.5.4</title><?php
+<head><title>Financial 0.9.5.4.2</title><?php
 	error_reporting(0);
 	
 /* 	<!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,14 @@
 ?></head>
 <body>
 <?php
-	pagelayout($page,$accounttype,$accounts,$accounts2,$accounts3);
+	if($page > 0){pagelayout2($page,$accounttype,$accounts);}
+	else{?><table width=98%><tr><TD><?
+		billsDue($accounts,$page);
+		totals($accounts,$accounts3,$accounttype);
+	?>	</tr></td></table>
+	<?	mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
+		newTR(0,$accounts);
+	}
 	mysql_close($connection); 
 ?></body>
 </html>
