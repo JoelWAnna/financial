@@ -119,7 +119,8 @@
 		$X = "X";
 		$X .= $new;
 		if (isset($_POST[$X])){
-			echo $X ;}
+			myEnterTrans();}
+
 	}
 		
 		
@@ -206,7 +207,9 @@
 				$X = "X";
 				$X .= $rowdata['number'];
 				if (isset($_POST[$X])){
-				echo $X; }
+					myEnterTrans();
+				}
+
 			
 			
 						
@@ -230,9 +233,9 @@
 
 
 
-<?php
+<?php/* 
 edittrans();
-edittrans(55555,1,2,2009,sdfsadfsadf);
+edittrans(55555,1,2,2009,sdfsadfsadf); */
 ?>
 
 </td></tr></table>

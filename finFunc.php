@@ -98,7 +98,7 @@
 <?php function accountdropdown($where,$which){
 	global $accounts;
 	global $page;
-	echo "<select name=\"" . $where . " account\">\n";
+	echo "<select name=\"" . $where . "account\">\n";
 	$i=1;
 	while($accounts[$i]){
 		echo "\t<option value=\"".$i."\"";
@@ -118,7 +118,8 @@
 
 <?php function edittrans($transNumber,$month, $day, $year, $description,
 						$toAcc,$fromAcc,$amount){
-	global $debug2;global $newtransa;global $X;
+	global $debug2;global $newtransa;
+
 	global $page;
 /* 	if($debug2){
 	echo "<form action=\"" . $_SERVER['PHP_SELF'] . "\" method=\"post\">"
@@ -127,8 +128,7 @@
 	
 	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']. "?page="
 					. $page . "\" method=\"post\">";
-///	echo "</td></tr></table>";
-	/* echo $transNum. "<br>". $transNumber; */
+
 	echo "<td>";
 	monthdropdown($month);
 	echo "</td><td>";
@@ -143,6 +143,7 @@
 	accountdropdown('to',$fromAcc);
 	echo "</td><td>";
 	amountbox($amount);
+	$X = "X";
 	echo "</td>"
 		. "<td colSpan=\"2\" align=center><input type=\"submit\""
 		. " name=\"".$X.$transNumber. "\" value=\"";
@@ -152,7 +153,7 @@
 	else{
 		echo "Submit Changes";
 	}	
-	echo "\" style=\"background-color: abcdef;\"></td>\n  </tr>";
+	echo "\" style=\"background-color: abcdef;\"></td>\n  ";
 
 	
 	
@@ -241,5 +242,22 @@ $newQ = " SELECT `number` FROM `transactions` ORDER BY `transactions`.`number` D
 		return $return[0]+1;
 	}
 	else{return -1;}
+}
+?>
+
+<?php function myEnterTrans(){
+
+if (!$_POST['month'] | !$_POST['day'] | !$_POST['year'] | !$_POST['description']
+	| !$_POST['amount'] | !$_POST["toaccount"] | !$_POST['fromaccount'])
+{
+	echo 'You did not complete all of the required fields';
+	return null;
+}
+if ($_POST['toaccount'] == $_POST['fromaccount']){
+	echo 'accounts cannot be the same';
+	return null;
+	}
+echo 'Nothing here uet';
+
 }
 ?>
