@@ -1,6 +1,6 @@
 <?php function mainPage($page,&$accounttype,&$accounts,&$accounts2,&$accounts3){
-	$tor = false;
-	echo "<table width=60% border=3 align=center>\n  <tr>";
+	$tor = false; //width=60% align=center
+	echo "<table border=3 width=100%>\n  <tr>";
 	for($sides=1;$sides !=-3;$sides -=2){ //LEFT & RIGHT HAND SIDE, SETS WHETHER SIDE IS NEGATIVE OR POSITIVE
 		$index=0;
 		$tor = !$tor; // width=48%

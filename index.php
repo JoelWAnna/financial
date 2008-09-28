@@ -17,7 +17,7 @@ define('TRo','\n  <tr');
 
 ?>
 <html>
-<head><title>Financial 0.9.6.5.1b</title>
+<head><title>Financial 0.9.6.5.2b</title>
  	<!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
 --> </head>
 <body>
@@ -30,13 +30,14 @@ define('TRo','\n  <tr');
 		}
 	if($page > 0){pagelayout2($page,$accounttype,$accounts);}
 	else{if(!$setup){?>
-		<!-- table width=98%><tr><TD--><?
+		<table><tr><TD width=19% valign=top><?
 		billsDue($accounts2,$page);
-		
-	?>	<!--/tr></td></table -->
+	?>	</td><TD width=60%>
+	<?	mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
+	?>	</td><td width=19% valign=top>
 	<?	totals($accounts,$accounts3,$accounttype);
-		mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
-		newTR(0,$accounts);
+	?>	</td></tr></table>
+	<?	newTR(0,$accounts);
 		}
 	if($page){
 		echo "<table border=3 align=center><tr>";

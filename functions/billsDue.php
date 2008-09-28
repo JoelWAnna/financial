@@ -3,8 +3,8 @@
 /**/	if(!$allbills){
 /**/		$billsQ .= "WHERE `paid` = CONVERT(_utf8 'FALSE' "
 /**/				. "USING latin1) COLLATE latin1_swedish_ci";
-/**/	}
-	echo "<table border=3  width=19%  align=LEFT>";
+/**/	} // width=19%    align=LEFT
+	echo "<table border=3>";
 	$billsQ .= " ORDER BY `".PREFIX.BILLS."`.`month`, `".PREFIX.BILLS."`.`day`, `".PREFIX.BILLS."`.`year` ASC";
 	
 	static $total = 0;
