@@ -22,16 +22,19 @@ for($p=2;$p;$p--){
 	echo "<table>\n";
 	while($accounttype[$index]){
  		$go=false;
-		if($tor){
-			if(($accounttype[$index]== "Checking")| ($accounttype[$index]== "Savings")
-			| ($accounttype[$index]== "Credit Card")| ($accounttype[$index]== "Loan"))
-			{$go=true;}
-		}else{
-			if(($accounttype[$index]!= "Checking")
-				& ($accounttype[$index]!= "Savings")
-				& ($accounttype[$index]!= "Credit Card")
-				& ($accounttype[$index]!= "Loan"))
-			{$go=true;}
+		if($accounttype[$index]!= "removed"){
+			if($tor){
+			
+				if(($accounttype[$index]== "Checking")| ($accounttype[$index]== "Savings")
+				| ($accounttype[$index]== "Credit Card")| ($accounttype[$index]== "Loan"))
+				{$go=true;}
+			}else{
+				if(($accounttype[$index]!= "Checking")
+					& ($accounttype[$index]!= "Savings")
+					& ($accounttype[$index]!= "Credit Card")
+					& ($accounttype[$index]!= "Loan"))
+				{$go=true;}
+			}
 		} 		
 		if($go){
 			echo "  <tr>" . $tdform . "><u><B>" . $accounttype[$index]
@@ -82,7 +85,7 @@ for($p=2;$p;$p--){
 					}
 				echo $tdform . " width=75px align=right>";
 				negativeRed($CurrentFunds[$j]);
-				echo	$CurrentFunds[$j]. "\n    </td>\n";
+				printf("%.2f</td>\n",$CurrentFunds[$j]);
 /*/////////////*/if($tor){
 /*/////////////*/		if($accounttype[$index]== "Credit Card"){
 /*/////////////*/			balanceRemaining($accounts2[$j],$CurrentFunds[$j] ,true);
@@ -109,7 +112,7 @@ for($p=2;$p;$p--){
 	newTR(0,$accounts);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else{
+else{/////////////PAGE  > 0
 	$new = newest('trans');
 	$X = "X";
 	$X .= $new;
@@ -181,18 +184,14 @@ else{
 			
 			if($rowdata['from account']==$page){
 				negativeRed($CurrentAm);
-				echo $CurrentAm;
+				printf("%.2f",$CurrentAm);
 				$CurrentAm += $rowdata['amount'];
 			}
 			
 			else{
-				if(isZero($CurrentAm)){
-					echo 0;
-				}
-				else{
-					negativeRed($CurrentAm);
-					echo round($CurrentAm,2);
-				}
+				$CurrentAm =round($CurrentAm,2);
+				negativeRed($CurrentAm);
+				printf("%.2f",$CurrentAm);
 				$CurrentAm	-= $rowdata['amount'];
 			}
 			
