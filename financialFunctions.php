@@ -15,6 +15,8 @@
 	//Calls to Selected, Called By edittrans, newTR
 	include("functions/descriptionbox.php");
 	//Calls nothing, Called By edittrans
+	include("functions/editBill.php");
+
 	include("functions/edittrans.php");
 	//Calls to monthdropdown, daydropdown, yeardropdown,
 	//Calls to descriptionbox, accountdropdown, amountbox
@@ -25,6 +27,7 @@
 	//Calls to Selected, Called by edittrans
 	include("functions/negativeRed.php");
 	//Calls nothing, Called by pagelayout
+	include("functions/newestBill.php");
 	include("functions/newestTransaction.php");
 	//Calls nothing, Called by newTR, pagelayout
 	include("functions/newTR.php");
@@ -49,6 +52,7 @@
 	include("functions/setupAcc.php");
 	//Calls nothing
 	//Called by index
+	include("functions/submitBill.php");
 	include("functions/submitTransaction.php");
 	//Called by newTR, pagelayout
 	include("functions/sumMonth.php");

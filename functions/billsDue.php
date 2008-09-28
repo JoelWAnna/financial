@@ -29,7 +29,7 @@ function billsDue(&$accounts,$allbills){
 			. "</td></form>";
 			
 			if($allbills){ echo "<td>"
-			. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
+			. "<form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\" method=\"post\">"
 			. "<input type=\"submit\" name=\"unpaid" . $billRows['number'] . "\" value=\"Not paid\">"
 			. "</td></form>";
 			}
@@ -40,7 +40,7 @@ function billsDue(&$accounts,$allbills){
 			paid($billRows['number'], 'true');
 			reloadPHP();
 			}
-			if($allbills && ISSET($_POST[$unpaidQ])){
+			if(ISSET($_POST[$unpaidQ])){
 			paid($billRows['number'], 'false');
 			reloadPHP();
 			}

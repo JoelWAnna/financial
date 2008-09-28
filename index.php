@@ -1,5 +1,5 @@
 <html>
-<head><title>Financial 0.9.5.1</title>
+<head><title>Financial 0.9.5.2</title>
 <?php include("financialFunctions.php");?>
 <?php
 	error_reporting(0);
@@ -26,7 +26,6 @@
 </head>
 
 <?php //Initialize
-	//$debug = true;	//$debug2 =true;
 	$page = $_GET['page'];
 	$accounttype;
 	$accounts;
