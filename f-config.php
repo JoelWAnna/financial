@@ -1,0 +1,13 @@
+<?php
+require_once("financialFunctions.php");
+define('HOSTNAME','localhost');
+define('USERNAME','guest');
+define('UPDATEUSER','financial');
+define('UPDATEPASSWORD','');
+define('PASSWORD','');
+define('DATABASENAME','financial');
+define('ACCOUNTS','accounts');
+define('TRANSACTIONS','transactions');
+define('BILLS','bills');
+define('PREFIX','wp_');
+?>

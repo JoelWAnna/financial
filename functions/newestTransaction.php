@@ -1,5 +1,5 @@
 <?php function newestTransaction(){
-$newQ = " SELECT `number` FROM `transactions` ORDER BY `transactions`.`number` DESC LIMIT 1 ";
+$newQ = " SELECT `number` FROM `".PREFIX.TRANSACTIONS."` ORDER BY `".PREFIX.TRANSACTIONS."`.`number` DESC LIMIT 1 ";
 	 
 	$newR = mysql_query($newQ)
 		or die('Error in query: $newQ.' . mysql_error());

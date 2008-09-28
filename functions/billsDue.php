@@ -1,6 +1,6 @@
 <?php 
 function billsDue(&$accounts,$allbills){
-	$billsQ = 'SELECT * FROM `bills` ';
+	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
 	if(!$allbills){
 	$billsQ .= 'WHERE `paid` = CONVERT(_utf8 \'FALSE\' USING latin1) COLLATE latin1_swedish_ci';
 	}

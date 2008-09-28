@@ -20,15 +20,15 @@
 	mysql_select_db($databaseFin)
 		or die('Unable to select database! $databaseFin');	
 	
-	$updateQ ="Insert Into `financial`.`bills` SET `bills`.`number` ='" . $billNum . "', ";
+	$updateQ ="Insert Into `".DATABASENAME."`.`".PREFIX.BILLS."` SET `".PREFIX.BILLS."`.`number` ='" . $billNum . "', ";
 	$updateQ .= "`month` = '"
 			. $_POST[$MONTH] . "', `day` = '". $_POST[$DAY] . "', `year` = '"
 			. $_POST[$YEAR] . "', `description` = '". $_POST[$DESCRIPTION]
-			. "', `amount` = '" . $_POST[$AMOUNT] ."', `to account` = '" . $_POST[$TOACCOUNT]. "'";// LIMIT 1";
+			. "', `amount` = '" . $_POST[$AMOUNT] ."', `to account` = '" . $_POST[$TOACCOUNT]. "'";
 	$Result = mysql_query($updateQ)
 		or die('Error in query: $updateQ.' . mysql_error());
 	mysql_close($connect4);
-	$connect = mysql_connect('localhost','guest')
+	$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die('Unable to connect!');
 	return true;
 }

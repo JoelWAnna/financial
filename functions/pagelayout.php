@@ -27,7 +27,7 @@
 		{
 		echo "  <tr>" . $tdform . "><u><B>" . $accounttype[$index]
 			. " Accounts</B></u></td>" . $tdform . ">\n";
-		$queryAccount = " SELECT number FROM `accounts` "
+		$queryAccount = " SELECT number FROM `".PREFIX.ACCOUNTS."` "
 				. "WHERE `Type` = CONVERT( _utf8 '"
 				. $accounttype[$index]."' "
 				. "USING latin1 ) COLLATE latin1_swedish_ci LIMIT 0 , 30";
@@ -72,7 +72,7 @@
 		{ 
 		echo "  <tr>" . $tdform . "><u><B>" . $accounttype[$index]
 			. " Accounts</B></u></td>" . "\n  </tr>";
-		$queryAccount = " SELECT number FROM `accounts` "
+		$queryAccount = " SELECT number FROM `".PREFIX.ACCOUNTS."` "
 				. "WHERE `Type` = CONVERT( _utf8 '"
 				. $accounttype[$index]."' "
 				. "USING latin1 ) COLLATE latin1_swedish_ci LIMIT 0 , 30";
@@ -140,8 +140,8 @@ else{
 
 	$CurrentAm= currentAmount($page);
 
-	$queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
-			. $page." OR `To Account` =".$page." ORDER BY `transactions`.`number` DESC";// LIMIT 0 , 30 ";
+	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` WHERE `From Account` ="
+			. $page." OR `To Account` =".$page." ORDER BY `".PREFIX.TRANSACTIONS."`.`number` DESC";
 
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());

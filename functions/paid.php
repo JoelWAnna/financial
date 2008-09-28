@@ -1,20 +1,19 @@
 <?php function paid($billNum,$paid){
 
-	$connect3 = mysql_connect('localhost','financial')
+	$connect3 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
-	$databaseFin='financial';
-	mysql_select_db($databaseFin)
-		or die('Unable to select database! $databaseFin');	
+
+	mysql_select_db(DATABASENAME)
+		or die('Unable to select database! '.DATABASENAME);	
 		
 		
-	$q	= "UPDATE `financial`.`bills` SET ";
+	$q	= "UPDATE `".DATABASENAME."`.`".PREFIX.BILLS."` SET ";
 	$q	.= "`paid` = '" . $paid;
-	$q	.= "' WHERE `bills`.`number` =". $billNum ." LIMIT 1";
-	//echo $q;
+	$q	.= "' WHERE `".PREFIX.BILLS."`.`number` =". $billNum ." LIMIT 1";
 	$Result = mysql_query($q)
 		or die('Error in query: $q.' . mysql_error());
 	mysql_close($connect3);
-	$connect = mysql_connect('localhost','guest')
+	$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die('Unable to connect!');
 		
 }

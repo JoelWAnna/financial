@@ -28,7 +28,7 @@
 	//	}
 	}
 
-	$checkChanges = "SELECT * FROM `transactions` WHERE `transactions`.`number` ="
+	$checkChanges = "SELECT * FROM `".PREFIX.TRANSACTIONS."` WHERE `".PREFIX.TRANSACTIONS."`.`number` ="
 					. $trNum. " LIMIT 1";
 	$changesResult = mysql_query($checkChanges)
 		or die('Error in query: $checkChanges.' . mysql_error());
@@ -44,7 +44,7 @@
 				)
 			{
 				$changed = true;
-				$updateQ ="UPDATE `financial`.`transactions` SET ";
+				$updateQ ="UPDATE `".DATABASENAME."`.`".PREFIX.TRANSACTIONS."` SET ";
 			}else{
 				echo "no changes";
 				return false;
@@ -52,15 +52,14 @@
 		}
 	}else{
 	if($trNum == 0){echo "HELLLLLL";}
-	$updateQ ="Insert Into `financial`.`transactions` SET `transactions`.`number` ='" . $trNum . "', ";
+	$updateQ ="Insert Into `".DATABASENAME."`.`".PREFIX.TRANSACTIONS."` SET `".PREFIX.TRANSACTIONS."`.`number` ='" . $trNum . "', ";
 	}
 	mysql_free_result($changesResult);
 
-	$connect2 = mysql_connect('localhost','financial')
+	$connect2 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
-	$databaseFin='financial';
-	mysql_select_db($databaseFin)
-		or die('Unable to select database! $databaseFin');	
+	mysql_select_db(DATABASENAME)
+		or die('Unable to select database! DATABASENAME');	
 	
 	
 	$updateQ .= "`month` = '"
@@ -70,13 +69,13 @@
 			. $_POST[$FROMACCOUNT] . "', `to account` = '" . $_POST[$TOACCOUNT]. "'";
 
 	if($changed){
-		$updateQ .= " WHERE `transactions`.`number` =". $trNum ." LIMIT 1";
+		$updateQ .= " WHERE `".PREFIX.TRANSACTIONS."`.`number` =". $trNum ." LIMIT 1";
 	}
 	$Result = mysql_query($updateQ)
 		or die('Error in query: $updateQ.' . mysql_error());
 	mysql_close($connect2);
-	$connect = mysql_connect('localhost','guest')
-		or die('Unable to connect!');
+	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
+		or die('Unable to connect !');
 	return true;
 }
 ?>

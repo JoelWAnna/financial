@@ -13,7 +13,7 @@
 		}
 	else{$month2 = 12; $year2 = $year -1;}
 
-	return "SELECT SUM( `amount` ) FROM `transactions` WHERE ((("
+	return "SELECT SUM( `amount` ) FROM `".PREFIX.TRANSACTIONS."` WHERE ((("
 	. "`month` =" . $month . " && `day` <= " . $day 
 	. " && `year` =" . $year	. ") OR ("
 	. "`month` =" . $month2 . " && `day` > " . $day

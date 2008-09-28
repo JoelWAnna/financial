@@ -4,7 +4,7 @@
 				. "</td><td align=right>&nbsp&nbsp&nbsp&nbsp Limit</td>";
 	return;}
 
-	$bal = "SELECT `Budget` FROM `accounts` WHERE `name` = '".$T."' LIMIT 1 ";
+	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS."` WHERE `name` = '".$T."' LIMIT 1 ";
 	$resultbal = mysql_query($bal)
 		or die('Error in query: $bal.' . mysql_error());
 

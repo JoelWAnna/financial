@@ -1,5 +1,5 @@
 <?php function newestBill(){
-$newestBill = " SELECT `number` FROM `bills` ORDER BY `bills`.`number` DESC LIMIT 1 ";
+$newestBill = " SELECT `number` FROM `".PREFIX.BILLS."` ORDER BY `".PREFIX.BILLS."`.`number` DESC LIMIT 1 ";
 	 
 	$newR = mysql_query($newestBill)
 		or die('Error in query: $newestBill.' . mysql_error());

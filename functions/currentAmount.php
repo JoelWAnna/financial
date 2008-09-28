@@ -3,7 +3,7 @@
 	  //plus transactions to account  minus transactions from account
 function	currentAmount($accNumber,$recent,$day,$month,$year){
 	if(!$recent){	
-		$queryStartAmo = "SELECT start FROM accounts Where number =" . $accNumber;
+		$queryStartAmo = "SELECT `start` FROM `".PREFIX.ACCOUNTS."` Where number =" . $accNumber;
 		$resStartAmo = mysql_query($queryStartAmo)
 			or die('Error in query: $queryStartAmo.' . mysql_error());
 		if (mysql_num_rows($resStartAmo) > 0){
@@ -12,7 +12,7 @@ function	currentAmount($accNumber,$recent,$day,$month,$year){
 		}else{
 			echo '<b>error no rows in $resStartAmo</b>';
 		}
-		$querySt = 'SELECT SUM( `Amount` ) FROM `transactions` WHERE `';		
+		$querySt = 'SELECT SUM( `Amount` ) FROM `'.PREFIX.TRANSACTIONS.'` WHERE `';		
 		$queryEnd =' Account` ='. $accNumber;
 		$resMinus = mysql_query($querySt . 'From'. $queryEnd)	
 			or die('Error in query: $resultMinus.'. mysql_error());

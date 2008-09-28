@@ -1,7 +1,8 @@
 <html>
 <head><title>Financial 0.9.5.2</title>
-<?php include("financialFunctions.php");?>
+
 <?php
+require_once("f-config.php");
 	error_reporting(0);
 	extract($_POST);extract($_SERVER);
 	$host = "127.0.0.1";$local = true;$timeout = "1";
@@ -29,12 +30,17 @@
 	$page = $_GET['page'];
 	$accounttype;
 	$accounts;
-	$connection = mysql_connect('localhost','guest')
-		or die('Unable to connect!');
+	//setupSql();
+	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
+		or die('Unable to connect !');
 	setupAcc($accounttype,$accounts);
 	echo "<body>";
 	pagelayout($page,$accounttype,$accounts);
-	mysql_close($connection);
+	mysql_close($connection); 
+?>
+<?php function setupSql(){
+	echo 'poop';
+}
 ?>
 </body>
 </html>
