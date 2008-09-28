@@ -8,7 +8,7 @@
 	$tdformat = $tdformat2.">";
 	$w = " width=";
 
-	if($page <= 0){
+	if($page < 1){
 	$page = -$page;
 	$count=4;
 	$i=0;
@@ -56,7 +56,7 @@
 				echo "\n  </tr>\n";		
 			}
 		}else{
-			echo '<b>Error Line 97</b>';
+			echo "<b>Error Line 97 $resultAccount</b>";
 		}
 		mysql_free_result($result);
 		}
@@ -108,7 +108,7 @@
 	newTR($page,$accounts);
 }
 else{
-	$new = newest('Transaction');
+	$new = newest('trans');
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){

@@ -1,8 +1,5 @@
 <html>
-<head><title>Financial 0.9.5.3.5b</title>
-
-<?php
-require_once("f-config.php");
+<head><title>Financial 0.9.5.3.5b</title><?php
 	error_reporting(0);
 	extract($_POST);extract($_SERVER);
 	$host = "127.0.0.1";$local = true;$timeout = "1";
@@ -18,27 +15,20 @@ require_once("f-config.php");
 	$fti = 'ftp://' . $_SERVER['HTTP_HOST'];
 	$uri = $uri2 . '/';
 	$app = $uri . 'webapps/';
-	echo "<!--";
-	echo "<link href=\"" .$app
-		. "support/styles.css\" rel=\""
-		. "stylesheet\" type=\"text/css\">";
-	echo "-->";
-?>
-</head>
-
-<?php //Initialize
+?><!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
+--><?php
+	require_once("f-config.php");
 	$page = $_GET['page'];
 	$accounttype;
 	$accounts;
-
-	 
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die('Unable to connect !');
+	mysql_select_db(DATABASENAME)
+		or die('Unable to select database! DATABASENAME');
 	setupAcc($accounttype,$accounts);
-	echo "<body>";
+?></head>
+<body><?php
 	pagelayout($page,$accounttype,$accounts);
 	mysql_close($connection); 
-?>
-
-</body>
+?></body>
 </html>
