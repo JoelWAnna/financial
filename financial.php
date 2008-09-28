@@ -1,5 +1,5 @@
 <html>
-<head><title>Financial 0.9.2.3</title>
+<head><title>Financial 0.9.3</title>
 <?php include("financialFunctions.php");?>
 <?php
 	error_reporting(0);
