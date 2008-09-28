@@ -1,9 +1,6 @@
 <html>
-<head><title>Financial 0.9.2</title>
-<?php
-	include("financialFunctions.php");
-
-?>
+<head><title>Financial 0.9.2.3</title>
+<?php include("financialFunctions.php");?>
 <?php
 	error_reporting(0);
 	extract($_POST);extract($_SERVER);
