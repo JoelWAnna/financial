@@ -12,6 +12,17 @@
 		echo "</select>\n";
 		return;
 	}
+	if($type=='accounttype'){
+		$i = 0;
+		echo "<select name=\"" ./*  $current . $type. */ $transNumber . "\">\n";
+		while($accounts[$i]){
+			echo "\t<option value=\"".$accounts[$i]."\"";
+			selected($accounts[$i],$reverseLen,$max);
+			echo ">".$accounts[$i++]."</option>\n";
+		}
+		echo "</select>\n";
+		return;
+	}
 	if($type == 'words'){$type='description';}
 	if($type=='amount' | $type=='description'){
 		echo "<input type=\"text\" name=\""	. $type

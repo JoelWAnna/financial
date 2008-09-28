@@ -1,10 +1,8 @@
-<html>
-<head><title>Financial 0.9.5.4.2</title><?php
+<?php
 	error_reporting(0);
-	
-/* 	<!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
---> */
-?><?php
+	if(!file_exists("f-config.php")){
+		header('Location: setup/setup-config.php');
+	}
 	require_once("f-config.php");
 	$page = $_GET['page'];
 	$accounttype;
@@ -14,7 +12,11 @@
 	mysql_select_db(DATABASENAME)
 		or die('Unable to select database! DATABASENAME');
 	setupAcc($accounttype,$accounts,$accounts2,$accounts3);
-?></head>
+?>
+<html>
+<head><title>Financial 0.9.6b</title>
+ 	<!--<link href="<?php echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">
+--> </head>
 <body>
 <?php
 	if($page > 0){pagelayout2($page,$accounttype,$accounts);}

@@ -7,8 +7,12 @@
 		echo "\n    <td align=center width=48%>\n      ";
 		echo "<table>\n";
 		while($accounttype[$index]){
-			if(leftPage($accounttype[$index], $tor)){
-				echo "  <tr>" . "\n    <td><u><B>" . $accounttype[$index]
+			if(leftPage($accounttype[$index], $tor,-$page-$sides)){
+				echo "  <tr>" . "\n    <td>";
+				if($page){
+					echo "</td><td>";
+				}
+				echo "<u><B>" . $accounttype[$index]
 					. " Accounts</B></u></td>" . "\n    <td>\n";
 				$qAcc = " SELECT number FROM `".PREFIX.ACCOUNTS."` "
 					. "WHERE `Type` = CONVERT( _utf8 '" . $accounttype[$index]."' "
@@ -21,9 +25,15 @@
 				if (mysql_num_rows($rAcc) > 0){
 					while($rowAcc = mysql_fetch_row($rAcc)){
 						$j=$rowAcc[0];
-						echo "\n  <tr>\n    <td>"
-						."<lis><a href =\"". $_SERVER['PHP_SELF'] ."?page="
-						. $j . "\"><span>". $accounts[$j] . "</span></a></lis></td>";
+						echo "\n  <tr>";
+						
+						if($page){
+							echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $page
+								. "\" method=\"post\">\n    <td><input type=\"submit\" name=\""
+								. $j."\" value=\"edit" . "\">" . "</td>\n    </form>";	
+						}
+						echo "\n    <td><lis><a href =\"". $_SERVER['PHP_SELF'] ."?page="
+							. $j . "\"><span>". $accounts[$j] . "</span></a></lis></td>";
 						if($accounttype[$index]== "Loan"){$tor = !$tor; $sides = -$sides;}
 						$CurrentFunds[$j] = currentAmount($j,!$tor) *$sides;
 						if($accounttype[$index]== "Loan"){$tor = !$tor;$sides = -$sides;}
@@ -32,6 +42,17 @@
 						printf("%.2f</td>\n",$CurrentFunds[$j]);
 						if($accounttype[$index]== "Credit Card")
 							{balanceRemaining($accounts2[$j],$CurrentFunds[$j] ,true);}
+						if(isset($_POST[$j])){
+							echo "</tr><tr>";
+							editAcc($j,$accounttype);
+							echo "</tr><tr>";
+						}
+						$foo = "account" . $j;
+						if(isset($_POST[$foo])){
+							if(submitAcc($j)){
+							reloadPHP();
+							}
+						}
 						echo "\n  </tr>\n";		
 					}
 				}else{echo "<b>Error Line 37 $resultAccount</b>";}
@@ -39,8 +60,21 @@
 			}
 			$index++;
 		}
-		echo "</table></td>";
+		echo "</table>";
+		echo"</td>";
 	}
 	echo "</tr></table>";
+	if($page){
+		echo "<table border=3 align=center><tr>";
+		$i =editAcc('new',$accounttype);
+		$foo = "account" . $i;
+		if(isset($_POST[$foo])){
+			if(submitAcc($i,'new')){
+				reloadPHP();
+			}
+		}
+		echo "</tr></table>";
+	}
+
 }
 ?>

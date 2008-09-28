@@ -1,7 +1,10 @@
 <?php function setupAcc(&$accounttype,&$accounts,&$accounts2,&$accounts3){
+	$text ="Your setup is incorrect or you have not added databases to your server\n<br>";
 	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
 	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."`";
-	$typeresult = mysql_query($querytype) or die("Error in query: $querytype." . mysql_error());
+	$typeresult = mysql_query($querytype)
+	or die(mysql_error()."<br>".$text."<a href=\"setup\\setup-config.php\">setup</a>");
+
 	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	$index=0;
 	if (mysql_num_rows($typeresult) > 0){

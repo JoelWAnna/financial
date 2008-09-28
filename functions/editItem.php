@@ -35,3 +35,115 @@
 /**/			. "abcdef;\"></td>\n  </form></tr>";
 /**/	}
 }?>
+
+<?php function editAcc($number,&$accountType){
+	if($number == 'new'){
+	$new =true;
+	echo "<td>Number</td>";
+	}
+	echo "<td align=\"center\">Name</td><td align=\"center\">Type</td><td>Interest Rate</td><td>Budget</td><td>start</td></tr>";
+	echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']
+			. "?page=-1\" method=\"post\"><td align=\"center\">";
+	if($new){
+		$ppp  = "Select `number` from `".PREFIX.ACCOUNTS."` ORDER BY `number` DESC ";
+	$Rppp = mysql_query($ppp)
+		or die("Error in query: $ppp." . mysql_error());
+	if(mysql_num_rows($Rppp) > 0){
+		$row = mysql_fetch_row($Rppp);
+		$number = $row[0];
+		$number++;
+		echo "<input type=text READONLY size=\"3\" value=$number></td><td>";
+	}mysql_free_result($Rppp);
+	}
+	$ppp  = "Select * from `".PREFIX.ACCOUNTS."` WHERE `".PREFIX.ACCOUNTS."`.`number` =" . $number;
+	$Rppp = mysql_query($ppp);
+	//	or die("Error in query: $ppp." . mysql_error());
+	
+
+
+//if (mysql_num_rows($Rppp) > 0){
+		$pppR = mysql_fetch_assoc($Rppp);
+		$type = $pppR['Type'];
+		for($i=0;$i < 100;$i++){
+			if($accountType[$i] == $type){break;}
+		}
+		
+		
+
+		dropDown('words','Name'.$number,$pppR['Name']);
+		echo "</td><td>";
+		if(!$new){dropDown('accounttype','Type'.$number,'','',$type,$accountType);}
+		else{echo "<select name=\"Type".$number."\">\n";
+			echo "\t<option value=\"Checking\">Checking</option>\n";
+			echo "\t<option value=\"Savings\">Savings</option>\n";
+			echo "\t<option value=\"Credit Card\">Credit Card</option>\n";
+			echo "\t<option value=\"Expense\">Expense</option>\n";
+			echo "\t<option value=\"Income \">Income</option>\n";
+			echo "</select>";
+		}
+		echo "</td><td align=\"center\">";
+		dropDown('amount','IRate'.$number,$pppR['Interest Rate']);
+		echo "</td><td align=\"center\">";
+		dropDown('amount','Budget'.$number,$pppR['Budget']);
+		echo "</td><td>";
+		dropDown('amount','start'.$number,$pppR['start']);	
+		
+		echo "</td><td>";
+		echo"<input type=\"submit\" name=\"account".$number."\" value=\"Submit Changes to ";
+		echo  $number . "\" style=\"background-color: "
+			. "abcdef;\"></td>\n  </form></tr><tr>";
+//}
+		mysql_free_result($Rppp);
+	return $number;
+	
+}?>
+<?php function submitAcc($number,$new){
+
+$NAME = "descriptionName".$number;
+$TYPE = "Type".$number;
+$IRATE = "amountIRate".$number;
+$BUDGET = "amountBudget".$number;
+$START = "amountstart".$number;
+
+
+	$_POST[$IRATE]=(float)$_POST[$IRATE];
+	$_POST[$BUDGET]=(float)$_POST[$BUDGET];
+	$_POST[$START]=(float)$_POST[$START];
+	
+	if (!$_POST[$NAME]){
+		echo ' You did not enter a name ';
+		return false;
+	}
+	if (!$_POST[$TYPE]){
+		echo ' You did not enter a type ';
+		return false;
+	}
+	if($new == 'new'){
+	$query ="Insert Into `".DATABASENAME
+			."`.`".PREFIX.ACCOUNTS."` SET `"
+			.PREFIX.ACCOUNTS."`.`number` ='"
+			. $number . "', ";
+	}else{
+		$query = "UPDATE `" . DATABASENAME. "`.`" . PREFIX . ACCOUNTS. "` SET ";
+	}
+	$query .= "`Name` = '" . $_POST[$NAME]	. "', `Type` = '" . $_POST[$TYPE]
+		. "', `Interest Rate` = '" . $_POST[$IRATE]	. "', `Budget` = '" . $_POST[$BUDGET]
+		. "', `start` = '" . $_POST[$START] ."'";
+	if(!($new == 'new')){
+		$query .= " WHERE `".PREFIX.ACCOUNTS."`.`number` =". $number ." LIMIT 1";
+	}
+
+	
+	mysql_close($connect);
+	$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
+		or die('Unable to connect!');
+	mysql_select_db(DATABASENAME)
+		or die('Unable to select database! DATABASENAME');	
+	$Rquery = mysql_query($query)
+		or die("Error in query: $query." . mysql_error());
+	mysql_close($connect);
+	$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
+		or die('Unable to connect!');
+	return true;
+	
+}?>

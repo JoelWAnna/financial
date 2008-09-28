@@ -1,8 +1,8 @@
-<?php function leftPage($type, $equalTo){
-	if($type == "removed"){
+<?php function leftPage($type, $equalTo,$three){
+	if($type == "removed" & $three !=3){
 		return false;
 	}
-	if($equalTo){
+ 	if($equalTo){ 
 		if(($type== "Checking")| ($type== "Savings")
 				| ($type== "Credit Card")//| ($type== "Loan")
 				)
@@ -10,9 +10,10 @@
 	}else{
 		if(($type!= "Checking")& ($type!= "Savings")
 			& ($type!= "Credit Card")//& ($type!= "Loan")
-			)
+		)
 		{return true;}
-	}
+	} 
+	
 	return false;
 }
 ?>

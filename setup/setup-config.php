@@ -21,7 +21,7 @@ if ( !is_writable('../')){
 }
 // Check if wp-config.php has been created
 if (file_exists('../f-config.php')){
-	echo "<p>The file 'f-config.php' already exists. If you need to reset any of the configuration items in this file, please delete it first. You may try <a href='install.php'>installing now</a>.</p>";
+	header('Location: install.php');
 	die;
 }
 if (isset($_GET['step']))
