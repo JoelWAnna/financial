@@ -100,15 +100,12 @@
 	$X .= $new;
 	if (isset($_POST[$X])){
 	echo "<body>";// onload=\"load()\">";//window.setTimeout('window.location.reload()',1000);\">";
-	reloadPHP();
-
-	echo "FUUUUUUUUUCK";
-		if(myEnterTrans($new)){
-		echo "22FUUUUUUUUUCK";
+	//reloadPHP();
+	if(myEnterTrans($new)){
 		$new = $_GET['new'];
-		echo "2233FUUUUUUUUUCK";
+		reloadPHP();
 		unset($_POST[$X]);
-		}
+	}
 	}else{ echo"<body>";}
 	
 	
@@ -146,7 +143,7 @@
 		
 		
 	
-	$CurrentAm= currentAmount();
+	$CurrentAm= currentAmount($page);
 	
 	 $queryAcc = " SELECT * FROM `transactions` WHERE `From Account` ="
 				. $page." OR `To Account` =".$page." ORDER BY `transactions`.`number` DESC";// LIMIT 0 , 30 ";
@@ -161,10 +158,9 @@
 			$X = "X";
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
-				myEnterTrans($rowdata['number']);
-				echo "before";
-				reloadPHP();
-				echo "after";
+				if(myEnterTrans($rowdata['number'])){
+					reloadPHP();
+				}
 			unset($_POST[$X]);
 			} 
 			//else{
