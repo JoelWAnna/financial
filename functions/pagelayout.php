@@ -1,4 +1,4 @@
-<?php function pagelayout($page,&$accounttype,&$accounts){
+<?php function pagelayout($page,&$accounttype,&$accounts,&$accounts2,&$accounts3){
 //Main Page
 	$months = array(0,Jan,Feb,Mar,Apr,
 					May,June,July,Aug,
@@ -15,6 +15,7 @@
 	$index=0;
 	billsDue($accounts,$page);
 	$page =0;
+	$total =0;
 	echo "<table width=98% border=3>";
 	
 	echo"\n  <tr>\n    <td align=center width=48%>\n      ";
@@ -27,6 +28,24 @@
 		{
 		echo "  <tr>" . $tdform . "><u><B>" . $accounttype[$index]
 			. " Accounts</B></u></td>" . $tdform . ">\n";
+	
+		$acc[$accounttype[$index]] =0;
+		
+		for($F=0;$F<20;$F++){
+			if($accounts3[$F]==$accounttype[$index]){
+			$acc[$accounttype[$index]] += currentAmount($F);
+			}
+		}
+		if($acc[$accounttype[$index]]){
+			$total += $acc[$accounttype[$index]];
+			negativeRed($acc[$accounttype[$index]]);
+			echo $acc[$accounttype[$index]];
+			
+			echo "</td><td>";
+			negativeRed($total);
+			echo"$total</td>";
+		}
+			
 		$queryAccount = " SELECT number FROM `".PREFIX.ACCOUNTS."` "
 				. "WHERE `Type` = CONVERT( _utf8 '"
 				. $accounttype[$index]."' "
@@ -51,7 +70,7 @@
 				negativeRed($CurrentFunds[$j]);
 				echo	$CurrentFunds[$j]. "\n    </td>\n";
 				if($accounttype[$index]== "Credit Card"){
-					balanceRemaining($accounts[$j],$CurrentFunds[$j] ,true);
+					balanceRemaining($accounts2[$j],$CurrentFunds[$j] ,true);
 				}
 				echo "\n  </tr>\n";		
 			}
@@ -141,8 +160,10 @@ else{
 	$CurrentAm= currentAmount($page);
 
 	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` WHERE `From Account` ="
-			. $page." OR `To Account` =".$page." ORDER BY `".PREFIX.TRANSACTIONS."`.`number` DESC";
-
+			. $page." OR `To Account` =".$page." ORDER BY `".PREFIX.TRANSACTIONS."`.`year` DESC, `"
+			.PREFIX.TRANSACTIONS."`.`month` DESC, `".PREFIX.TRANSACTIONS
+			."`.`day` DESC";
+ 
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
 	
@@ -187,7 +208,7 @@ else{
 				}
 				else{
 					negativeRed($CurrentAm);
-					echo $CurrentAm;
+					echo round($CurrentAm,2);
 				}
 				$CurrentAm	-= $rowdata['amount'];
 			}

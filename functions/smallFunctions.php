@@ -1,8 +1,8 @@
 <?php function isZero($i){
-	if($i < .001 && $i < .002){
+/* 	if($i < .001 && $i < .002){
 		return true;
 	}
-	return false;
+	return false; */
 }
 ?>
 <?php function negativeRed($i){

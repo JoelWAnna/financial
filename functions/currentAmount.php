@@ -3,7 +3,7 @@
 	  //plus transactions to account  minus transactions from account
 function	currentAmount($accNumber,$recent,$day,$month,$year){
 	if(!$recent){	
-		$queryStartAmo = "SELECT `start` FROM `".PREFIX.ACCOUNTS."` Where number =" . $accNumber;
+		$queryStartAmo = "SELECT ROUND(start,2) as `start` FROM `".PREFIX.ACCOUNTS."` Where number =" . $accNumber;
 		$resStartAmo = mysql_query($queryStartAmo)
 			or die('Error in query: $queryStartAmo.' . mysql_error());
 		if (mysql_num_rows($resStartAmo) > 0){

@@ -5,6 +5,7 @@
 		return;
 	}
 	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS."` WHERE `name` = '".$T."' LIMIT 1 ";
+
 	$resultbal = mysql_query($bal)
 		or die('Error in query: $bal.' . mysql_error());
 	if (mysql_num_rows($resultbal) > 0){
@@ -13,7 +14,7 @@
 			if($A){echo ($row[0] + $A);}
 			else{ echo $row[0];}
 		echo "</td><td align=right>" . "&nbsp&nbsp&nbsp&nbsp ". $row[0] . "</td>";
-	}
+	}else{	die($bal);}
 	mysql_free_result($resultbal);
 }
 ?>

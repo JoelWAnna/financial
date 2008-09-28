@@ -1,10 +1,13 @@
 <?php function billsDue(&$accounts,$allbills){
 	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
 /**/	if(!$allbills){
-/**/		$billsQ .= "WHERE `paid` = CONVERT(_utf8 \'FALSE\' "
+/**/		$billsQ .= "WHERE `paid` = CONVERT(_utf8 'FALSE' "
 /**/				. "USING latin1) COLLATE latin1_swedish_ci";
 /**/	}
 	echo "<table border=3 width=50% align=center>";
+	$billsQ .= " ORDER BY `".PREFIX.BILLS."`.`month`, `".PREFIX.BILLS."`.`day`, `".PREFIX.BILLS."`.`year` ASC";
+	
+	
 	$billsR = mysql_query($billsQ)
 		or die("Error in query: $billsQ." . mysql_error());
 	if (mysql_num_rows($billsR) > 0){

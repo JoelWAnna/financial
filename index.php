@@ -20,15 +20,18 @@
 	require_once("f-config.php");
 	$page = $_GET['page'];
 	$accounttype;
-	$accounts;
+	$accounts;	$accounts2;	$accounts3;
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die('Unable to connect !');
 	mysql_select_db(DATABASENAME)
 		or die('Unable to select database! DATABASENAME');
-	setupAcc($accounttype,$accounts);
+	setupAcc($accounttype,$accounts,$accounts2,$accounts3);
 ?></head>
 <body><?php
-	pagelayout($page,$accounttype,$accounts);
+
+
+
+	pagelayout($page,$accounttype,$accounts,$accounts2,$accounts3);
 	mysql_close($connection); 
 ?></body>
 </html>
