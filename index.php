@@ -16,10 +16,10 @@ define('TRo','\n  <tr');
 	$accounts2;
 	$accounts3;
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-		or die("Unable to connect !\n is your database set up?"
+		or die("Unable to connect !\n is your database set up?".
 				"<a href=\"setup\">setup</a>");
 	mysql_select_db(DATABASENAME)
-		or die("Unable to select database! DATABASENAME\n is your"
+		or die("Unable to select database! DATABASENAME\n is your".
 				"database set up?<a href=\"setup\">setup</a>");
 ?>
 <html>
@@ -29,14 +29,11 @@ define('TRo','\n  <tr');
 </head>
 <body>
 <?php
-	if ($page=='setup' || $page'-1')
+	setupAcc($accounttype,$accounts,$accounts2,$accounts3, $page);
+	if ($page=='-1' || $page=='setup')
 	{
 		$page=-1;
 		$setup=true;
-	}
-	else
-	{
-		setupAcc($accounttype,$accounts,$accounts2,$accounts3);
 	}
 	//________________________________________//
 	if ($page > 0)

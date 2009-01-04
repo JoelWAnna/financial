@@ -1,4 +1,5 @@
-<?php function setupAcc(&$accounttype,&$accounts,&$accounts2,&$accounts3){
+<?php function setupAcc(&$accounttype,&$accounts,&$accounts2,&$accounts3, $page){
+	if ($page=='setup') return;
 	$text ="Your setup is incorrect or you have not added databases to your server\n<br>";
 	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
 	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."`";
