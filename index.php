@@ -11,10 +11,10 @@ define('TRo','\n  <tr');
 	}
 	require_once("f-config.php");
 	$page = $_GET['page'];
-	$accounttype;
-	$accounts;
-	$accounts2;
-	$accounts3;
+	$ACC_TYPE;
+	$ACC_1;
+	$ACC_2;
+	$ACC_3;
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die("Unable to connect !\n is your database set up?".
 				"<a href=\"setup\">setup</a>");
@@ -29,33 +29,27 @@ define('TRo','\n  <tr');
 </head>
 <body>
 <?php
-	setupAcc($accounttype,$accounts,$accounts2,$accounts3, $page);
-	if ($page=='-1' || $page=='setup')
-	{
-		$page=-1;
-		$setup=true;
-	}
-	//________________________________________//
+	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 	if ($page > 0)
 	{
-		pagelayout2($page,$accounttype,$accounts);
+		pagelayout2($page,$ACC_TYPE,$ACC_1);
 	}
 	else
 	{
-		if (!$setup)
+		if ($page != -1)
 		{
-			billsDue($accounts2,$page);
+			billsDue($page, $ACC_2);
 ?><!-- <table><tr><TD  width=19% valign=top></td><TD width=60%> --><?
-			mainPage($page,$accounttype,$accounts,$accounts2,$accounts3);
+			mainPage($page,$ACC_TYPE,$ACC_1,$ACC_2,$ACC_3);
 ?><!-- </td><td width=19% valign=top> --><?
-			totals($accounts,$accounts3,$accounttype);
+			totals($ACC_1,$ACC_3,$ACC_TYPE);
 ?><!--</td></tr></table>--><?
-			newTR(0,$accounts);
+			newTR(0,$ACC_1);
 		}
 		if ($page)
 		{
 			echo "<table border=3 align=center><tr>";
-			$i =editAcc('new',$accounttype);
+			$i =editAcc('new',$ACC_TYPE);
 			$foo = "account" . $i;
 			if (isset($_POST[$foo]))
 			{

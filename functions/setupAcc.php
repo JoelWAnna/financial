@@ -1,5 +1,9 @@
-<?php function setupAcc(&$accounttype,&$accounts,&$accounts2,&$accounts3, $page){
-	if ($page=='setup') return;
+<?php function setupAcc(&$page, &$ACC_TYPE, &$ACC_1, &$ACC_2, &$ACC_3){
+	if ($page=='setup')
+	{
+		$page = -1;
+		return;
+	}
 	$text ="Your setup is incorrect or you have not added databases to your server\n<br>";
 	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
 	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."`";
@@ -10,7 +14,7 @@
 	$index=0;
 	if (mysql_num_rows($typeresult) > 0){
 		while($row = mysql_fetch_row($typeresult)){		
-			$accounttype[$index++]=$row[0];
+			$ACC_TYPE[$index++]=$row[0];
 		}
 	}else{echo "<b>Error Line 14.setupacc $typeresult</b>";}
 	mysql_free_result($typeresult);
@@ -19,12 +23,12 @@
 			$number = $row['number'];
 			$name = $row['name'];
 			$type = $row['type'];
-			$accounts2[$number]= $name;
-			$accounts[$number]= $name;
+			$ACC_2[$number]= $name;
+			$ACC_1[$number]= $name;
 			if(leftPage($type,true)){
-				$accounts[$number].= " ". $type;
+				$ACC_1[$number].= " ". $type;
 			}
-			$accounts3[$number]= $type;
+			$ACC_3[$number]= $type;
 			
 		}
 	}else{echo "<b>Error Line 29.setupacc $resultname</b>";}
