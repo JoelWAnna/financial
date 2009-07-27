@@ -1,4 +1,5 @@
 <?php
+$ver = 'Financial 0.9.7.5.0';
 define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
 define('TRo','\n  <tr');
@@ -23,7 +24,7 @@ define('TRo','\n  <tr');
 				"database set up?<a href=\"setup\">setup</a>");
 ?>
 <html>
-<head><title>Financial 0.9.7.0.0</title>
+<head><title><?php echo $ver; ?></title>
 <!--<link href="<?php// echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">-->
 <link href="resources/financialstyles.css" rel="stylesheet" type="text/css">
 </head>
