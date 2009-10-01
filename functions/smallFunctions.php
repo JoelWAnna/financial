@@ -1,18 +1,23 @@
-<?php function leftPage($type, $equalTo,$three){
+<?php function secondColumn($type, $three){
 	if($type == "removed" & $three !=3){
 		return false;
 	}
- 	if($equalTo){ 
-		if(($type== "Checking")| ($type== "Savings")
-				| ($type== "Credit Card")//| ($type== "Loan")
-				)
-				{return true;}
-	}else{
-		if(($type!= "Checking")& ($type!= "Savings")
-			& ($type!= "Credit Card")//& ($type!= "Loan")
-		)
-		{return true;}
-	} 
+ 	
+	if(($type!= "Checking")& ($type!= "Savings")
+		& ($type!= "Credit Card")//& ($type!= "Loan")
+	)
+	{return true;}
+	
+	
+	return false;
+}
+
+function firstColumn($type,$three){
+ 	if(($type== "Checking")| ($type== "Savings")
+			| ($type== "Credit Card")//| ($type== "Loan")
+			)
+	{return true;}
+
 	
 	return false;
 }
