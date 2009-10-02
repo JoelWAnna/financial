@@ -21,7 +21,7 @@
 				. "</td>\n";
 			if($accounttype[$index]== "Credit Card")
 			{
-				balanceRemaining($accounts[$index]);
+				balanceRemainingHeader();
 			}
 			echo "\n  </tr>";
 
@@ -71,7 +71,7 @@
 					}
 					printf("%.2f</div></td>\n", $CurrentFunds[$j]);
 					if($accounttype[$index]== "Credit Card")
-						{balanceRemaining($accounts2[$j],$CurrentFunds[$j] ,true);}
+						{balanceRemaining($accounts2[$j],$CurrentFunds[$j]);}
 					if(isset($_POST[$j])){
 						echo "</tr><tr>";
 						editAcc($j,$accounttype);
