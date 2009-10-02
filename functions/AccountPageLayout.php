@@ -1,13 +1,19 @@
-<?php function AccountPageLayout($page,&$accounttype,&$accounts){
-//Main Page
+<?php function AccountLayoutPage($page,&$accounttype,&$accounts){
+	// Main Page
+	// ---------
+	// $page cannot be less than 1
+	if ($page < 1)
+	{
+		echo "AccountLayout Called for invalid account";
+		return;
+	}
+	$accountKey = $page;
+	
+
 	$months = array(0,Jan,Feb,Mar,Apr,
 					May,June,July,Aug,
 					Sep,Oct,Nov,Dec);
-	$tdform = "\n    <td";
-	$tdformat2 = "</td>".$tdform;
-	$tdformat = $tdformat2.">";
-	$w = " width=";
-/////////////PAGE  > 0
+
 	$new = newest('trans');
 	$X = "X";
 	$X .= $new;
@@ -17,31 +23,38 @@
 			unset($_POST[$X]);
 		}
 	}	
-	echo "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a>";
-	echo "<Br><B>".$accounts[$page]."</B>";
-	echo "<table bordercolor=\"000\" border=2>\n  ";
-	echo "<tr align=center>\n    <td width=165 colSpan=\"3\">date</td>"
-		. $tdform.$w."142>description</td>"
-		. $tdform.$w."145>from account</td>"
-		. $tdform.$w."143>to account</td>"
-		. $tdform.$w."50>amount</td>"
-		. $tdform.$w."55>balance</td>"
-		. "<form action=\"" . $_SERVER['PHP_SELF']
-		. "?page=". $page ."\" method=\"post\">"
-		. $tdform."><input type=\"submit\" "
-		. "name=\"".$new."\" value=\""
-		. "Start new transaction"
-		. "\"></td></form>\n  </tr>";
+	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a>";
+	echo  "<Br><B>".$accounts[$accountKey]."</B>";
+	echo  "<table bordercolor=\"000\" border=2>\n  ";
+	echo  "<tr align=center>\n"
+		. "    <td width=165 colSpan=\"3\">date</td>\n"
+		. "    <td width=142>description</td>\n"
+		. "    <td width=145>from account</td>\n"
+		. "    <td width=143>to account</td>\n"
+		. "    <td width=50>amount</td>\n"
+		. "    <td width=55>balance</td>\n\n";
+	
+	echo "    <form action=\""
+		. $_SERVER['PHP_SELF']
+		. "?page=". $accountKey
+		. "\" method=\"post\">\n";
+
+	echo  "    <td>"
+		. "<input type=\"submit\" name=\"".$new."\""
+		. "value=\"Start new transaction\"></td>\n"
+		. "    </form>\n"
+		. "</tr>";
+
 	if($new > 0){
 		if (isset($_POST[$new])){
-			editItem('trans',$page,$accounts,$new,true);
+			editItem('trans',$accountKey,$accounts,$new,true);
 		}
 	}
 
-	$CurrentAm= currentAmount($page);
+	$CurrentAm= currentAmount($accountKey);
 
 	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` WHERE `From Account` ="
-			. $page." OR `To Account` =".$page." ORDER BY `".PREFIX.TRANSACTIONS."`.`year` DESC, `"
+			. $accountKey." OR `To Account` =".$accountKey." ORDER BY `".PREFIX.TRANSACTIONS."`.`year` DESC, `"
 			.PREFIX.TRANSACTIONS."`.`month` DESC, `".PREFIX.TRANSACTIONS
 			."`.`day` DESC";
  
@@ -61,15 +74,15 @@
 			unset($_POST[$X]);
 			} 
 			
-			echo "\n  <tr align=center>" . $tdform . $w. "55>"
-				. $months[(int)$rowdata['month']]. $tdformat2. $w. "50>"
-				. $rowdata['day'] . $tdformat2. $w. "55>"
-				. $rowdata['year'] . $tdformat
-				. $rowdata['description'] . $tdformat
-				. $accounts[$rowdata['from account']] . $tdformat
-				. $accounts[$rowdata['to account']]	. $tdformat;
+			echo "\n  <tr align=center>" . "\n    <td width=55>"
+				. $months[(int)$rowdata['month']]. "</td>"."\n    <td". " width=". "50>"
+				. $rowdata['day'] . "</td>"."\n    <td width=55>"
+				. $rowdata['year'] . "</td>\n    <td>"
+				. $rowdata['description'] . "</td>"."\n    <td".">"
+				. $accounts[$rowdata['from account']] . "</td>"."\n    <td".">"
+				. $accounts[$rowdata['to account']]	. "</td>"."\n    <td".">";
 			echo "<div";
-			if($rowdata['from account']==$page){
+			if($rowdata['from account']==$accountKey){
 				echo " id=\"negative\">-";
 			}else{echo ">";}
 			echo $rowdata['amount'];
@@ -77,7 +90,7 @@
 			
 			echo $tdformat;
 			
-			if($rowdata['from account']==$page){
+			if($rowdata['from account']==$accountKey){
 				echo "<div";
 				if($CurrentAm<0){echo " id=\"negative\"";}
 				echo ">";
@@ -97,14 +110,15 @@
 			}
 			
 			echo "</td>\n    ";
-			echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $page 
-				. "\" method=\"post\">".  $tdform. "><input type=\"submit\" name=\""
+			echo "<form action=\"" . $_SERVER['PHP_SELF']. "?page=". $accountKey 
+				. "\" method=\"post\">\n"
+				. "<td><input type=\"submit\" name=\""
 				. $rowdata['number']."\" value=\"". "Edit transaction " . $rowdata['number']
 				. " \">" . "</td>\n    </form>";
 			echo "\n  </tr>";
 			
 			if (isset($_POST[$rowdata['number']])){
-				editItem('trans',$page,$accounts,$rowdata['number'],false,false,
+				editItem('trans',$accountKey,$accounts,$rowdata['number'],false,false,
 						(int)$rowdata['month'],$rowdata['day'],$rowdata['year'],
 						$rowdata['description'],$rowdata['from account'],
 						$rowdata['to account'],$rowdata['amount']);
