@@ -33,7 +33,7 @@ define('TRo','\n  <tr');
 	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 	if ($page > 0)
 	{
-		pagelayout2($page,$ACC_TYPE,$ACC_1);
+		AccountPageLayout($page, $ACC_TYPE, $ACC_1);
 	}
 	else
 	{
@@ -41,7 +41,14 @@ define('TRo','\n  <tr');
 		{
 			billsDue($page, $ACC_2);
 ?><!-- <table><tr><TD  width=19% valign=top></td><TD width=60%> --><?
-			mainPage($page,$ACC_TYPE,$ACC_1,$ACC_2,$ACC_3);
+		// Main Page Columns
+		echo "<div id=\"Main\">"
+			."<table border=3 class=\"t1\">\n"
+			."<tr>";
+			ShowMainPageColumn(true, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
+			ShowMainPageColumn(false, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
+		echo "</tr>\n"
+			."</table>";
 ?><!-- </td><td width=19% valign=top> --><?
 			totals($ACC_1,$ACC_3,$ACC_TYPE);
 ?><!--</td></tr></table>--><?

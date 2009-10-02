@@ -1,4 +1,4 @@
-<?php function pagelayout2($page,&$accounttype,&$accounts){
+<?php function AccountPageLayout($page,&$accounttype,&$accounts){
 //Main Page
 	$months = array(0,Jan,Feb,Mar,Apr,
 					May,June,July,Aug,

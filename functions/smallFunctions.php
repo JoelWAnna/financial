@@ -1,25 +1,16 @@
-<?php function secondColumn($type, $three){
-	if($type == "removed" & $three !=3){
+<?php function validAccountforThisPage($type, $left, $page)
+{
+	if($type == "removed" & $page !=-2){
 		return false;
 	}
  	
 	if(($type!= "Checking")& ($type!= "Savings")
 		& ($type!= "Credit Card")//& ($type!= "Loan")
 	)
-	{return true;}
+	{return !$left}
 	
 	
-	return false;
-}
-
-function firstColumn($type,$three){
- 	if(($type== "Checking")| ($type== "Savings")
-			| ($type== "Credit Card")//| ($type== "Loan")
-			)
-	{return true;}
-
-	
-	return false;
+	return $left;
 }
 ?>
 
