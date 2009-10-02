@@ -88,7 +88,7 @@
 			echo $rowdata['amount'];
 			echo "</div>";
 			
-			echo $tdformat;
+			echo "</td>\n    <td>";
 			
 			if($rowdata['from account']==$accountKey){
 				echo "<div";

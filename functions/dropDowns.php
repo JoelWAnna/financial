@@ -1,8 +1,9 @@
-<?php function dropDown($type,$transNumber,$current,$max,$reverseLen,$accounts){
+<?php function dropDown($type,$transNumber,$current,$max=0,$reverseLen=0,$accounts=0){
 //$type can be day (d) month  (m) or year (Y) it is case sensitive
 //$current == $day/$year/$month
 	$i=1;
-	if($type=='account'){
+	if($type=='account')
+	{
 		echo "<select name=\"" . $current . $type. $transNumber . "\">\n";
 		while($accounts[$i]){
 			echo "\t<option value=\"".$i."\"";
@@ -12,7 +13,9 @@
 		echo "</select>\n";
 		return;
 	}
-	if($type=='accounttype'){
+
+	if($type=='accounttype')
+	{
 		$i = 0;
 		echo "<select name=\"" ./*  $current . $type. */ $transNumber . "\">\n";
 		echo "\t<option value=\"\"></option>\n";
@@ -24,8 +27,14 @@
 		echo "</select>\n";
 		return;
 	}
-	if($type == 'words'){$type='description';}
-	if($type=='amount' | $type=='description'){
+	
+	if($type == 'words')
+	{
+		$type='description';
+	}
+	
+	if($type=='amount' | $type=='description')
+	{
 		echo "<input type=\"text\" name=\""	. $type
 			. $transNumber . "\"" . " maxlength=\"";
 		if($type=='amount'){
@@ -34,15 +43,22 @@
 		echo "  value=\"" . $current . "\">\n";
 		return;
 	}
+	
 	$J = (int)date($type);
-	if(!$reverseLen){$reverseLen = 0;}
-	if($type == 'Y'){
+	if(!$reverseLen)
+	{
+		$reverseLen = 0;
+	}
+	if($type == 'Y')
+	{
 		$type = 'year';
 		if(!$max){$max=2;}
 		if(!$reverseLen){$reverseLen=1;}
 		$i= $J-$reverseLen;
 		$max += $i;
-	}else{
+	}
+	else
+	{
 		if($type == 'd'){
 			$type = 'day';
 			if(!$max){$max=31;}
@@ -56,6 +72,7 @@
 			}
 		}
 	}
+	
 	echo "<select name=\"" . $type. $transNumber . "\">\n";
 	while($i<$max+1){
 		echo "\t<option value=\"";

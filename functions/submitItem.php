@@ -1,4 +1,4 @@
-<?php function submitItem($type,$number,$negative){
+<?php function submitItem($type,$number){
 	$AMOUNT = 'amount' . $number;
 	$DESCRIPTION = 'description' . $number;
 	$TOACCOUNT = 'toaccount'. $number;
@@ -80,7 +80,7 @@
 			$updateQ .= " WHERE `".PREFIX.TRANSACTIONS."`.`number` =". $number ." LIMIT 1";
 		}
 	}
-	mysql_close($connect);
+
 	$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
 	mysql_select_db(DATABASENAME)

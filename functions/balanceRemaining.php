@@ -16,7 +16,7 @@ function balanceRemainingHeader()
 
 function balanceRemaining($AccountName,$Amount)
 {
-	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS.
+	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS
 		 . "` WHERE `name` = '$AccountName' LIMIT 1 ";
 
 	$resultbal = mysql_query($bal)

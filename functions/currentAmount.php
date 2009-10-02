@@ -1,7 +1,7 @@
 <?php //function	currentAmount($accountNumber) 
 	  //Takes account number and returns start amount for account
 	  //plus transactions to account  minus transactions from account
-function	currentAmount($accNumber,$recent,$day,$month,$year){
+function	currentAmount($accNumber,$recent = false,$day=false,$month=false,$year=false){
 	if(!$recent){	
 		$queryStartAmo = "SELECT ROUND(start,2) as `start` FROM `".PREFIX.ACCOUNTS."` Where number =" . $accNumber;
 		$resStartAmo = mysql_query($queryStartAmo)

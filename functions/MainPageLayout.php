@@ -1,4 +1,4 @@
-<?php function ShowMainPageColumn($leftColumn, $page, &$accounttype, &$accounts, &$accounts2, &$accounts3))
+<?php function ShowMainPageColumn($leftColumn, $page, &$accounttype, &$accounts, &$accounts2, &$accounts3)
 {
 	$EditAccount = $page ? true : false;
 	echo "\n    <td align=center>\n      "

@@ -7,7 +7,10 @@
 	{	$billorTrans = 'bill';	}
 	addMore($nber,'o');////////////////////////////////
 	$num = newest($billorTrans);
-	echo "\n    <form action=\"" . $_SERVER['PHP_SELF']."\" method=\"post\">";
+	echo  "\n    <form action=\"" . $_SERVER['PHP_SELF']
+		. "?page=$page&num=$nber\" method=\"post\">";
+
+	
 	for($j=0;$j<$nber;$j++){
 		editItem($billorTrans,$page,$accounts,($num+$j),true,true);
 		echo "</tr>";
@@ -22,7 +25,8 @@
 	$submit=$billorTrans.'sSubmit';
 	if (isset($_POST[$submit])){
 		if($billorTrans=='transaction'){$billorTrans='trans';}
-		for($i=0;$i<15;$i++){
+		$previousSubmit = $_GET['num'];
+		for($i=0;$i<$previousSubmit;$i++){
 			submitItem($billorTrans,($num+$i));
 		}
 		reloadPHP();

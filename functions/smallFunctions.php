@@ -1,13 +1,15 @@
 <?php function validAccountforThisPage($type, $left, $page)
 {
-	if($type == "removed" & $page !=-2){
+	if($type == "removed" && $page !=-2)
+	{
 		return false;
 	}
  	
-	if(($type!= "Checking")& ($type!= "Savings")
-		& ($type!= "Credit Card")//& ($type!= "Loan")
-	)
-	{return !$left}
+	if (($type!= "Checking") && ($type != "Savings") &&
+		($type!= "Credit Card")/*&& ($type!= "Loan")*/)
+	{
+		return !$left;
+	}
 	
 	
 	return $left;
@@ -35,7 +37,9 @@
 	}
 }
 ?>
-<?php function reloadPHP(){
+<?php function reloadPHP()
+{
+	return;
 	$page=$_GET['page'];
 	echo "<script type=\"text/javascript\">"
 		. "function load()" . "{"

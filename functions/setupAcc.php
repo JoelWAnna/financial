@@ -25,7 +25,7 @@
 			$type = $row['type'];
 			$ACC_2[$number]= $name;
 			$ACC_1[$number]= $name;
-			if(leftPage($type,true)){
+			if(validAccountforThisPage($type, true, false)){
 				$ACC_1[$number].= " ". $type;
 			}
 			$ACC_3[$number]= $type;

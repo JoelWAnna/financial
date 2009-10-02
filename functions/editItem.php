@@ -1,6 +1,6 @@
 <?php function editItem($type,&$page,&$accounts,$number,$newtrans,
-/*$type= bill or trans*/			$noforms, $month, $day, $year,
-						$description,$fromAcc,$toAcc,$amount){
+/*$type= bill or trans*/			$noforms, $month="", $day="", $year="",
+						$description="",$fromAcc="",$toAcc="",$amount=""){
 /**/	if($type == 'trans' && !$noforms){
 /**/		echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']
 /**/			. "?page=" . $page . "\" method=\"post\">";
