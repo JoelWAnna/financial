@@ -39,7 +39,6 @@
 ?>
 <?php function reloadPHP()
 {
-	return;
 	$page=$_GET['page'];
 	echo "<script type=\"text/javascript\">"
 		. "function load()" . "{"
