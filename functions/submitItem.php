@@ -21,7 +21,8 @@
 			.PREFIX.BILLS."`.`number` ='"
 			. $number . "', ";
 	}
-	if($type=='trans'){
+	if ($type == 'transaction')
+	{
 		if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
 			echo ' Accounts cannot be the same ';
 			return false;
@@ -74,7 +75,8 @@
 		. "', `description` = '" . $_POST[$DESCRIPTION]
 		. "', `amount` = '" . $_POST[$AMOUNT]
 		. "', `to account` = '" . $_POST[$TOACCOUNT]. "'";
-	if($type=='trans'){
+	if ($type == 'transaction')
+	{
 		$updateQ .= ", `from account` = '" . $_POST[$FROMACCOUNT] . "'";
 		if($changed){
 			$updateQ .= " WHERE `".PREFIX.TRANSACTIONS."`.`number` =". $number ." LIMIT 1";

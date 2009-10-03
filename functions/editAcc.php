@@ -48,16 +48,16 @@
 		
 		
 
-		dropDown('words',"Name$number",$rowResults['Name']);
+		echo dropDownString('words',"Name$number",$rowResults['Name']);
 		echo "</td><td>";
 		if (!$new)
 		{
-			dropDown('accounttype',"Type$number",'','',$type,$accountType);
+			echo dropDownString('accounttype',"Type$number",'','',$type,$accountType);
 		}
 		else
 		{
 			echo "<input type=\"text\" size=12 name=\"Type".$number."\"><br>";
-			dropDown('accounttype',"2Type$number",'','',$type,$accountType);
+			echo dropDownString('accounttype',"2Type$number",'','',$type,$accountType);
 			echo "<br><select name=\"3Type$number\">";
 			echo "\t<option value=\"\"></option>\n";
 			echo "\t<option value=\"Checking\">Checking</option>\n";
@@ -69,11 +69,11 @@
 		}
 
 		echo "</td><td align=\"center\">";
-		dropDown('amount',"IRate$number", $rowResults['Interest Rate']);
+		echo dropDownString('amount',"IRate$number", $rowResults['Interest Rate']);
 		echo "</td><td align=\"center\">";
-		dropDown('amount',"Budget$number", $rowResults['Budget']);
+		echo dropDownString('amount',"Budget$number", $rowResults['Budget']);
 		echo "</td><td>";
-		dropDown('amount',"start$number", $rowResults['start']);	
+		echo dropDownString('amount',"start$number", $rowResults['start']);	
 		
 		echo  "</td><td>";
 		echo  "<input type=\"submit\" name=\"account$number\" "

@@ -11,7 +11,8 @@
 		$nber=1;
 	}
 	
-	$billorTrans = 'trans';
+	$billorTrans = 'transaction';
+	///transaction
 	if (isset($_POST['bills']) | isset($_POST['billsSubmit']))
 	{
 		$billorTrans = 'bill';
@@ -28,10 +29,6 @@
 		echo "</tr>";
 	}
 	
-	if($billorTrans == 'trans')
-	{
-		$billorTrans .= 'action';
-	}
 
 	$submit = $billorTrans . 'sSubmit';
 	
@@ -47,10 +44,6 @@
 
 	if (isset($_POST[$submit]))
 	{
-		if($billorTrans=='transaction')
-		{
-			$billorTrans='trans';
-		}
 		$previousSubmit = $_GET['num'];
 		
 		for ($i = 0; $i < $previousSubmit; $i++)
@@ -69,7 +62,7 @@
 		. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
 		. "<td colspan=7 align=center>";
 
-	dropDown(d,$letter,$number,10);
+	echo dropDownString(d,$letter,$number,10);
 
 	echo "<input type=\"submit\" name=\"transactions\" "
 		. "value=\"more transactions\" style=\"background-color: abcdef;\">\n";

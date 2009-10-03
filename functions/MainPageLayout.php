@@ -1,8 +1,8 @@
 <?php function ShowMainPageColumn($leftColumn, $page, &$accounttype, &$accounts, &$accounts2, &$accounts3)
 {
 	$EditAccount = $page ? true : false;
-	echo "\n    <td align=center>\n      "
-		."      <table>\n";	
+	echo  "\n    <td align=center>\n      "
+		. "      <table>\n";	
 
 	for($index = 0; $accounttype[$index]; $index++)
 	{
@@ -11,7 +11,8 @@
 			echo  "  <tr>\n"
 				. "    <td>";
 
-			if($EditAccount){
+			if($EditAccount)
+			{
 				echo "</td>\n    <td>";
 			}
 

@@ -1,88 +1,112 @@
-<?php function dropDown($type,$transNumber,$current,$max=0,$reverseLen=0,$accounts=0){
+<?php function dropDownString($type, $transNumber, $current, $max=0, $reverseLen=0, $accounts=0)
+{
 //$type can be day (d) month  (m) or year (Y) it is case sensitive
 //$current == $day/$year/$month
-	$i=1;
+
 	if($type=='account')
 	{
-		echo "<select name=\"" . $current . $type. $transNumber . "\">\n";
-		while($accounts[$i]){
-			echo "\t<option value=\"".$i."\"";
-			selected($i,$reverseLen,$max);
-			echo ">".$accounts[$i++]."</option>\n";
+		$returnString = "<select name=\"{$current}{$type}{$transNumber}\">\n";
+		for ($i = 1; $accounts[$i]; $i++)
+		{
+			$returnString .= "\t<option value=\"".$i."\"";
+			$returnString .= selectedString($i, $reverseLen, $max);
+			$returnString .= $accounts[$i]."</option>\n";
 		}
-		echo "</select>\n";
-		return;
+		$returnString .= "</select>\n";
+		return $returnString;
 	}
 
 	if($type=='accounttype')
 	{
-		$i = 0;
-		echo "<select name=\"" ./*  $current . $type. */ $transNumber . "\">\n";
-		echo "\t<option value=\"\"></option>\n";
-		while($accounts[$i]){
-			echo "\t<option value=\"".$accounts[$i]."\"";
-			selected($accounts[$i],$reverseLen,$max);
-			echo ">".$accounts[$i++]."</option>\n";
+		$returnString  = "<select name=\"" ./*  $current . $type. */ "$transNumber\">\n";
+		$returnString .= "\t<option value=\"\"></option>\n";
+		for ($i = 0; $accounts[$i]; $i++)
+		{
+			$returnString .= "\t<option value=\"".$accounts[$i]."\"";
+			$returnString .= selectedString($accounts[$i], $reverseLen, $max);
+			$returnString .= $accounts[$i]."</option>\n";
 		}
-		echo "</select>\n";
-		return;
+		$returnString .= "</select>\n";
+		return $returnString;
 	}
 	
 	if($type == 'words')
 	{
-		$type='description';
+		$type = 'description';
 	}
 	
-	if($type=='amount' | $type=='description')
+	if($type == 'amount' | $type == 'description')
 	{
-		echo "<input type=\"text\" name=\""	. $type
-			. $transNumber . "\"" . " maxlength=\"";
-		if($type=='amount'){
-			echo "10\" size=\"5\"";
-		}else{echo "15\"";}
-		echo "  value=\"" . $current . "\">\n";
-		return;
+		$returnString = "<input type=\"text\" name=\"{$type}{$transNumber}\" ";
+
+		if($type == 'amount')
+		{
+			$returnString .= "maxlength=\"10\" size=\"5\"";
+		}
+		else
+		{
+			$returnString .= "maxlength=\"15\"";
+		}
+		$returnString .= "  value=\"$current\">\n";
+		return $returnString;
 	}
-	
+
 	$J = (int)date($type);
-	if(!$reverseLen)
-	{
-		$reverseLen = 0;
-	}
+
 	if($type == 'Y')
 	{
 		$type = 'year';
-		if(!$max){$max=2;}
-		if(!$reverseLen){$reverseLen=1;}
-		$i= $J-$reverseLen;
-		$max += $i;
+		if (!$max)
+		{
+			$max=2;
+		}
+		if (!$reverseLen)
+		{
+			$reverseLen = 1;
+		}
+		$max += $J - $reverseLen;
 	}
-	else
+	else if ($type == 'd')
 	{
-		if($type == 'd'){
-			$type = 'day';
-			if(!$max){$max=31;}
-		}else{
-			if($type =='m'){
-				$type = 'month';
-				$months = array(0,Jan,Feb,Mar,Apr,
-					May,June,July,Aug,
-					Sep,Oct,Nov,Dec);
-				if(!$max){$max=12;}
-			}
+		$type = 'day';
+		if (!$max)
+		{
+			$max=31;
 		}
 	}
-	
-	echo "<select name=\"" . $type. $transNumber . "\">\n";
-	while($i<$max+1){
-		echo "\t<option value=\"";
-		echo $i. "\"";
-		selected($i,$J,$current);
-		echo ">";
-		if($type=='month'){echo $months[$i];}
-		else{echo $i;}
-		echo "</option>\n";
-		$i++;
+	else if ($type == 'm')
+	{
+			$type = 'month';
+			$months = array(0,Jan,Feb,Mar,Apr,
+							May,June,July,Aug,
+							Sep,Oct,Nov,Dec);
+			if(!$max)
+			{
+				$max=12;
+			}
 	}
-	echo  "</select>\n";
-}?>
+	
+	
+	//$returnString 
+	$returnString = "<select name=\"{$type}{$transNumber}\">\n";
+	
+	for ($i=1; $i <= $max; $i++;)
+	{
+		$returnString .= "\t<option value=\"";
+		$returnString .= $i. "\"";
+		$returnString .= selectedString($i,$J,$current);
+
+		if($type=='month')
+		{
+			$returnString .= $months[$i];
+		}
+		else
+		{
+			$returnString .= $i;
+		}
+		$returnString .= "</option>\n";
+	}
+	$returnString .=  "</select>\n";
+	return $returnString;
+}
+?>

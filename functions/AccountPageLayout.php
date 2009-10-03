@@ -14,11 +14,11 @@
 					May,June,July,Aug,
 					Sep,Oct,Nov,Dec);
 
-	$new = newest('trans');
+	$new = newest('transaction');
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X])){
-		if(submitItem('trans',$new)){
+		if(submitItem('transaction',$new)){
 			reloadPHP();
 			unset($_POST[$X]);
 		}
@@ -47,7 +47,7 @@
 
 	if($new > 0){
 		if (isset($_POST[$new])){
-			editItem('trans',$accountKey,$accounts,$new,true);
+			editItem('transaction',$accountKey,$accounts,$new,true);
 		}
 	}
 
@@ -68,7 +68,7 @@
 			$X = "X";
 			$X .= $rowdata['number'];
 			if (isset($_POST[$X])){
-				if(submitItem('trans',$rowdata['number'])){
+				if(submitItem('transaction',$rowdata['number'])){
 					reloadPHP();
 				}
 			unset($_POST[$X]);
@@ -118,7 +118,7 @@
 			echo "\n  </tr>";
 			
 			if (isset($_POST[$rowdata['number']])){
-				editItem('trans',$accountKey,$accounts,$rowdata['number'],false,false,
+				editItem('transaction',$accountKey,$accounts,$rowdata['number'],false,false,
 						(int)$rowdata['month'],$rowdata['day'],$rowdata['year'],
 						$rowdata['description'],$rowdata['from account'],
 						$rowdata['to account'],$rowdata['amount']);
