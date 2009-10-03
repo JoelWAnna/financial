@@ -90,7 +90,7 @@
 	//$returnString 
 	$returnString = "<select name=\"{$type}{$transNumber}\">\n";
 	
-	for ($i=1; $i <= $max; $i++;)
+	for ($i=1; $i <= $max; $i++)
 	{
 		$returnString .= "\t<option value=\"$i\" ";
 		$returnString .= selectedString($i,$J,$current);

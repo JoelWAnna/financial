@@ -117,9 +117,6 @@
 				echo "<div id=\"$idRD\">";
 				printf("%.2f", $CurrentAm);
 				echo "</div>";
-
-				printf("%.2f",$CurrentAm);
-				echo "</div>";
 				$CurrentAm	-= $rowdata['amount'];
 			}
 			
