@@ -8,7 +8,7 @@
 		$returnString = "<select name=\"{$current}{$type}{$transNumber}\">\n";
 		for ($i = 1; $accounts[$i]; $i++)
 		{
-			$returnString .= "\t<option value=\"".$i."\"";
+			$returnString .= "\t<option value=\"".$i."\" ";
 			$returnString .= selectedString($i, $reverseLen, $max);
 			$returnString .= $accounts[$i]."</option>\n";
 		}
@@ -22,7 +22,7 @@
 		$returnString .= "\t<option value=\"\"></option>\n";
 		for ($i = 0; $accounts[$i]; $i++)
 		{
-			$returnString .= "\t<option value=\"".$accounts[$i]."\"";
+			$returnString .= "\t<option value=\"".$accounts[$i]."\" ";
 			$returnString .= selectedString($accounts[$i], $reverseLen, $max);
 			$returnString .= $accounts[$i]."</option>\n";
 		}
@@ -92,8 +92,7 @@
 	
 	for ($i=1; $i <= $max; $i++;)
 	{
-		$returnString .= "\t<option value=\"";
-		$returnString .= $i. "\"";
+		$returnString .= "\t<option value=\"$i\" ";
 		$returnString .= selectedString($i,$J,$current);
 
 		if($type=='month')

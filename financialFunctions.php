@@ -22,8 +22,9 @@
 	//Called by pagelayout
 	include("functions/billsDue.php");
 	//Called by pagelayout
-	include("functions/MainPageLayout.php");	include("functions/AccountPageLayout.php");
-	//Calls to balanceRemaining, currentAmount, negativeRed
+	include("functions/MainPageLayout.php");
+	include("functions/AccountPageLayout.php");
+	//Calls to balanceRemaining, currentAmount,
 	//Calls to newTR, newestTransaction, submitTransaction
 	//Calls to reloadPHP, edittrans, isZero, billsDue
 	//Called by index

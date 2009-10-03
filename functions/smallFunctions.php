@@ -1,6 +1,6 @@
 <?php function validAccountforThisPage($type, $left, $page)
 {
-	if($type == "removed" && $page !=-2)
+	if(($type == "removed") && ($page != -2))
 	{
 		return false;
 	}
@@ -16,47 +16,19 @@
 }
 ?>
 
-<?php function negativeRed($i){
-	if($i < 0)
-	{
-		echo "<font color = red>";
-		return true;
-	}
-	return false;
-}
-?>
-
-<?php function selected($i,$j,$s){
-	if($s)
-	{
-		if($s == $i)
-		{
-			echo " selected=\"selected\"";
-		}
-	}
-	else
-	{
-		if($i == $j)
-		{
-			echo " selected=\"selected\"";
-		}
-	}
-}
-?>
-
 <?php function selectedString($i,$j,$s){
 	if($s)
 	{
 		if($s == $i)
 		{
-			return " selected=\"selected\">";
+			return "selected=\"selected\">";
 		}
 	}
 	else
 	{
 		if($i == $j)
 		{
-			return " selected=\"selected\">";
+			return "selected=\"selected\">";
 		}
 	}
 	return ">";

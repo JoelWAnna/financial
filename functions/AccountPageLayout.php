@@ -81,29 +81,43 @@
 				. $rowdata['description'] . "</td>"."\n    <td".">"
 				. $accounts[$rowdata['from account']] . "</td>"."\n    <td".">"
 				. $accounts[$rowdata['to account']]	. "</td>"."\n    <td".">";
-			echo "<div";
-			if($rowdata['from account']==$accountKey){
-				echo " id=\"negative\">-";
-			}else{echo ">";}
-			echo $rowdata['amount'];
+				
+			$idFA = "positive\">";
+			if ($rowdata['from account'] == $accountKey)
+			{
+				$idFA = "negative\">-";
+			}
+						
+			echo "<div id=\"$idFA"
+				. $rowdata['amount'];
 			echo "</div>";
 			
 			echo "</td>\n    <td>";
 			
-			if($rowdata['from account']==$accountKey){
-				echo "<div";
-				if($CurrentAm<0){echo " id=\"negative\"";}
-				echo ">";
-				printf("%.2f",$CurrentAm);
+			if ($rowdata['from account'] == $accountKey)
+			{
+				$idRD = "positive";
+				if ($CurrentAm < 0)
+				{
+					$idRD = "negative";
+				}
+				echo "<div id=\"$idRD\">";
+				printf("%.2f", $CurrentAm);
 				echo "</div>";
 				$CurrentAm += $rowdata['amount'];
 			}
-			
-			else{
-				$CurrentAm =round($CurrentAm,2);
-				echo "<div";
-				if($CurrentAm<0){echo " id=\"negative\"";}
-				echo ">";
+			else
+			{
+				$CurrentAm = round($CurrentAm, 2);
+				$idRD = "positive";
+				if ($CurrentAm < 0)
+				{
+					$idRD = "negative";
+				}
+				echo "<div id=\"$idRD\">";
+				printf("%.2f", $CurrentAm);
+				echo "</div>";
+
 				printf("%.2f",$CurrentAm);
 				echo "</div>";
 				$CurrentAm	-= $rowdata['amount'];
