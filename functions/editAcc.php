@@ -1,4 +1,4 @@
-<?php function editAcc($number,&$accountType){
+<?php function editAcc($number, &$accountTypes){
 	if($number == 'new')
 	{
 		$new =true;
@@ -41,23 +41,23 @@
 //if (mysql_num_rows($rQuery2) > 0){
 		$rowResults = mysql_fetch_assoc($rQuery2);
 		$type = $rowResults['Type'];
-		for ($i=0;$i < 100;$i++)
+/*		for ($i=0;$i < 100;$i++)
 		{
-			if($accountType[$i] == $type){break;}
+			if($accountTypes[$i] == $type){break;}
 		}
-		
+*/		
 		
 
-		echo dropDownString('words',"Name$number",$rowResults['Name']);
+		textField("Name$number", $rowResults['Name']);
 		echo "</td><td>";
 		if (!$new)
 		{
-			echo dropDownString('accounttype',"Type$number",'','',$type,$accountType);
+			dropDownAccountType("Type$number", $type,$accountTypes);
 		}
 		else
 		{
 			echo "<input type=\"text\" size=12 name=\"Type".$number."\"><br>";
-			echo dropDownString('accounttype',"2Type$number",'','',$type,$accountType);
+			dropDownAccountType("2Type$number", $type,$accountTypes);
 			echo "<br><select name=\"3Type$number\">";
 			echo "\t<option value=\"\"></option>\n";
 			echo "\t<option value=\"Checking\">Checking</option>\n";
@@ -69,11 +69,11 @@
 		}
 
 		echo "</td><td align=\"center\">";
-		echo dropDownString('amount',"IRate$number", $rowResults['Interest Rate']);
+		textField("IRate$number", $rowResults['Interest Rate'], 'amount');
 		echo "</td><td align=\"center\">";
-		echo dropDownString('amount',"Budget$number", $rowResults['Budget']);
+		textField("Budget$number", $rowResults['Budget'], 'amount');
 		echo "</td><td>";
-		echo dropDownString('amount',"start$number", $rowResults['start']);	
+		textField("start$number", $rowResults['start'], 'amount');	
 		
 		echo  "</td><td>";
 		echo  "<input type=\"submit\" name=\"account$number\" "

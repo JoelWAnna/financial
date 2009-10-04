@@ -1,111 +1,87 @@
-<?php function dropDownString($type, $transNumber, $current, $max=0, $reverseLen=0, $accounts=0)
+<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, $accountTypes)
+{
+	$returnString = "<select name=\"{$current}account{$transNumber}\">\n";
+	for ($i = 1; $accountTypes[$i]; $i++)
+	{
+		$returnString .= "\t<option value=\"".$i."\" ";
+		$returnString .= selectedString($i, $currentAccountPage, $transactionAccount);
+		$returnString .= $accountTypes[$i]."</option>\n";
+	}
+	$returnString .= "</select>\n";
+	echo $returnString;
+}
+
+function dropDownAccountType($transNumber, $transactionType, $accountTypes)
+{
+	$returnString  = "<select name=\"" /* . $current . 'accounttype' */
+					. "$transNumber\">\n";
+	$returnString .= "\t<option value=\"\"></option>\n";
+	for ($i = 0; $accountTypes[$i]; $i++)
+	{
+		$returnString .= "\t<option value=\"".$accountTypes[$i]."\" ";
+		$returnString .= selectedString($accountTypes[$i], $transactionType, '');
+		$returnString .= $accountTypes[$i]."</option>\n";
+	}
+	$returnString .= "</select>\n";
+	echo $returnString;
+}
+
+function textField($transNum, $current, $type='description')
+{
+
+	if($type == 'amount')
+	{
+		$length .= "maxlength=\"10\" size=\"5\"";
+	}
+	else
+	{
+		$length .= "maxlength=\"15\"";
+	}
+	echo  "<input type=\"text\" name=\"$type"
+		. "$transNum}\" $length value=\"$current\">\n";
+}
+function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 {
 //$type can be day (d) month  (m) or year (Y) it is case sensitive
 //$current == $day/$year/$month
-
-	if($type=='account')
-	{
-		$returnString = "<select name=\"{$current}{$type}{$transNumber}\">\n";
-		for ($i = 1; $accounts[$i]; $i++)
-		{
-			$returnString .= "\t<option value=\"".$i."\" ";
-			$returnString .= selectedString($i, $reverseLen, $max);
-			$returnString .= $accounts[$i]."</option>\n";
-		}
-		$returnString .= "</select>\n";
-		return $returnString;
-	}
-
-	if($type=='accounttype')
-	{
-		$returnString  = "<select name=\"" ./*  $current . $type. */ "$transNumber\">\n";
-		$returnString .= "\t<option value=\"\"></option>\n";
-		for ($i = 0; $accounts[$i]; $i++)
-		{
-			$returnString .= "\t<option value=\"".$accounts[$i]."\" ";
-			$returnString .= selectedString($accounts[$i], $reverseLen, $max);
-			$returnString .= $accounts[$i]."</option>\n";
-		}
-		$returnString .= "</select>\n";
-		return $returnString;
-	}
-	
-	if($type == 'words')
-	{
-		$type = 'description';
-	}
-	
-	if($type == 'amount' | $type == 'description')
-	{
-		$returnString = "<input type=\"text\" name=\"{$type}{$transNumber}\" ";
-
-		if($type == 'amount')
-		{
-			$returnString .= "maxlength=\"10\" size=\"5\"";
-		}
-		else
-		{
-			$returnString .= "maxlength=\"15\"";
-		}
-		$returnString .= "  value=\"$current\">\n";
-		return $returnString;
-	}
-
+	$i = 1;
 	$J = (int)date($type);
 
-	if($type == 'Y')
+	switch ($type)
 	{
+	case 'Y':
 		$type = 'year';
-		if (!$max)
-		{
-			$max=2;
-		}
-		if (!$reverseLen)
-		{
-			$reverseLen = 1;
-		}
-		$max += $J - $reverseLen;
-	}
-	else if ($type == 'd')
-	{
+		if (!$max) $max=2;
+		$i = $J - $numPrevYears;
+		$max += $i;
+		break;
+	case 'd':
 		$type = 'day';
-		if (!$max)
-		{
-			$max=31;
-		}
+		if (!$max) $max=31;
+		break;
+	case 'm':
+		$type = 'month';
+		$months = array(0,Jan,Feb,Mar,Apr,
+						May,June,July,Aug,
+						Sep,Oct,Nov,Dec);
+		if(!$max) $max=12;
+		break;
+	default:
+		return;
 	}
-	else if ($type == 'm')
-	{
-			$type = 'month';
-			$months = array(0,Jan,Feb,Mar,Apr,
-							May,June,July,Aug,
-							Sep,Oct,Nov,Dec);
-			if(!$max)
-			{
-				$max=12;
-			}
-	}
-	
-	
-	//$returnString 
+
 	$returnString = "<select name=\"{$type}{$transNumber}\">\n";
 	
-	for ($i=1; $i <= $max; $i++)
+	for (;$i <= $max; $i++)
 	{
 		$returnString .= "\t<option value=\"$i\" ";
 		$returnString .= selectedString($i,$J,$current);
-
-		if($type=='month')
-		{
-			$returnString .= $months[$i];
-		}
-		else
-		{
-			$returnString .= $i;
-		}
+		$returnString .= ($type=='month') ? $months[$i] : $i;
 		$returnString .= "</option>\n";
 	}
 	$returnString .=  "</select>\n";
-	return $returnString;
+	echo $returnString;
 }
+
+
 ?>

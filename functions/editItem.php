@@ -14,22 +14,22 @@
 				. "?page=" . $page . "\" method=\"post\">";
 		}
 	echo "<td width=55>";
-	echo dropDownString(m,$number,$month);
+	echo dropDownDate(m, $number, $month, 12);
 	echo "</td><td width=50>";
-	echo dropDownString(d,$number,$day);
+	echo dropDownDate(d, $number, $day, 31);
 	echo "</td><td width=55>";
-	echo dropDownString(Y,$number,$year);
+	echo dropDownDate('Y',$number,$year, 2);
 	echo "</td><td width=142>";
-	echo dropDownString('words',$number,$description);
-		if ($type == 'transaction')
-		{
-			echo "</td><td width=145>";
-			echo dropDownString('account',$number,'from',$fromAcc,$page,$accounts);
-		}
+	textField($number, $description);
+	if ($type == 'transaction')
+	{
+		echo "</td><td width=145>";
+		dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
+	}
 	echo "</td><td width=143>";
-	echo dropDownString('account',$number,'to',$toAcc,$page,$accounts);
+	dropDownAccount($number, 'to', $toAcc, $page, $accounts);
 	echo "</td><td width=50>";
-	echo dropDownString('amount',$number,$amount);
+	textField($number, $amount, 'amount');
 	echo "</td>";
 		if (($type == 'transaction') && !$noforms)
 		{
