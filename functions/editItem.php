@@ -1,4 +1,4 @@
-<?php function editItem($type, &$page, &$accounts, $number, $newtrans, $noforms,
+<?php function editItem($type, &$page, &$accounts, $number, $newtrans, $noforms=false,
 						$month="", $day="", $year="", $description="", $fromAcc="", $toAcc="", $amount="")
 {
 
@@ -17,7 +17,7 @@
 	echo "</td><td width=50>";
 	
 	$maxDay = 31;
-	switch ($month)
+/*	switch ($month)
 	{
 	case 2:
 		$maxDay--;
@@ -31,7 +31,7 @@
 	default:
 		break;
 	}
-	
+*/
 	echo dropDownDate(d, $number, $day, $maxDay);
 	echo "</td><td width=55>";
 	echo dropDownDate('Y',$number,$year, 2);

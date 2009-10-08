@@ -4,7 +4,7 @@ define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
 define('TRo','\n  <tr');
 
-	error_reporting(0);
+//	error_reporting(0);
 	
 	if (!file_exists("f-config.php"))
 	{
