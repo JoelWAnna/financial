@@ -2,9 +2,10 @@
 	// Main Page
 	// ---------
 	// $page cannot be less than 1
-	if ($page < 1)
+	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a><br>";
+	if ($page < 1 || !$accounts[$page])
 	{
-		echo "AccountLayout Called for invalid account";
+		echo "No account found with id = $page";
 		return;
 	}
 	$accountKey = $page;
@@ -23,7 +24,6 @@
 			unset($_POST[$X]);
 		}
 	}	
-	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a>";
 	echo  "<Br><B>".$accounts[$accountKey]."</B>";
 	echo  "<table bordercolor=\"000\" border=2>\n  ";
 	echo  "<tr align=center>\n"
@@ -61,7 +61,12 @@
 	$resultAcc = mysql_query($queryAcc)
 		or die('Error in query: $queryAcc.' . mysql_error());
 	
-	if (mysql_num_rows($resultAcc) > 0){
+	if (mysql_num_rows($resultAcc) <= 0)
+	{
+		echo '<b> - No transactions found</b>';
+	}
+	else
+	{
 		while($rowdata = mysql_fetch_assoc($resultAcc)){
 
 			
@@ -135,7 +140,7 @@
 						$rowdata['to account'],$rowdata['amount']);
 			}
 		}
-	}else{echo '<b>Error No transactions found</b>';}
+	}
 	echo "\n</table>";
 		mysql_free_result($resultAcc);
 	}

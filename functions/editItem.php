@@ -36,16 +36,16 @@
 	echo "</td><td width=55>";
 	echo dropDownDate('Y',$number,$year, 2);
 	echo "</td><td width=142>";
-	textField($number, $description);
+	echo textField($number, $description);
 	if ($type == 'transaction')
 	{
 		echo "</td><td width=145>";
-		dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
+		echo dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
 	}
 	echo "</td><td width=143>";
-	dropDownAccount($number, 'to', $toAcc, $page, $accounts);
+	echo dropDownAccount($number, 'to', $toAcc, $page, $accounts);
 	echo "</td><td width=50>";
-	textField($number, $amount, 'amount');
+	echo textField($number, $amount, 'amount');
 	echo "</td>";
 
 	if (($type == 'transaction') && !$noforms)

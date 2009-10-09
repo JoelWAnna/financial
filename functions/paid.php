@@ -1,5 +1,5 @@
-<?php function paid($billNum,$paid){
-	mysql_close($connect);
+<?php function paid($billNum,$paid)
+{
 	$connect3 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
 	mysql_select_db(DATABASENAME)

@@ -7,8 +7,6 @@
 				. "USING latin1) COLLATE latin1_swedish_ci";
 	}
 	
-	echo "<div id=\"Bills\">\n<table border>";
-	
 	$billsQ .= " ORDER BY `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
 			. BILLS . "`.`day`, `" . PREFIX . BILLS . "`.`year` ASC";
 	
@@ -19,6 +17,8 @@
 				
 	if (mysql_num_rows($billsR) > 0)
 	{
+		echo "<div id=\"Bills\">\n<table border>";
+	
 		while ($billRows = mysql_fetch_assoc($billsR))
 		{
 			echo "\n  <tr><td";
@@ -73,15 +73,15 @@
 				reloadPHP();
 			}
 		}
+		echo "<tr><td";
+		if	($allbills)
+		{
+			echo " colspan=2";
+		}
+		echo "></td>";	
+		printf("<td align=right>%.2f&nbsp </td><td></td></tr></table>\n</div>",$total);
 	}
 	mysql_free_result($billsR);
-	echo "<tr><td";
-	if	($allbills)
-	{
-		echo " colspan=2";
-	}
-	echo "></td>";	
-	printf("<td align=right>%.2f&nbsp </td><td></td></tr></table>\n</div>",$total);
 }
 ?>
 

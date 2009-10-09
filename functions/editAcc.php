@@ -2,18 +2,18 @@
 	if($number == 'new')
 	{
 		$new =true;
-		echo "<td align=\"center\">Number</td>";
+		echo "\n    <td align=\"center\">Number</td>\n";
 	}
-	echo  "<td align=\"center\">Name</td>"
-		. "<td align=\"center\">Type</td>"
-		. "<td>Interest Rate</td>"
-		. "<td>Budget</td>"
-		. "<td align=\"center\">start</td>"
+	echo  "    <td align=\"center\">Name</td>\n"
+		. "    <td align=\"center\">Type</td>\n"
+		. "    <td>Interest Rate</td>\n"
+		. "    <td>Budget</td>\n"
+		. "    <td align=\"center\">start</td>\n"
 		. "</tr>";
 
-	echo  "\n    <tr>"
+	echo  "\n<tr>"
 		. "<form action=\"" . $_SERVER['PHP_SELF'] . "?page=-1\" method=\"post\">"
-		. "<td align=\"center\">";
+		. "<td align=\"center\">\n";
 		
 	if($new){
 		$pQuery  = "Select `number` from `".PREFIX.ACCOUNTS."` ORDER BY `number` DESC ";
@@ -26,7 +26,11 @@
 			$row = mysql_fetch_row($rQuery);
 			$number = $row[0];
 			$number++;
-			echo "<input type=text READONLY size=\"3\" value=$number></td><td>";
+			echo "<input type=text READONLY size=\"3\" value=$number></td>\n<td>";
+		}
+		else
+		{
+			echo "<input type=text READONLY size=\"3\" value=1></td>\n<td>";
 		}
 		mysql_free_result($rQuery);
 	}
@@ -34,12 +38,16 @@
 	$pQuery2 = "Select * from `" . PREFIX.ACCOUNTS
 			 . "` WHERE `" . PREFIX.ACCOUNTS . "`.`number` =$number";
 	$rQuery2 = mysql_query($pQuery2);
-	//	or die("Error in query: $pQuery2." . mysql_error());
-	
-
-
-//if (mysql_num_rows($rQuery2) > 0){
+	// or die("Error in query: $pQuery2." . mysql_error());
+	if ($rQuery2)
+	{
 		$rowResults = mysql_fetch_assoc($rQuery2);
+		mysql_free_result($rQuery2);
+	}
+	else
+	$rowResults = "";
+//if (mysql_num_rows($rQuery2) > 0){
+		
 		$type = $rowResults['Type'];
 /*		for ($i=0;$i < 100;$i++)
 		{
@@ -48,17 +56,21 @@
 */		
 		
 
-		textField("Name$number", $rowResults['Name']);
-		echo "</td><td>";
+		echo textField("Name$number", $rowResults['Name']);
+		echo "</td>\n<td>";
 		if (!$new)
 		{
-			dropDownAccountType("Type$number", $type,$accountTypes);
+			echo dropDownAccountType("Type$number", $type,$accountTypes);
 		}
 		else
 		{
-			echo "<input type=\"text\" size=12 name=\"Type".$number."\"><br>";
-			dropDownAccountType("2Type$number", $type,$accountTypes);
-			echo "<br><select name=\"3Type$number\">";
+			echo "<input type=\"text\" size=12 name=\"Type".$number."\">\n<br>";
+			if ($accountTypes)
+			{
+				echo dropDownAccountType("2Type$number", $type,$accountTypes);
+				echo "<br>";
+			}
+			echo "<select name=\"3Type$number\">\n";
 			echo "\t<option value=\"\"></option>\n";
 			echo "\t<option value=\"Checking\">Checking</option>\n";
 			echo "\t<option value=\"Savings\">Savings</option>\n";
@@ -68,21 +80,25 @@
 			echo "</select>";
 		}
 
-		echo "</td><td align=\"center\">";
-		textField("IRate$number", $rowResults['Interest Rate'], 'amount');
-		echo "</td><td align=\"center\">";
-		textField("Budget$number", $rowResults['Budget'], 'amount');
-		echo "</td><td>";
-		textField("start$number", $rowResults['start'], 'amount');	
+		echo  "</td>\n"
+			. "<td align=\"center\">\n\t";
+		echo textField("IRate$number", $rowResults['Interest Rate'], 'amount');
+		echo  "</td>\n"
+			. "<td align=\"center\">\n\t";
+		echo textField("Budget$number", $rowResults['Budget'], 'amount');
+		echo "</td>\n"
+			. "<td>\n\t";
+		echo textField("start$number", $rowResults['start'], 'amount');	
 		
-		echo  "</td><td>";
+		echo  "</td>\n"
+			. "<td>\n\t";
 		echo  "<input type=\"submit\" name=\"account$number\" "
 			. "value=\"Add account\" style=\"background-color: "
-			. "abcdef;\">"
-			. "</td>\n  </form>"
-			. "</tr><tr>";
+			. "abcdef;\">\n\t"
+			. "</td>\n  </form>\n"
+			. "</tr>\n<tr>";
 //}
-		mysql_free_result($rQuery2);
+
 	return $number;
 	
 }?>

@@ -8,7 +8,7 @@
 		$returnString .= $accountTypes[$i]."</option>\n";
 	}
 	$returnString .= "</select>\n";
-	echo $returnString;
+	return $returnString;
 }
 
 function dropDownAccountType($transNumber, $transactionType, $accountTypes)
@@ -23,7 +23,7 @@ function dropDownAccountType($transNumber, $transactionType, $accountTypes)
 		$returnString .= $accountTypes[$i]."</option>\n";
 	}
 	$returnString .= "</select>\n";
-	echo $returnString;
+	return $returnString;
 }
 
 function textField($transNum, $current, $type='description')
@@ -37,8 +37,8 @@ function textField($transNum, $current, $type='description')
 	{
 		$length .= "maxlength=\"15\"";
 	}
-	echo  "<input type=\"text\" name=\"$type"
-		. "$transNum}\" $length value=\"$current\">\n";
+	return  "<input type=\"text\" name=\"$type"
+		. "$transNum\" $length value=\"$current\">\n";
 }
 function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 {
@@ -80,7 +80,7 @@ function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 		$returnString .= "</option>\n";
 	}
 	$returnString .=  "</select>\n";
-	echo $returnString;
+	return $returnString;
 }
 
 

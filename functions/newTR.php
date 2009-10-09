@@ -62,7 +62,7 @@
 		. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
 		. "<td colspan=7 align=center>";
 
-	dropDownDate('d', $letter, $number, 10);
+	echo dropDownDate('d', $letter, $number, 10);
 
 	echo "<input type=\"submit\" name=\"transactions\" "
 		. "value=\"more transactions\" style=\"background-color: abcdef;\">\n";

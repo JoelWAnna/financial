@@ -12,11 +12,12 @@
 
 	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	$index=0;
+
 	if (mysql_num_rows($typeresult) > 0){
 		while($row = mysql_fetch_row($typeresult)){		
 			$ACC_TYPE[$index++]=$row[0];
 		}
-	}else{echo "<b>Error Line 14.setupacc $typeresult</b>";}
+	}//else echo "<b>No account types found\n\n</b>";}
 	mysql_free_result($typeresult);
 	if (mysql_num_rows($resultname) > 0){
 		while($row = mysql_fetch_assoc($resultname)){	
@@ -31,7 +32,7 @@
 			$ACC_3[$number]= $type;
 			
 		}
-	}else{echo "<b>Error Line 29.setupacc $resultname</b>";}
+	}//else echo "<b>No accounts found\n</b>";
 	mysql_free_result($resultname);
 	
 }

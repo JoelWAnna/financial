@@ -4,6 +4,8 @@ define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
 define('TRo','\n  <tr');
 
+// TODO: Make user configurable
+date_default_timezone_set('America/Los_Angeles');
 //	error_reporting(0);
 	
 	if (!file_exists("f-config.php"))
@@ -40,8 +42,10 @@ define('TRo','\n  <tr');
 		if ($page != -1)
 		{
 			billsDue($page, $ACC_2);
-?><!-- <table><tr><TD  width=19% valign=top></td><TD width=60%> --><?
+?><!-- <table><tr><TD  width=19% valign=top></td><TD width=60%> --><?php
 		// Main Page Columns
+		if ($ACC_1)
+		{
 		echo "<div id=\"Main\">"
 			."<table border=3 class=\"t1\">\n"
 			."<tr>";
@@ -49,15 +53,18 @@ define('TRo','\n  <tr');
 			ShowMainPageColumn(false, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 		echo "</tr>\n"
 			."</table>";
-?><!-- </td><td width=19% valign=top> --><?
+?><!-- </td><td width=19% valign=top> --><?php
 			totals($ACC_1,$ACC_3,$ACC_TYPE);
-?><!--</td></tr></table>--><?
+		}
+?><!--</td></tr></table>--><?php
 			newTR(0,$ACC_1);
 		}
+		
 		if ($page)
 		{
-			echo "<table border=3 align=center><tr>";
-			$i =editAcc('new',$ACC_TYPE);
+			echo  "<table border=3 align=center>\n"
+				. "<tr>";
+			$i = editAcc('new',$ACC_TYPE);
 			$foo = "account" . $i;
 			if (isset($_POST[$foo]))
 			{
@@ -75,7 +82,8 @@ define('TRo','\n  <tr');
 </html>
 
 
-<?/*
+
+<?php $F/*
 	extract($_POST);extract($_SERVER);
 	$host = "127.0.0.1";$local = true;$timeout = "1";
 	if ($REMOTE_ADDR) {
