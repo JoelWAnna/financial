@@ -14,7 +14,7 @@ $START = "amountstart".$number;
 	$_POST[$START]=(float)$_POST[$START];
 	
 	if (!$_POST[$NAME]){
-		echo ' You did not enter a name ';
+		Panic("You did not enter a name");
 		return false;
 	}
 	if($new =='new'){
@@ -25,13 +25,13 @@ $START = "amountstart".$number;
 		}else if($_POST[$TYPE3]){
 			$type = $_POST[$TYPE3];
 		}else {	
-		echo ' You did not enter a type ';
+		Panic("You did not enter a type");
 		return false;
 		}
 	
 	}else{
 	if (!$_POST[$TYPE]){
-		echo ' You did not enter a type ';
+		Panic("You did not enter a type");
 		return false;
 	}else{$type = $_POST[$TYPE];}
 	}

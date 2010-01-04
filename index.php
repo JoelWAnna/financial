@@ -26,7 +26,11 @@ date_default_timezone_set('America/Los_Angeles');
 				"database set up?<a href=\"setup\">setup</a>");
 ?>
 <html>
-<head><title><?php echo $ver; ?></title>
+<head>
+<?php
+FINinit();
+echo "\n\n<title> $ver </title>"
+?>
 <!--<link href="<?php// echo$app; ?>support/styles.css" rel="stylesheet" type="text/css">-->
 <link href="resources/financialstyles.css" rel="stylesheet" type="text/css">
 </head>

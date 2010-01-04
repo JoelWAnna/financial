@@ -8,11 +8,11 @@
     $YEAR = 'year' . $number;
 	$_POST[$AMOUNT]=(float)$_POST[$AMOUNT];
 	if (!$_POST[$AMOUNT]){
-		echo 'You did not enter a valid amount ';
+		Panic("You did not enter a valid amount");
 		return false;
 	}
 	if (!$_POST[$DESCRIPTION]){
-		echo ' You did not enter a description ';
+		Panic("You did not enter a description");
 		return false;
 	}
 	if($type=='bill'){
@@ -24,7 +24,7 @@
 	if ($type == 'transaction')
 	{
 		if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT]){
-			echo ' Accounts cannot be the same ';
+			Panic("Accounts cannot be the same");
 			return false;
 		}
 		if($_POST[$AMOUNT] < 0){
@@ -52,14 +52,14 @@
 							. "`.`" . PREFIX . TRANSACTIONS
 							. "` SET ";
 				}else{
-					echo "no changes";
+					Panic("no changes");
 					return false;
 				}
 			}
 		}
 		else{
 			if($number == 0){
-				echo'transaction number cannot be 0';
+				Panic("transaction number cannot be 0");
 			}
 			$updateQ ="Insert Into `". DATABASENAME
 					. "`.`".PREFIX . TRANSACTIONS

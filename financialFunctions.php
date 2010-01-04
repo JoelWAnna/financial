@@ -33,17 +33,16 @@
 	//Calls nothing
 	//Called by index
 	include("functions/submitAcc.php");
-
+//
 	include("functions/editAcc.php");
-
+//
 	include("functions/submitItem.php");
 	//Called by newTR, pagelayout
 	include("functions/sumMonth.php");
 	//Called by currentAmount
 	include("functions/totals.php");
 	//Called by currentAmount
-
-
+//
+	include("functions/JavaFunctions.php");
+//
 ?>
-
-
