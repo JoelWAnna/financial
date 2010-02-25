@@ -17,17 +17,14 @@
 				
 	if (mysql_num_rows($billsR) > 0)
 	{
-		echo "<div id=\"Bills\">\n<table border>";
+		echo "<div id=\"Bills\">\n";
 	
+		echo  "<ul><li class=\"hdr\">Account</li>"
+			. "<li class=\"hdr\">Amount</li>"
+			. "<li class=\"hdr2\">&nbsp;   Date   &nbsp;</li>";
 		while ($billRows = mysql_fetch_assoc($billsR))
-		{
-			echo "\n  <tr><td";
-			if ($allbills)
-			{
-				echo " colspan=2";
-			}
-			echo ">";
-			
+		{	
+			echo  "<li class=\"ent\">";
 			if ($billRows['to account'] > 0)
 			{
 				echo $accounts[$billRows['to account']];
@@ -36,21 +33,20 @@
 			{
 				echo $billRows['description'];
 			}
-			echo "</td>\n    <td > <li>";
-			
+			echo  "</li>\n";
 			$temp = $billRows['amount'];
 			$total += $temp;
-			echo $temp;
+			echo  "<li class=\"ent\">" . $temp . "&nbsp </li>\n";
 		
-			echo "&nbsp </li></td></tr><tr>". "\n    <td> <li>"
+			echo "\n <li class=\"ent2\">"
 				. $billRows['month'] . "/" 
 				. $billRows['day']. "/"
-				. $billRows['year'] . "</li></td>"
+				. $billRows['year'] . "</li>"
 				. "\n    "
 				. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
-				. "\n      <td class=\"button\"><input type=\"submit\"name=\"paid"
+				. "\n      <li class=\"ent\"><input type=\"submit\"name=\"paid"
 				. $billRows['number'] . "\" value=\"Paid\""
-				." ></td>\n    </form>";
+			." ></li>\n    </form>";
 				
 			if ($allbills)
 			{
@@ -59,7 +55,6 @@
 					. "\"unpaid" . $billRows['number'] . "\" value=\"Not paid\""
 					. "  style=\" width: 4.5em\"></td>\n    </form>";
 			}
-			echo "\n  </tr>";
 			$paidQ = 'paid'.$billRows['number'];
 			$unpaidQ = 'un'.$paidQ;
 			if (ISSET($_POST[$paidQ]))
@@ -73,15 +68,12 @@
 				reloadPHP();
 			}
 		}
-		echo "<tr><td";
-		if	($allbills)
-		{
-			echo " colspan=2";
-		}
-		echo "></td>";	
-		printf("<td align=right>%.2f&nbsp </td><td></td></tr></table>\n</div>",$total);
+
+		printf("<li class=\"ent\">%.2f&nbsp </li></ul>\n</div>",$total);
 	}
 	mysql_free_result($billsR);
+
+	
 }
 ?>
 
