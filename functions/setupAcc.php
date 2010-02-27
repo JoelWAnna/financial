@@ -8,7 +8,7 @@
 	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
 	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."`";
 	$typeresult = mysql_query($querytype)
-	or die(mysql_error()."<br>".$text."<a href=\"setup\\setup-config.php\">setup</a>");
+	or die(mysql_error()."<br>".$text."<a href=\"setup\">setup</a>");
 
 	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	$index=0;

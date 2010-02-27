@@ -17,14 +17,24 @@
 				
 	if (mysql_num_rows($billsR) > 0)
 	{
-		echo "<div id=\"Bills\">\n";
-	
-		echo  "<ul><li class=\"hdr\">Account</li>"
-			. "<li class=\"hdr\">Amount</li>"
-			. "<li class=\"hdr2\">&nbsp;   Date   &nbsp;</li>";
+?>
+		<div id="Bills">
+		<ul>
+		<li class="hdr1">Account</li>
+		<li class="hdr2">Date</li>
+		<li class="hdr3">Amount</li>
+		<li class="_hdr">&nbsp;</li>
+<?php
+		if ($allbills)
+		{
+			echo "<li class=\"_hdr\">&nbsp;</li>\n";
+		}
 		while ($billRows = mysql_fetch_assoc($billsR))
 		{	
-			echo  "<li class=\"ent\">";
+
+				
+			echo  "<li class=\"ent1\">"
+				. "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=" . $billRows['to account'] . "\">";
 			if ($billRows['to account'] > 0)
 			{
 				echo $accounts[$billRows['to account']];
@@ -33,27 +43,32 @@
 			{
 				echo $billRows['description'];
 			}
-			echo  "</li>\n";
-			$temp = $billRows['amount'];
-			$total += $temp;
-			echo  "<li class=\"ent\">" . $temp . "&nbsp </li>\n";
-		
+			echo  "</a></li>\n";
+			
 			echo "\n <li class=\"ent2\">"
 				. $billRows['month'] . "/" 
 				. $billRows['day']. "/"
-				. $billRows['year'] . "</li>"
-				. "\n    "
+				. $billRows['year'] . "</li>";
+			
+			$temp = $billRows['amount'];
+			$total += $temp;
+			echo  "<li class=\"ent3\">" . $temp . "&nbsp </li>\n";
+		
+
+
+			echo "\n"
+				. "<li>"
 				. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
-				. "\n      <li class=\"ent\"><input type=\"submit\"name=\"paid"
+				. "\n      <input type=\"submit\"name=\"paid"
 				. $billRows['number'] . "\" value=\"Paid\""
-			." ></li>\n    </form>";
-				
+			." >\n    </form></li>";
+
 			if ($allbills)
 			{
-				echo "\n    <form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\""
-					. " method=\"post\">\n      <td><input type=\"submit\" name="
+				echo "\n    <li><form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\""
+					. " method=\"post\">\n      <input type=\"submit\" name="
 					. "\"unpaid" . $billRows['number'] . "\" value=\"Not paid\""
-					. "  style=\" width: 4.5em\"></td>\n    </form>";
+					. "  style=\" width: 4.5em\">\n    </form></li>";
 			}
 			$paidQ = 'paid'.$billRows['number'];
 			$unpaidQ = 'un'.$paidQ;
@@ -68,8 +83,10 @@
 				reloadPHP();
 			}
 		}
-
-		printf("<li class=\"ent\">%.2f&nbsp </li></ul>\n</div>",$total);
+		echo "<li class=\"ftr\">Total</li>";
+		echo "<li class=\"ent\">";
+		printf("%.2f&nbsp",$total);
+		echo "</li></ul>\n</div>";
 	}
 	mysql_free_result($billsR);
 

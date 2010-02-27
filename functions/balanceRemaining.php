@@ -1,17 +1,12 @@
 <?php
 
 function balanceRemainingHeader()
-{
-	$fourspaces = "&nbsp&nbsp&nbsp&nbsp";
-
-	echo  "<td colspan=2 align=right>"
-		. "<div id=\"small\">"
-		. "$fourspaces&nbsp&nbsp Available"
-		. "</div></td>"
-		. "<td align=right>"
-		. "<div id=\"small\">"
-		. "$fourspaces Limit"
-		. "</div></td>";
+{	echo  "<li class=\"ccHdr\">"
+		. "Available"
+		. "</li>"
+		. "<li class=\"ccHdr\">"
+		. "Limit"
+		. "</li>";
 }
 
 function balanceRemaining($AccountName,$Amount)
@@ -22,13 +17,14 @@ function balanceRemaining($AccountName,$Amount)
 	$resultbal = mysql_query($bal)
 		or die("Error in query: $bal." . mysql_error());
 
-	if (mysql_num_rows($resultbal) > 0)
+	if (mysql_num_rows($resultbal) <= 0)
 	{
-		$fourspaces = "&nbsp&nbsp&nbsp&nbsp";
-
+		die($bal);
+	}
+	else
+	{
 		$row = mysql_fetch_row($resultbal);
-		echo  "<td align=right>"
-			. "<div id=\"small\">$fourspaces ";
+		echo  "<li class=\"small\">";
 		if ($Amount)
 		{
 			printf("%.2f", $row[0] + $Amount);
@@ -37,14 +33,8 @@ function balanceRemaining($AccountName,$Amount)
 		{
 			echo $row[0];
 		}
-			
-		echo  "</div></td>"
-			. "<td align=right>"
-			. "<div id=\"small\">$fourspaces ". $row[0] . "</div></td>";
-	}
-	else
-	{
-		die($bal);
+		echo  "</li>"
+			. "<li class=\"small\">". $row[0] . "</li>";
 	}
 	mysql_free_result($resultbal);
 }

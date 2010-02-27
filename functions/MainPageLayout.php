@@ -1,30 +1,33 @@
 <?php function ShowMainPageColumn($leftColumn, $page, &$accounttype, &$accounts, &$accounts2, &$accounts3)
 {
 	$EditAccount = $page ? true : false;
-	echo  "\n    <td align=center>\n      "
-		. "      <table>\n";	
 
+	$left = $leftColumn ? "leftColumn" : "rightColumn";
+	echo  "<div id=\"" . $left . "\">\n"
+		. "<ul>\n";
 	for($index = 0; $accounttype[$index]; $index++)
 	{
 		if(validAccountforThisPage($accounttype[$index], $leftColumn, $page))
 		{
-			echo  "  <tr>\n"
-				. "    <td>";
-
 			if($EditAccount)
 			{
-				echo "</td>\n    <td>";
+				echo "<li class=\"small\"></li>\n";
 			}
+			
+			echo "<li class=\"AccountHDR\">"
+				. $accounttype[$index] . " Accounts</li>\n";
 
-			echo  "<u><B>"
-				. $accounttype[$index] . " Accounts"
-				. "</B></u>"
-				. "</td>\n";
+			echo "<li class=\"empty\">&nbsp;</li>\n";
+			
 			if($accounttype[$index]== "Credit Card")
 			{
 				balanceRemainingHeader();
 			}
-			echo "\n  </tr>";
+			else if ($leftColumn)
+			{
+				echo  "<li class=\"empty\">&nbsp;</li>\n"
+					. "<li class=\"empty\">&nbsp;</li>\n";
+			}
 
 			$AQuery = " SELECT number FROM `".PREFIX.ACCOUNTS."` "
 					. "WHERE `Type` = CONVERT( _utf8 '$accounttype[$index]'"
@@ -32,66 +35,73 @@
 
 			$rAcc = mysql_query($AQuery)
 				or die("Error in query: line 31 $AQuery" . mysql_error());
-
-
 			
-			
-			if (mysql_num_rows($rAcc) > 0){
-				while($rowAcc = mysql_fetch_row($rAcc)){
+			if (mysql_num_rows($rAcc) <= 0)
+			{
+				echo "<b>Error Line 47 $resultAccount</b>";
+			}				
+			else
+			{
+				while($rowAcc = mysql_fetch_row($rAcc))
+				{
 					$j=$rowAcc[0];
-					echo "\n  <tr>";
 					
-					if($EditAccount){
+					if($EditAccount)
+					{
 						echo "<form action=\"" . $_SERVER['PHP_SELF']
 							. "?page=$page\" method=\"post\">"
-							. "\n    <td>"
-							. "<input type=\"submit\" name=\"$j\" value=\"edit\">"
-							. "</td>\n    </form>";	
+							. "<input type=\"submit\" name=\"$j\" value=\"edit\">";
 					}
-					echo  "\n    <td><li>"
+					
+					echo  "\n    <li class=\"accountname\">"
 						. "<a href =\"" . $_SERVER['PHP_SELF'] . "?page=$j\">"
-						. "<span>" . $accounts[$j] . "</span>"
-						. "</a>"
-						. "</li></td>";
+						. $accounts[$j]
+						. "</a>" . "</li>\n";
 
 					if($accounttype[$index]== "Loan")
 						$CurrentFunds[$j] = currentAmount($j,$leftColumn) * ($leftColumn ? -1 : 1);
 					else
 						$CurrentFunds[$j] = currentAmount($j,!$leftColumn) * ($leftColumn ? 1 : -1);
 
-					echo "\n    <td width=75px align=right>";
+					//echo "\n    <td width=75px align=right>";
 					
 					
 					if($CurrentFunds[$j]<0)
 					{
-						echo "<div id=\"negative\">";
+						echo "<li class=\"fundsneg\">";
 					}
 					else
 					{
-						echo "<div>";
+						echo "<li class=\"funds\">";
 					}
-					printf("%.2f</div></td>\n", $CurrentFunds[$j]);
+					//printf("%.2f</div></td>\n", $CurrentFunds[$j]);
+					printf("%.2f</li>\n", $CurrentFunds[$j]);
 					if($accounttype[$index]== "Credit Card")
-						{balanceRemaining($accounts2[$j],$CurrentFunds[$j]);}
-					if(isset($_POST[$j])){
-						echo "</tr><tr>";
+					{
+						balanceRemaining($accounts2[$j],$CurrentFunds[$j]);
+					}
+					else if ($leftColumn)
+					{
+						echo  "<li class=\"empty\">&nbsp;</li>\n"
+							. "<li class=\"empty\">&nbsp;</li>\n";
+					}
+					if(isset($_POST[$j]))
+					{
 						editAcc($j,$accounttype);
-						echo "</tr><tr>";
 					}
 					$foo = "account" . $j;
-					if(isset($_POST[$foo])){
-						if(submitAcc($j)){
-						reloadPHP();
+					if(isset($_POST[$foo]))
+					{
+						if(submitAcc($j))
+						{
+							reloadPHP();
 						}
-					}
-					echo "\n  </tr>\n";		
+					}	
 				}
-			}else{echo "<b>Error Line 98 $resultAccount</b>";}
+			}
 			mysql_free_result($rAcc);
 		}
 	}
-	echo "</table>";
-	echo"</td>";
-	echo "</div>";
+	echo "</ul></div>";
 }
 ?>

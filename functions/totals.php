@@ -1,7 +1,11 @@
 <?php function totals(&$accounts,&$accounts3,&$accounttype)
 {
-	echo  "<div id=\"Totals\">\n"
-		. "<table border=3>";
+	echo  "<div id=\"Totals\">\n<ul>"
+	;//	. "<table border=3>";
+	
+	echo "<li class=\"hdr_ex\">&nbsp;</li>"
+		. "<li class=\"hdr\">SubTotal</li>"
+		. "<li class=\"hdr\">Total</li>";
 
 	for ($index = 0; $index < 100; $index++)
 	{
@@ -17,42 +21,42 @@
 					$acc[$accounttype[$index]] += currentAmount($i);
 				}
 			}
-			
 			if($acc[$accounttype[$index]])
 			{
+				echo "<li class=\"name\">$accounttype[$index]</li>";
 				$total += $acc[$accounttype[$index]];
 					
-				echo "<tr><td align=center>";
+				//echo "<tr><td align=center>";
 
 				if ($acc[$accounttype[$index]] < 0)
 				{
-					echo "<div id=\"negative\">";
+					echo "<li class=\"fundsneg\">";
 				}
 				else
 				{
-					echo "<div>";
+					echo "<li class=\"funds\">";
 				}
 				
 				echo $acc[$accounttype[$index]];
-				echo "</div>";
+				echo "</li>";
 				
-				echo "</td><td align=center>";
+			//	echo "</td><td align=center>";
 				
 				if($total<0)
 				{
-					echo "<div id=\"negative\">";
+					echo "<li class=\"fundsneg\">";
 				}
 				else
 				{
-					echo "<div>";
+					echo "<li class=\"funds\">";
 				}
 				
 				echo $total;
-				echo "</div>";
-				echo "</td></tr>";
+				echo "</li>";
+				//echo "</td></tr>";
 			}
 		}
 	}
-	echo "</table>\n</div>";
+	echo "</ul>\n</div>";
 }
 ?>

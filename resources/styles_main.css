@@ -1,0 +1,310 @@
+#Bills 
+{
+	position:absolute;
+	width:240px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+}
+
+#Bills ul
+{
+	width:240px;
+	margin:0;
+	padding:0;
+}
+
+#Bills ul li
+{
+	width:50px;
+	display:block;
+	float:left;
+	list-style:none;
+	border:1px solid #fff;
+	font-size:7pt;
+	text-align:center;
+	margin:0;
+}
+	
+#Bills ul li.hdr1
+{
+	background:#666;
+	color:#fff;
+	width:70px;
+}
+	
+#Bills ul li.hdr2
+ {
+	width:50px;
+	background:#666;
+	color:#fff;
+	font-size:7pt;
+	text-align:center;
+}
+
+#Bills ul li.hdr3
+{
+	background:#666;
+	color:#fff;
+	width:50px;
+}
+	
+#Bills ul li._hdr
+{
+	width:50px;
+}
+
+#Bills ul li.ftr 
+{
+	width:120px;
+	background:#666;
+	color:#fff;
+}
+
+#Bills ul li form
+ {
+	margin:0px 20px 2px 0px;
+	align:center;
+}
+
+#Bills ul li.ent1
+{
+	background:#ccc;
+	width:70px;
+}
+
+#Bills ul li.ent2
+{
+	width:50px;
+	background:#ccc;
+}
+#Bills ul li.ent3
+{
+	width:50px;
+	background:#ccc;
+}
+
+#Bills input 
+{
+	font-size: 6pt;
+	height: 1.7em;
+	width: 3em;
+}
+	
+#Main 
+{
+	position:absolute;
+	left:200px;
+	width:520px;
+}
+
+#leftColumn
+{
+	position:absolute;
+	left:220px;
+	width:350px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+}
+	
+#leftColumn ul
+{
+	width:350px;
+	margin:0;
+	padding:0;
+}
+
+#leftColumn ul li
+ {
+	width:40px;
+	height:17px;
+	display:block;
+	float:left;
+	list-style:none;
+	border:1px solid #fff;
+	font-size:7pt;
+	text-align:center;
+	margin:0;
+}
+
+#leftColumn ul li.AccountHDR 
+{
+	background:#666;
+	width:120px;	
+	color:#fff;
+}
+	
+#leftColumn ul li.accountname
+ {
+	background:#ccc;
+	width:120px;
+}
+#leftColumn ul li.small {
+	width:40px;
+	height:17px;
+	color:#000;
+}
+
+#leftColumn ul li.ccHdr 
+{
+	background:#666;
+	color:#fff;
+	width:40px;
+	height:17px;
+	font-size:7pt;
+}
+	
+#leftColumn ul li.empty
+ {
+	width:40px;
+	height:17px;
+	color:#000;
+}
+	
+#leftColumn ul li.fundsneg
+ {
+	background:#ccc;
+	color:#f00;
+	width:40px;
+}
+#leftColumn ul li.funds
+{
+	background:#ccc;
+	width:40px;
+}
+
+
+#rightColumn
+ {
+	position:absolute;
+	left:480px;
+	right:300px;
+	width:170px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+}
+	
+#rightColumn ul 
+{
+	margin:0;
+	padding:0;
+}
+
+#rightColumn ul li 
+{
+	width:40px;
+	height:17px;
+	display:block;
+	float:left;
+	list-style:none;
+	border:1px solid #fff;
+	font-size:7pt;
+	text-align:center;
+	margin:0;
+}
+
+#rightColumn ul li.AccountHDR 
+{
+	background:#666;
+	width:120px;	
+	color:#fff;
+}
+	
+#rightColumn ul li.accountname
+ {
+	background:#ccc;
+	width:120px;
+}
+#rightColumn ul li.small
+ {
+	width:40px;
+	height:17px;
+	color:#000;
+}
+	
+#rightColumn ul li.empty 
+{
+	width:40px;
+	height:17px;
+	color:#000;
+}
+	
+#rightColumn ul li.fundsneg 
+{
+	background:#ccc;
+	color:#f00;
+	width:40px;	
+}
+#rightColumn ul li.funds 
+{
+	background:#ccc;
+	width:40px;
+}
+
+	
+#Totals 
+{
+	position:absolute;
+	left:650px;
+	width:180px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+}
+
+#Totals ul 
+{
+	width:180px;
+	margin:0;
+	padding:0;
+}
+
+#Totals ul li
+ {
+	width:40px;
+	display:block;
+	float:left;
+	list-style:none;
+	border:1px solid #fff;
+	font-size:7pt;
+	text-align:center;
+	margin:0;
+}
+		
+		
+#Totals ul li.hdr_ex 
+{
+	background:#666;
+	width:70px;
+}
+#Totals ul li.hdr
+{
+	background:#666;
+	width:40px;
+}
+#Totals ul li.name 
+{
+	background:#ccc;
+	width:70px;
+}
+#Totals ul li.fundsneg 
+{
+	background:#ccc;
+	color:#f00;
+	width:40px;
+}
+#Totals ul li.funds
+{
+	background:#ccc;
+	width:40px;
+}
