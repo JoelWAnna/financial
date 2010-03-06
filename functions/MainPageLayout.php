@@ -65,16 +65,9 @@
 
 					//echo "\n    <td width=75px align=right>";
 					
-					
-					if($CurrentFunds[$j]<0)
-					{
-						echo "<li class=\"fundsneg\">";
-					}
-					else
-					{
-						echo "<li class=\"funds\">";
-					}
-					//printf("%.2f</div></td>\n", $CurrentFunds[$j]);
+					$neg = ($CurrentFunds[$j]<0) ? " negative" : ""; 
+
+					echo  "  <li class=\"funds$neg\">";
 					printf("%.2f</li>\n", $CurrentFunds[$j]);
 					if($accounttype[$index]== "Credit Card")
 					{

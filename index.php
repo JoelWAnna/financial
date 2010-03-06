@@ -60,7 +60,7 @@ else
 	//		echo "</div>";
 				totals($ACC_1,$ACC_3,$ACC_TYPE);
 			}
-		//	newTR(0,$ACC_1);
+			newTR(0,$ACC_1);
 		}
 		else
 		{

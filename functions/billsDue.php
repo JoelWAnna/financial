@@ -24,6 +24,7 @@
 		<li class="hdr2">Date</li>
 		<li class="hdr3">Amount</li>
 		<li class="_hdr">&nbsp;</li>
+
 <?php
 		if ($allbills)
 		{
@@ -47,17 +48,17 @@
 			
 			echo "\n <li class=\"ent2\">"
 				. $billRows['month'] . "/" 
-				. $billRows['day']. "/"
-				. $billRows['year'] . "</li>";
+				. $billRows['day']   . "/"
+				. $billRows['year']  . "</li>";
 			
 			$temp = $billRows['amount'];
 			$total += $temp;
-			echo  "<li class=\"ent3\">" . $temp . "&nbsp </li>\n";
+			echo  "<li class=\"ent3\">" . $temp . "</li>\n";
 		
 
 
 			echo "\n"
-				. "<li>"
+				. "<li class=\"ent4\">"
 				. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
 				. "\n      <input type=\"submit\"name=\"paid"
 				. $billRows['number'] . "\" value=\"Paid\""
@@ -84,8 +85,8 @@
 			}
 		}
 		echo "<li class=\"ftr\">Total</li>";
-		echo "<li class=\"ent\">";
-		printf("%.2f&nbsp",$total);
+		echo "<li class=\"ftr_total\">";
+		printf("%.2f",$total);
 		echo "</li></ul>\n</div>";
 	}
 	mysql_free_result($billsR);

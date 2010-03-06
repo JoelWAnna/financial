@@ -1,10 +1,11 @@
 <?php function newTR($page,&$accounts)
 {
-
-	echo  "<div id=\"newtr\">"
-		. "<table border=3 align=center>";
-
-	$nber=$_POST['dayo'];
+?>
+<div id="NewTransactions">
+ <ul>
+ <table border=3 align=center>
+<?php
+	$nber = $_POST['dayo'];
 
 	if(!$nber)
 	{
@@ -12,7 +13,6 @@
 	}
 	
 	$billorTrans = 'transaction';
-	///transaction
 	if (isset($_POST['bills']) | isset($_POST['billsSubmit']))
 	{
 		$billorTrans = 'bill';
@@ -52,7 +52,7 @@
 		}
 		reloadPHP();
 	}
-	echo "</div>";
+	echo "</ul></div>";
 }
 ?>
 

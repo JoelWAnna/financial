@@ -24,17 +24,12 @@ function balanceRemaining($AccountName,$Amount)
 	else
 	{
 		$row = mysql_fetch_row($resultbal);
-		echo  "<li class=\"small\">";
-		if ($Amount)
-		{
-			printf("%.2f", $row[0] + $Amount);
-		}
-		else
-		{
-			echo $row[0];
-		}
-		echo  "</li>"
-			. "<li class=\"small\">". $row[0] . "</li>";
+		$neg = (($row[0] + $Amount) < 0) ? "negative" : "";
+		echo  "<li class=\"funds small $neg\">";
+		printf("%.2f", $row[0] + $Amount);
+		echo  "</li>";
+		$neg = (($row[0]) < 0) ? "negative" : "";
+		echo "<li class=\"funds small $neg\">". $row[0] . "</li>";
 	}
 	mysql_free_result($resultbal);
 }

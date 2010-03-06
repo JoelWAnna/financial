@@ -1,28 +1,29 @@
 #Bills 
 {
 	position:absolute;
-	width:240px;
+	width:210px;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
 	color:#000;
 	text-align:left;
 	line-height:15px;
+	Border:1px solid #000;
 }
 
 #Bills ul
 {
-	width:240px;
+	width:220px;
 	margin:0;
 	padding:0;
 }
 
 #Bills ul li
 {
+	border:1px none #000;
+	border-top-style:solid;
 	width:50px;
-	display:block;
 	float:left;
 	list-style:none;
-	border:1px solid #fff;
 	font-size:7pt;
 	text-align:center;
 	margin:0;
@@ -30,37 +31,36 @@
 	
 #Bills ul li.hdr1
 {
-	background:#666;
-	color:#fff;
+	border-top-style:none;
 	width:70px;
 }
 	
 #Bills ul li.hdr2
  {
-	width:50px;
-	background:#666;
-	color:#fff;
+	border-top-style:none;
 	font-size:7pt;
 	text-align:center;
 }
 
 #Bills ul li.hdr3
 {
-	background:#666;
-	color:#fff;
-	width:50px;
+	border-top-style:none;
 }
 	
 #Bills ul li._hdr
 {
-	width:50px;
+	border-top-style:none;
 }
 
 #Bills ul li.ftr 
 {
 	width:120px;
-	background:#666;
-	color:#fff;
+}
+#Bills ul li.ftr_total
+{
+	width:90px;
+	text-align:left;
+	text-indent:14px;
 }
 
 #Bills ul li form
@@ -71,26 +71,26 @@
 
 #Bills ul li.ent1
 {
-	background:#ccc;
 	width:70px;
 }
 
 #Bills ul li.ent2
 {
-	width:50px;
-	background:#ccc;
 }
+
 #Bills ul li.ent3
 {
-	width:50px;
-	background:#ccc;
+}
+#Bills ul li.ent4
+{
+	width:40px;
 }
 
 #Bills input 
 {
 	font-size: 6pt;
 	height: 1.7em;
-	width: 3em;
+	width: 4em;
 }
 	
 #Main 
@@ -103,8 +103,9 @@
 #leftColumn
 {
 	position:absolute;
-	left:220px;
-	width:350px;
+	left:222px;
+	width:253px;
+	border:1px solid #000;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
 	color:#000;
@@ -126,56 +127,35 @@
 	display:block;
 	float:left;
 	list-style:none;
-	border:1px solid #fff;
 	font-size:7pt;
-	text-align:center;
 	margin:0;
 }
 
 #leftColumn ul li.AccountHDR 
 {
-	background:#666;
-	width:120px;	
-	color:#fff;
+	width:125px;
 }
-	
+
 #leftColumn ul li.accountname
  {
-	background:#ccc;
-	width:120px;
-}
-#leftColumn ul li.small {
-	width:40px;
-	height:17px;
-	color:#000;
+	width:125px;
 }
 
 #leftColumn ul li.ccHdr 
 {
-	background:#666;
-	color:#fff;
 	width:40px;
 	height:17px;
 	font-size:7pt;
+	text-align:right;
 }
 	
-#leftColumn ul li.empty
- {
-	width:40px;
-	height:17px;
-	color:#000;
+#leftColumn ul li.small
+{
+	font-size:7px;
 }
-	
-#leftColumn ul li.fundsneg
- {
-	background:#ccc;
-	color:#f00;
-	width:40px;
-}
+
 #leftColumn ul li.funds
 {
-	background:#ccc;
-	width:40px;
 }
 
 
@@ -185,6 +165,7 @@
 	left:480px;
 	right:300px;
 	width:170px;
+	border:1px solid #000;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
 	color:#000;
@@ -205,66 +186,37 @@
 	display:block;
 	float:left;
 	list-style:none;
-	border:1px solid #fff;
 	font-size:7pt;
-	text-align:center;
 	margin:0;
 }
 
 #rightColumn ul li.AccountHDR 
 {
-	background:#666;
-	width:120px;	
-	color:#fff;
+	width:120px;
 }
 	
 #rightColumn ul li.accountname
  {
-	background:#ccc;
 	width:120px;
 }
-#rightColumn ul li.small
- {
-	width:40px;
-	height:17px;
-	color:#000;
-}
-	
-#rightColumn ul li.empty 
-{
-	width:40px;
-	height:17px;
-	color:#000;
-}
-	
-#rightColumn ul li.fundsneg 
-{
-	background:#ccc;
-	color:#f00;
-	width:40px;	
-}
-#rightColumn ul li.funds 
-{
-	background:#ccc;
-	width:40px;
-}
+
 
 	
 #Totals 
 {
+	border:1px solid #000;
 	position:absolute;
-	left:650px;
-	width:180px;
+	left:655px;
+	width:150px;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
-	color:#000;
 	text-align:left;
 	line-height:15px;
 }
 
 #Totals ul 
 {
-	width:180px;
+	width:150px;
 	margin:0;
 	padding:0;
 }
@@ -275,36 +227,57 @@
 	display:block;
 	float:left;
 	list-style:none;
-	border:1px solid #fff;
 	font-size:7pt;
-	text-align:center;
+	text-align:left;
 	margin:0;
+
 }
 		
 		
 #Totals ul li.hdr_ex 
 {
-	background:#666;
 	width:70px;
 }
 #Totals ul li.hdr
 {
-	background:#666;
-	width:40px;
 }
 #Totals ul li.name 
 {
-	background:#ccc;
 	width:70px;
+	text-indent:4px;
 }
-#Totals ul li.fundsneg 
+
+.AccountHDR 
 {
-	background:#ccc;
-	color:#f00;
-	width:40px;
+	font-size:10px;
+	font-weight:bold;
+	text-decoration:underline;
+	text-align:left;
+	text-indent:4px;
 }
-#Totals ul li.funds
+.accountname
+ {
+	text-indent:4px;
+	width:125px;
+}
+.negative
 {
-	background:#ccc;
-	width:40px;
+ color:#f00;
+}
+
+.funds
+{
+	text-align:right;
+}
+
+#NewTransactions
+{
+	position:relative;
+	top:500px;
+	width:180px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
 }
