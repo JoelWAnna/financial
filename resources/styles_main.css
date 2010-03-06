@@ -20,6 +20,7 @@
 #Bills ul li
 {
 	border:1px none #000;
+	display:block;
 	border-top-style:solid;
 	width:50px;
 	float:left;
@@ -64,7 +65,7 @@
 }
 
 #Bills ul li form
- {
+{
 	margin:0px 20px 2px 0px;
 	align:center;
 }

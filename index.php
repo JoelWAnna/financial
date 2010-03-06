@@ -29,13 +29,10 @@ date_default_timezone_set('America/Los_Angeles');
 <head>
 <?php
 FINinit();
+echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if ($page < -1 && ($page != ""))
 {
 	echo "<link href=\"resources/styles_-1.css\" rel=\"stylesheet\" type=\"text/css\">\n";
-}
-else
-{
-	echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 }
 ?>
 </head>
