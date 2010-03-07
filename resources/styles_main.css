@@ -48,7 +48,7 @@
 	border-top-style:none;
 }
 	
-#Bills ul li._hdr
+#Bills ul li.hdr_4
 {
 	border-top-style:none;
 }
@@ -91,7 +91,7 @@
 {
 	font-size: 6pt;
 	height: 1.7em;
-	width: 4em;
+	width: 25px;
 }
 	
 #Main 
@@ -117,7 +117,7 @@
 	
 #leftColumn ul
 {
-	width:350px;
+	width:253px;
 	margin:0;
 	padding:0;
 }
@@ -165,7 +165,6 @@
  {
 	position:absolute;
 	left:480px;
-	right:300px;
 	width:170px;
 	border:1px solid #000;
 	font-family:arial, helvetica, sans-serif;

@@ -23,7 +23,7 @@
 		<li class="hdr1">Account</li>
 		<li class="hdr2">Date</li>
 		<li class="hdr3">Amount</li>
-		<li class="_hdr">&nbsp;</li>
+		<li class="hdr_4">&nbsp;</li>
 
 <?php
 		if ($allbills)

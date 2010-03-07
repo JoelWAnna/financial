@@ -31,6 +31,10 @@ date_default_timezone_set('America/Los_Angeles');
 FINinit();
 echo "\n\n<title> $ver </title>";
 echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+if (isIE())
+{
+	echo "<link href=\"resources/styles_main_ie.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+}
 echo "<link href=\"resources/styles_account.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if ($page < -1 && ($page != ""))
 {

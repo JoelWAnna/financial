@@ -33,4 +33,11 @@
 	}
 	return ">";
 }
+
+function isIE()
+{
+	return stristr(
+			strtolower( $_SERVER['HTTP_USER_AGENT'] ),
+			"msie");
+}
 ?>
