@@ -1,0 +1,63 @@
+#AccountTransactions
+{
+	position:absolute;
+	top:75px;
+	width:1072px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:center;
+	line-height:15px;
+	Border:2px solid #000;
+}
+
+#AccountTransactions ul
+{
+	margin:0;
+	padding:1;
+}
+
+#AccountTransactions ul li
+{
+	border:1px solid #000;
+	display:block;
+	height:25px;
+	float:left;
+	list-style:none;
+	text-align:center;
+	margin:1px;
+}
+
+#AccountTransactions ul li.AT_hdr
+{
+	width:200px;
+}
+
+#AccountTransactions ul li.submit
+{
+	width:150px;
+}
+
+#AccountTransactions ul li.hdr_date
+{
+	width:174px;
+}
+
+#AccountTransactions ul li.hdr_funds
+{
+	width:55px;
+}
+
+#AccountTransactions ul li.date
+{
+	width:174px;
+}
+#AccountTransactions ul li.desc
+{
+	width:200px;
+}
+#AccountTransactions ul li.account
+{
+	width:200px;
+}
+
