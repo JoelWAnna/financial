@@ -101,6 +101,7 @@
 	width:520px;
 }
 
+
 #leftColumn
 {
 	position:absolute;
@@ -273,12 +274,51 @@
 
 #NewTransactions
 {
-	position:relative;
+	position:absolute;
 	top:500px;
-	width:180px;
+	width:900px;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
 	color:#000;
 	text-align:left;
-	line-height:15px;
+	border:1px solid #000;
+}
+#NewTransactions ul 
+{
+
+	margin:0;
+	padding:1;
+}
+
+#NewTransactions ul li 
+{
+	display:block;
+	float:left;
+	list-style:none;
+	text-align:center;
+	margin:1px;
+	height:25px;
+}
+
+#NewTransactions ul li.date
+{
+	width:174px;
+}
+#NewTransactions ul li.desc
+{
+	width:200px;
+}
+#NewTransactions ul li.account
+{
+	width:200px;
+}
+
+#NewTransactions ul li.addMore
+{
+	width:900px;
+}
+
+#NewTransactions ul li.submitTrans
+{
+	width:900px;
 }

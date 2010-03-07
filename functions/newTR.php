@@ -2,8 +2,7 @@
 {
 ?>
 <div id="NewTransactions">
- <ul>
- <table border=3 align=center>
+  <ul>
 <?php
 	$nber = $_POST['dayo'];
 
@@ -26,21 +25,16 @@
 	for ($j = 0; $j < $nber; $j++)
 	{
 		editItem($billorTrans,$page,$accounts,($num+$j),true,true);
-		echo "</tr>";
 	}
 	
 
 	$submit = $billorTrans . 'sSubmit';
 	
-	echo  "<tr>"
-		. "<td align=center colspan=7>"
+	echo  "<li class=\"submitTrans\">"
 		. "<input type=\"submit\" name=\"$submit\" "
 		. "value=\"Add new $billorTrans" . "s\" "
 		. "style=\"background-color: abcdef;\">\n"
-		. "  </td>"
-		. "</form>"
-		. "</tr>";
-
+		. "  </li>";
 
 	if (isset($_POST[$submit]))
 	{
@@ -52,23 +46,24 @@
 		}
 		reloadPHP();
 	}
-	echo "</ul></div>";
+	echo  "    </form>\n"
+		. "  </ul>\n"
+		. "</div>\n";
 }
 ?>
 
 <?php function addMore($number,$letter)
 {
-	echo  "<tr>"
-		. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
-		. "<td colspan=7 align=center>";
+	echo  "\n    <li class=\"addMore\">"
+		. "\n      <form action=\"" . $_SERVER['PHP_SELF'] . "\" method=\"post\">";
 
 	echo dropDownDate('d', $letter, $number, 10);
 
-	echo "<input type=\"submit\" name=\"transactions\" "
+	echo "\n      <input type=\"submit\" name=\"transactions\" "
 		. "value=\"more transactions\" style=\"background-color: abcdef;\">\n";
-	echo  "  <input type=\"submit\" name=\"bills\" "
+	echo  "\n      <input type=\"submit\" name=\"bills\" "
 		. "value=\"more Bills\" style=\"background-color: abcdef;\">\n";
-	echo  "  </td>"
-		. "</form></tr>";
+	echo  "\n      </form>"
+		. "\n    </li>";
 }
 ?>

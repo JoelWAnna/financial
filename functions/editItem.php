@@ -9,44 +9,29 @@
 						
 	if (($type == 'transaction') && !$noforms)
 	{
-		echo "\n    <tr><form action=\"" . $_SERVER['PHP_SELF']
-			. "?page=$page\" method=\"post\">";
+		echo "\n    <form action=\"" . $_SERVER['PHP_SELF']
+			. "?page=$page\" method=\"post\">\n";
 	}
-	echo "<td width=55>";
-	echo dropDownDate(m, $number, $month, 12);
-	echo "</td><td width=50>";
-	
-	$maxDay = 31;
-/*	switch ($month)
-	{
-	case 2:
-		$maxDay--;
-		if (!($year%100) || ($year%4))
-		{	// Not Leap Year
-			$maxDay--;
-		}
-	case 4: case 6: case 9: case 11:
-		$maxDay--;
-		break;
-	default:
-		break;
-	}
-*/
-	echo dropDownDate(d, $number, $day, $maxDay);
-	echo "</td><td width=55>";
-	echo dropDownDate('Y',$number,$year, 2);
-	echo "</td><td width=142>";
-	echo textField($number, $description);
+	echo  "    <li class=\"date\">"
+		. dropDownDate(m, $number, $month, 12)
+		. dropDownDate(d, $number, $day, 31)
+		. dropDownDate('Y',$number,$year, 2)
+		. "</li>\n"
+		. "    <li class=\"desc\">"
+		. textField($number, $description)
+		. "</li>\n";
+		
 	if ($type == 'transaction')
 	{
-		echo "</td><td width=145>";
-		echo dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
+		echo "    <li class=\"account\">"
+			. dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
 	}
-	echo "</td><td width=143>";
-	echo dropDownAccount($number, 'to', $toAcc, $page, $accounts);
-	echo "</td><td width=50>";
-	echo textField($number, $amount, 'amount');
-	echo "</td>";
+	echo  "    <li class=\"account\">"
+		. dropDownAccount($number, 'to', $toAcc, $page, $accounts)
+		. "</li>\n"
+		. "    <li class=\"\" width=50>"
+		. textField($number, $amount, 'amount')
+		. "</li>\n";
 
 	if (($type == 'transaction') && !$noforms)
 	{
@@ -61,4 +46,5 @@
 		echo  $number . "\" style=\"background-color: "
 			. "abcdef;\"></td>\n  </form></tr>";
 	}
-}?>
+}
+?>

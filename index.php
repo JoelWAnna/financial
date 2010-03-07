@@ -29,7 +29,9 @@ date_default_timezone_set('America/Los_Angeles');
 <head>
 <?php
 FINinit();
+echo "\n\n<title> $ver </title>";
 echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+echo "<link href=\"resources/styles_account.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if ($page < -1 && ($page != ""))
 {
 	echo "<link href=\"resources/styles_-1.css\" rel=\"stylesheet\" type=\"text/css\">\n";
@@ -51,10 +53,8 @@ if ($page < -1 && ($page != ""))
 		// Main Page Columns
 			if ($ACC_1)
 			{
-	//		echo "<div id=\"Main\">";
 				ShowMainPageColumn(true, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 				ShowMainPageColumn(false, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
-	//		echo "</div>";
 				totals($ACC_1,$ACC_3,$ACC_TYPE);
 			}
 			newTR(0,$ACC_1);
