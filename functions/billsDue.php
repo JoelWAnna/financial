@@ -28,7 +28,7 @@
 <?php
 		if ($allbills)
 		{
-			echo "<li class=\"_hdr\">&nbsp;</li>\n";
+			echo "<li class=\"hdr_4\">&nbsp;</li>\n";
 		}
 		while ($billRows = mysql_fetch_assoc($billsR))
 		{	
@@ -66,7 +66,7 @@
 
 			if ($allbills)
 			{
-				echo "\n    <li><form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\""
+				echo "\n    <li class=\"ent4\"><form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\""
 					. " method=\"post\">\n      <input type=\"submit\" name="
 					. "\"unpaid" . $billRows['number'] . "\" value=\"Not paid\""
 					. "  style=\" width: 4.5em\">\n    </form></li>";

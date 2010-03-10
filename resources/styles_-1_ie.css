@@ -1,0 +1,32 @@
+#Bills 
+{
+	width:280px;
+}
+
+#Bills ul
+{
+	width:280px;
+}
+
+#Bills ul li.ftr_total
+{
+	width:160px;
+}
+#Bills ul li.ent4
+{
+	width:54px;
+}
+#leftColumn
+{
+	left:295px;
+}
+
+#rightColumn
+ {
+	left:555px;
+}
+
+#Totals 
+{
+	left:735px;
+}

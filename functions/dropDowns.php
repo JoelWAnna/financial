@@ -35,7 +35,7 @@ function textField($transNum, $current, $type='description')
 	}
 	else
 	{
-		$length .= "maxlength=\"15\"";
+		$length .= "maxlength=\"256\"";
 	}
 	return  "<input type=\"text\" name=\"$type"
 		. "$transNum\" $length value=\"$current\">\n";
