@@ -29,9 +29,9 @@
 			echo "<li class=\"hdr_4\">&nbsp;</li>\n";
 		}
 		while ($billRows = mysql_fetch_assoc($billsR))
-		{	
+		{
 
-				
+
 			echo  "<li class=\"ent1\">"
 				. "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=" . $billRows['to account'] . "\">";
 			if ($billRows['to account'] > 0)
@@ -43,16 +43,15 @@
 				echo $billRows['description'];
 			}
 			echo  "</a></li>\n";
-			
+
 			echo "\n <li class=\"ent2\">"
 				. $billRows['month'] . "/" 
 				. $billRows['day']   . "/"
 				. $billRows['year']  . "</li>";
-			
+
 			$temp = $billRows['amount'];
 			$total += $temp;
 			echo  "<li class=\"ent3\">" . $temp . "</li>\n";
-		
 
 
 			echo "\n"
@@ -89,7 +88,7 @@
 	}
 	mysql_free_result($billsR);
 
-	
+
 }
 ?>
 

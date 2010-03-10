@@ -20,7 +20,7 @@
 		. "    <li class=\"desc\">"
 		. textField($number, $description)
 		. "</li>\n";
-		
+
 	if ($type == 'transaction')
 	{
 		echo "    <li class=\"account\">"

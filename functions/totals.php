@@ -1,14 +1,18 @@
 <?php function totals(&$accounts,&$accounts3,&$accounttype)
 {
 	$exit = true;
-	for ($index = 0; !$exit && $accounttype[$index]; $index++)
+	for ($index = 0; $exit && $accounttype[$index]; $index++)
 	{
 		if (($accounttype[$index] != "Expense") &&
 			($accounttype[$index] != "Income") &&
 			($accounttype[$index] != "removed"))
 		{
-		
-		$exit = false;
+			echo "<div id=\"Totals\">\n"
+				. "  <ul>\n"
+				. "    <li class=\"hdr_ex\">&nbsp;</li>\n"
+				. "    <li class=\"hdr\">SubTotal</li>\n"
+				. "    <li class=\"hdr\">Total</li>\n";
+			$exit = false;
 		}
 	}
 	if ($exit) return;
@@ -37,8 +41,8 @@
 				echo  "  <li class=\"funds$neg\">"
 					. $acc[$accounttype[$index]]
 					. "</li>\n";
-				
-				
+
+
 				$total = round($total,2);
 				if($total<0)
 				{
@@ -48,7 +52,7 @@
 				{
 					echo "<li class=\"funds\">";
 				}
-				
+
 				echo $total;
 				echo "</li>";
 			}

@@ -22,12 +22,12 @@
 			{
 				echo "<li class=\"small\"></li>\n";
 			}
-			
+
 			echo "<li class=\"AccountHDR\">"
 				. $accounttype[$index] . " Accounts</li>\n";
 
 			echo "<li class=\"empty\">&nbsp;</li>\n";
-			
+
 			if($accounttype[$index]== "Credit Card")
 			{
 				balanceRemainingHeader();
@@ -48,7 +48,7 @@
 			if (mysql_num_rows($rAcc) <= 0)
 			{
 				echo "<b>Error Line 47 $resultAccount</b>";
-			}				
+			}
 			else
 			{
 				while($rowAcc = mysql_fetch_row($rAcc))
@@ -61,7 +61,7 @@
 							. "?page=$page\" method=\"post\">"
 							. "<input type=\"submit\" name=\"$j\" value=\"edit\">";
 					}
-					
+
 					echo  "\n    <li class=\"accountname\">"
 						. "<a href =\"" . $_SERVER['PHP_SELF'] . "?page=$j\">"
 						. $accounts[$j]
@@ -96,7 +96,7 @@
 						{
 							reloadPHP();
 						}
-					}	
+					}
 				}
 			}
 			mysql_free_result($rAcc);

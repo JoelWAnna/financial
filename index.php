@@ -1,5 +1,5 @@
 <?php
-$ver = 'Financial 0.9.8.0.0beta';
+$ver = 'Financial 0.9.8.0.1';
 define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
 define('TRo','\n  <tr');

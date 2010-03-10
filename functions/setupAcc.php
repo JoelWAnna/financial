@@ -30,10 +30,10 @@
 				$ACC_1[$number].= " ". $type;
 			}
 			$ACC_3[$number]= $type;
-			
+
 		}
 	}//else echo "<b>No accounts found\n</b>";
 	mysql_free_result($resultname);
-	
+
 }
 ?>
