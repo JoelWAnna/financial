@@ -68,12 +68,10 @@
 						. "</a>" . "</li>\n";
 
 					if($accounttype[$index]== "Loan")
-						$CurrentFunds[$j] = currentAmount($j,$leftColumn) * ($leftColumn ? -1 : 1);
+						$CurrentFunds[$j] = round(currentAmount($j,$leftColumn) * ($leftColumn ? -1 : 1), 2);
 					else
-						$CurrentFunds[$j] = currentAmount($j,!$leftColumn) * ($leftColumn ? 1 : -1);
+						$CurrentFunds[$j] = round(currentAmount($j,!$leftColumn) * ($leftColumn ? 1 : -1), 2);
 
-					//echo "\n    <td width=75px align=right>";
-					
 					$neg = ($CurrentFunds[$j]<0) ? " negative" : ""; 
 
 					echo  "  <li class=\"funds$neg\">";

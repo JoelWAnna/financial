@@ -39,6 +39,7 @@
 					. "</li>\n";
 				
 				
+				$total = round($total,2);
 				if($total<0)
 				{
 					echo "<li class=\"fundsneg\">";
