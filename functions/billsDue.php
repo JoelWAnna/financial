@@ -17,15 +17,13 @@
 				
 	if (mysql_num_rows($billsR) > 0)
 	{
-?>
-		<div id="Bills">
-		<ul>
-		<li class="hdr1">Account</li>
-		<li class="hdr2">Date</li>
-		<li class="hdr3">Amount</li>
-		<li class="hdr_4">&nbsp;</li>
+		echo  "<div id=\"Bills\">\n"
+			. "  <ul>\n"
+			. "    <li class=\"hdr1\">Account</li>\n"
+		 	. "   <li class=\"hdr2\">Date</li>\n"
+		 	. "   <li class=\"hdr3\">Amount</li>\n"
+			. "    <li class=\"hdr_4\">&nbsp;</li>\n";
 
-<?php
 		if ($allbills)
 		{
 			echo "<li class=\"hdr_4\">&nbsp;</li>\n";
@@ -86,7 +84,7 @@
 		}
 		echo "<li class=\"ftr\">Total</li>";
 		echo "<li class=\"ftr_total\">";
-		printf("%.2f",$total);
+		printf("%.2f", $total);
 		echo "</li></ul>\n</div>";
 	}
 	mysql_free_result($billsR);

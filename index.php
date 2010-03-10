@@ -66,7 +66,9 @@ $browser = isIE() ? "_ie" : "";
 		}
 		else
 		{
-				echo "<div align=center><a href=\"". $_SERVER['PHP_SELF'] ."?page=0\">Go to the Main Page</a></div>";
+				echo  "<div align=center>\n"
+					. "  <a href=\"". $_SERVER['PHP_SELF'] ."?page=0\">Go to the Main Page</a>\n"
+					. "</div>\n";
 		}
 		if ($page)
 		{

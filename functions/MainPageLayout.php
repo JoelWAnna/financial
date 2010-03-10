@@ -2,9 +2,18 @@
 {
 	$EditAccount = $page ? true : false;
 
-	$left = $leftColumn ? "leftColumn" : "rightColumn";
-	echo  "<div id=\"" . $left . "\">\n"
-		. "<ul>\n";
+	$exit = true;
+	for($index = 0; $exit && $accounttype[$index]; $index++)
+	{
+		if(validAccountforThisPage($accounttype[$index], $leftColumn, $page))
+		{
+			$left = $leftColumn ? "leftColumn" : "rightColumn";
+			echo  "<div id=\"" . $left . "\">\n" . "<ul>\n";
+			$exit = false;
+		}
+	}
+	if ($exit) return;
+
 	for($index = 0; $accounttype[$index]; $index++)
 	{
 		if(validAccountforThisPage($accounttype[$index], $leftColumn, $page))

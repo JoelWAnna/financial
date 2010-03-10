@@ -1,14 +1,19 @@
 <?php function totals(&$accounts,&$accounts3,&$accounttype)
 {
-?>
-<div id="Totals">
- <ul>
-  <li class="hdr_ex">&nbsp;</li>
-  <li class="hdr">SubTotal</li>
-  <li class="hdr">Total</li>
-<?php
+	$exit = true;
+	for ($index = 0; !$exit && $accounttype[$index]; $index++)
+	{
+		if (($accounttype[$index] != "Expense") &&
+			($accounttype[$index] != "Income") &&
+			($accounttype[$index] != "removed"))
+		{
+		
+		$exit = false;
+		}
+	}
+	if ($exit) return;
 
-	for ($index = 0; $index < 100; $index++)
+	for ($index = 0; $accounttype[$index]; $index++)
 	{
 		if (($accounttype[$index] != "Expense") &&
 			($accounttype[$index] != "Income") &&
@@ -45,7 +50,6 @@
 				
 				echo $total;
 				echo "</li>";
-				//echo "</td></tr>";
 			}
 		}
 	}
