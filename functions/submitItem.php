@@ -86,7 +86,7 @@
 	$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 		or die('Unable to connect!');
 	mysql_select_db(DATABASENAME)
-		or die('Unable to select database! DATABASENAME');	
+		or die('Unable to select database! '.DATABASENAME);	
 	$Result = mysql_query($updateQ)
 		or die("Error in query: $updateQ." . mysql_error());
 	mysql_close($connect);

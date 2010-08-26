@@ -5,7 +5,8 @@
 	{
 		if (($accounttype[$index] != "Expense") &&
 			($accounttype[$index] != "Income") &&
-			($accounttype[$index] != "removed"))
+			($accounttype[$index] != "removed")&&
+			($accounttype[$index] != "Loan"))
 		{
 			echo "<div id=\"Totals\">\n"
 				. "  <ul>\n"
@@ -21,12 +22,13 @@
 	{
 		if (($accounttype[$index] != "Expense") &&
 			($accounttype[$index] != "Income") &&
-			($accounttype[$index] != "removed"))
+			($accounttype[$index] != "removed")&&
+			($accounttype[$index] != "Loan"))
 		{
 			$acc[$accounttype[$index]] = 0;
-			for ($i = 0; $i < 20; $i++)
+			for ($i = 1; $accounts3[$i]; $i++)
 			{
-				if($accounts3[$i]==$accounttype[$index])
+				if($accounts3[$i] == $accounttype[$index])
 				{
 					$acc[$accounttype[$index]] += currentAmount($i);
 				}
