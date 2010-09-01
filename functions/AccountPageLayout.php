@@ -1,4 +1,4 @@
-<?php function AccountPageLayout($page,&$accounttype,&$accounts){
+<?php function AccountPageLayout($page,&$accounttype,&$accounts, $startTrans){
 	// Main Page
 	// ---------
 	// $page cannot be less than 1
