@@ -68,9 +68,9 @@
 						. "</a>" . "</li>\n";
 
 					if($accounttype[$index]== "Loan")
-						$CurrentFunds[$j] = round(currentAmount($j,$leftColumn) * ($leftColumn ? -1 : 1), 2);
+						$CurrentFunds[$j] = round(currentAmount($j, $leftColumn) * ($leftColumn ? -1 : 1), 2);
 					else
-						$CurrentFunds[$j] = round(currentAmount($j,!$leftColumn) * ($leftColumn ? 1 : -1), 2);
+						$CurrentFunds[$j] = round(currentAmount($j, !$leftColumn) * ($leftColumn ? 1 : -1), 2);
 
 					$neg = ($CurrentFunds[$j]<0) ? " negative" : ""; 
 

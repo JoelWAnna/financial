@@ -48,7 +48,9 @@ $browser = isIE() ? "_ie" : "";
 	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 	if ($page > 0)
 	{
-		AccountPageLayout($page, $ACC_TYPE, $ACC_1, $_GET['subPage']);
+		$subPage = $_GET['subPage'];
+		if ($subPage == "")	$subPage = 1;
+		AccountPageLayout($page, $ACC_TYPE, $ACC_1, $subPage);
 	}
 	else
 	{

@@ -2,6 +2,7 @@
 	include("functions/balanceRemaining.php");
 	//Calls nothing, Called by pagelayout
 	include("functions/currentAmount.php");
+	include("functions/currentAccountAmount.php");
 	//function	currentAmount($accountNumber) 
 	//Takes account number and returns start amount for account
 	//plus transactions to account  minus transactions from account
