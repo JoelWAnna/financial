@@ -48,12 +48,14 @@ $browser = isIE() ? "_ie" : "";
 	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 	if ($page > 0)
 	{
-		AccountPageLayout($page, $ACC_TYPE, $ACC_1);
+		AccountPageLayout($page, $ACC_TYPE, $ACC_1, $_GET['subPage']);
 	}
 	else
 	{
 		if ($page != -1)
 		{
+			echo
+			"<center><a href=?page=-1>AccountSetup</a></center>";
 			billsDue($page, $ACC_2);
 		// Main Page Columns
 			if ($ACC_1)
