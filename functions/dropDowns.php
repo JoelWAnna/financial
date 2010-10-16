@@ -26,7 +26,7 @@ function dropDownAccountType($transNumber, $transactionType, $accountTypes)
 	return $returnString;
 }
 
-function textField($transNum, $current, $type='description')
+function textField($transNum, $current, $type='description', $iType="text")
 {
 
 	if($type == 'amount')
@@ -37,7 +37,7 @@ function textField($transNum, $current, $type='description')
 	{
 		$length .= "maxlength=\"256\"";
 	}
-	return  "<input type=\"text\" name=\"$type"
+	return  "<input type=\"$iType\" name=\"$type"
 		. "$transNum\" $length value=\"$current\">\n";
 }
 function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)

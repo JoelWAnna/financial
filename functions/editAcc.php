@@ -92,9 +92,10 @@
 		
 		echo  "</td>\n"
 			. "<td>\n\t";
+		$disable = userIsAdmin() ? "" : "disabled='disabled'";
 		echo  "<input type=\"submit\" name=\"account$number\" "
 			. "value=\"Add account\" style=\"background-color: "
-			. "abcdef;\">\n\t"
+			. "abcdef;\" $disable >\n\t"
 			. "</td>\n  </form>\n"
 			. "</tr>\n<tr>";
 //}

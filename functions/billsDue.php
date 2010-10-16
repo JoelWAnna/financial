@@ -53,20 +53,22 @@
 			$total += $temp;
 			echo  "<li class=\"ent3\">" . $temp . "</li>\n";
 
-
+			$disable = userIsAdmin() ? "" : "disabled='disabled'";
+				
 			echo "\n"
 				. "<li class=\"ent4\">"
 				. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"
 				. "\n      <input type=\"submit\"name=\"paid"
-				. $billRows['number'] . "\" value=\"Paid\""
+				. $billRows['number'] . "\" value=\"Paid\" $disable "
 			." >\n    </form></li>";
 
 			if ($allbills)
 			{
+				$disable = userIsAdmin() ? "" : "disabled='disabled'";
 				echo "\n    <li class=\"ent4\"><form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\""
 					. " method=\"post\">\n      <input type=\"submit\" name="
 					. "\"unpaid" . $billRows['number'] . "\" value=\"Not paid\""
-					. "  style=\" width: 4.5em\">\n    </form></li>";
+					. "  style=\" width: 4.5em\" $disable >\n    </form></li>";
 			}
 			$paidQ = 'paid'.$billRows['number'];
 			$unpaidQ = 'un'.$paidQ;

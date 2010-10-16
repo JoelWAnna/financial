@@ -3,7 +3,7 @@
 	// ---------
 	// $page cannot be less than 1
 	// $subPage cannot be less than 1
-
+	
 	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a><br>";
 	if ($page < 1 || !$accounts[$page])
 	{
@@ -65,7 +65,8 @@
 			echo "&nbsp;";			
 		}
 	}
-
+	$disable = userIsAdmin() ? "" : "disabled='disabled'";
+						
 	echo  "<div id=\"AccountTransactions\">\n"
 		. "  <ul>\n"
 		. "    <li class=\"AT_hdr hdr_date\">date</li>\n"
@@ -76,7 +77,7 @@
 		. "    <li class=\"AT_hdr hdr_funds\">balance</li>\n"
 		. "    <li class=\"AT_hdr submit\">\n"
 		. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey\" method=\"post\">\n"
-		. "      <input type=\"submit\" name=\"$new\" value=\"Start new transaction\">\n"
+		. "      <input type=\"submit\" name=\"$new\" value=\"Start new transaction\" $disable >\n"
 		. "      </form>\n"
 		. "    </li>\n";
 
@@ -148,7 +149,7 @@
 		echo  "    <li>\n"
 			. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey\" method=\"post\">\n"
 			. "      <input type=\"submit\" name=\"" . $rowdata['number']. "\" value=\""
-			. "Edit transaction " . $rowdata['number'] . " \">\n      </form>\n";
+			. "Edit transaction " . $rowdata['number'] . " \" $disable >\n      </form>\n";
 		echo "    </li>\n";
 		
 		if (isset($_POST[$rowdata['number']])){
@@ -163,5 +164,6 @@
 
 	echo  "  </ul>\n"
 		. "</div>";
-}
+
+	}
 ?>

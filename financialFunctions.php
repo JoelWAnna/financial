@@ -1,4 +1,5 @@
 <?php
+	include("functions/Authentication.php");
 	include("functions/balanceRemaining.php");
 	//Calls nothing, Called by pagelayout
 	include("functions/currentAmount.php");
@@ -43,7 +44,6 @@
 	//Called by currentAmount
 	include("functions/totals.php");
 	//Called by currentAmount
-//
 	include("functions/JavaFunctions.php");
-//
+	include("functions/CleanupFunctions.php");
 ?>

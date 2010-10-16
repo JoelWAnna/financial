@@ -57,9 +57,10 @@
 					
 					if($EditAccount)
 					{
+						$disable = userIsAdmin() ? "" : "disabled='disabled'";
 						echo "<form action=\"" . $_SERVER['PHP_SELF']
 							. "?page=$page\" method=\"post\">"
-							. "<input type=\"submit\" name=\"$j\" value=\"edit\">";
+							. "<input type=\"submit\" name=\"$j\" value=\"edit\" $disable >";
 					}
 
 					echo  "\n    <li class=\"accountname\">"

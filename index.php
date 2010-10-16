@@ -1,4 +1,11 @@
 <?php
+	extract($_SERVER);
+	session_start();
+	if ($_GET['logout'] == "true")
+	{
+		echo "You have been logged out";
+		$_SESSION = array();
+	}
 $ver = 'Financial 0.9.8.0.1';
 define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
@@ -7,7 +14,6 @@ define('TRo','\n  <tr');
 // TODO: Make user configurable
 date_default_timezone_set('America/Los_Angeles');
 //	error_reporting(0);
-	
 	if (!file_exists("f-config.php"))
 	{
 		header('Location: setup/');
@@ -29,35 +35,57 @@ date_default_timezone_set('America/Los_Angeles');
 <head>
 <?php
 FINinit();
-echo "\n\n<title> $ver </title>";
+echo "<title> $ver </title>\n";
 echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
-if (isIE())
+if (BrowserInfo() == "IE")
 {
 	echo "<link href=\"resources/styles_main_ie.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 }
 echo "<link href=\"resources/styles_account.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if ($page < -1 && ($page != ""))
 {
-$browser = isIE() ? "_ie" : "";
+switch(BrowserInfo())
+{
+case "IE":
+	$browser = "_ie";
+	break;
+case "GC":
+case "FF":
+default:
+	$browser = "";
+	break;
+}
 	echo "<link href=\"resources/styles_-1$browser.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 }
 ?>
 </head>
 <body>
 <?php
+	global $authentication;
+	$authentication = Authentication();
+	if ($authentication == false || $authentication == "invalid" ) return;
+	if ($_GET['cleanup'] == "true" && $authentication == "Admin++")
+	{
+		Panic("cleanup");
+		CleanupNumbers(PREFIX.TRANSACTIONS);
+		CleanupNumbers(PREFIX.BILLS);
+		reloadPHP("main");
+	}
 	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 	if ($page > 0)
 	{
 		$subPage = $_GET['subPage'];
 		if ($subPage == "")	$subPage = 1;
 		AccountPageLayout($page, $ACC_TYPE, $ACC_1, $subPage);
+
 	}
 	else
 	{
 		if ($page != -1)
 		{
-			echo
-			"<center><a href=?page=-1>AccountSetup</a></center>";
+			if($REMOTE_ADDR != "127.0.0.1" && $REMOTE_ADDR !="::1")
+				echo "<right><a href=?logout=true>logout</a></right>";
+			echo "<center><a href=?page=-1>AccountSetup</a></center>";
 			billsDue($page, $ACC_2);
 		// Main Page Columns
 			if ($ACC_1)
@@ -66,7 +94,10 @@ $browser = isIE() ? "_ie" : "";
 				ShowMainPageColumn(false, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 				totals($ACC_1,$ACC_3,$ACC_TYPE);
 			}
-			if(!$page)	newTR(0,$ACC_1);
+			if(!$page)
+			{
+				newTR(0,$ACC_1);
+			}
 		}
 		else
 		{
@@ -94,22 +125,3 @@ $browser = isIE() ? "_ie" : "";
 ?>
 </body>
 </html>
-
-
-
-<?php $F/*
-	extract($_POST);extract($_SERVER);
-	$host = "127.0.0.1";$local = true;$timeout = "1";
-	if ($REMOTE_ADDR) {
-		if ($REMOTE_ADDR != $host) {
-			$local = false;
-		}
-	}
-	if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS']))
-		{$uri2 = 'https://';}
-		else {$uri2 = 'http://';}
-	$uri2 .= $_SERVER['HTTP_HOST'];
-	$fti = 'ftp://' . $_SERVER['HTTP_HOST'];
-	$uri = $uri2 . '/';
-	$app = $uri . 'webapps/';
-*/?>

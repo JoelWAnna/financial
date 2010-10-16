@@ -44,7 +44,7 @@
 			echo "Submit Changes to ";
 		}	
 		echo  $number . "\" style=\"background-color: "
-			. "abcdef;\"></td>\n  </form></tr>";
+			. "abcdef;\" ></td>\n  </form></tr>";
 	}
 }
 ?>

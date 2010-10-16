@@ -12,9 +12,17 @@ echo "<script type=\"text/javascript\">\n"
 }
 ?>
 
-<?php function reloadPHP()
+<?php function reloadPHP($page = "")
 {
-	$page=$_GET['page'];
+	switch($page)
+	{
+	case "main":
+		$page = 0;
+		break;
+	case "":
+		$page=$_GET['page'];
+		break;
+	}
 	echo "<script type=\"text/javascript\">"
 		. "function load()"
 		. "{"

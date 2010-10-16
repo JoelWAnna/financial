@@ -29,11 +29,12 @@
 	
 
 	$submit = $billorTrans . 'sSubmit';
+	$disable = userIsAdmin() ? "" : "disabled='disabled'";
 	
 	echo  "<li class=\"submitTrans\">"
 		. "<input type=\"submit\" name=\"$submit\" "
 		. "value=\"Add new $billorTrans" . "s\" "
-		. "style=\"background-color: abcdef;\">\n"
+		. "style=\"background-color: abcdef;\" $disable >\n"
 		. "  </li>";
 
 	if (isset($_POST[$submit]))
