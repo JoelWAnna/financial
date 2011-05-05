@@ -124,7 +124,7 @@
 
 #leftColumn ul li
  {
-	width:40px;
+	width:42px;
 	height:17px;
 	display:block;
 	float:left;
@@ -145,7 +145,7 @@
 
 #leftColumn ul li.ccHdr 
 {
-	width:40px;
+	width:42px;
 	height:17px;
 	font-size:7pt;
 	text-align:right;

@@ -68,7 +68,7 @@
 						. $accounts[$j]
 						. "</a>" . "</li>\n";
 
-					if($accounttype[$index]== "Loan")
+					if($accounttype[$index]== "Income")
 						$CurrentFunds[$j] = round(currentAmount($j, $leftColumn) * ($leftColumn ? -1 : 1), 2);
 					else
 						$CurrentFunds[$j] = round(currentAmount($j, !$leftColumn) * ($leftColumn ? 1 : -1), 2);

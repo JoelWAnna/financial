@@ -1,5 +1,5 @@
 <?php function setupAcc(&$page, &$ACC_TYPE, &$ACC_1, &$ACC_2, &$ACC_3){
-	if ($page=='setup')
+	if (strcmp('setup', $page)==0)
 	{
 		$page = -1;
 		return;
@@ -13,21 +13,27 @@
 	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	$index=0;
 
-	if (mysql_num_rows($typeresult) > 0){
-		while($row = mysql_fetch_row($typeresult)){		
+	if (mysql_num_rows($typeresult) > 0)
+	{
+		while($row = mysql_fetch_row($typeresult))
+		{
 			$ACC_TYPE[$index++]=$row[0];
 		}
 	}//else echo "<b>No account types found\n\n</b>";}
 	mysql_free_result($typeresult);
-	if (mysql_num_rows($resultname) > 0){
-		while($row = mysql_fetch_assoc($resultname)){	
+	if (mysql_num_rows($resultname) > 0)
+	{
+		while ($row = mysql_fetch_assoc($resultname))
+		{	
 			$number = $row['number'];
 			$name = $row['name'];
 			$type = $row['type'];
 			$ACC_2[$number]= $name;
 			$ACC_1[$number]= $name;
-			if(validAccountforThisPage($type, true, false)){
-				$ACC_1[$number].= " ". $type;
+			if (validAccountforThisPage($type, true, false))
+			{
+				if (($type != "Income") && ($type != "Loan"))
+					$ACC_1[$number] .= " ". $type;
 			}
 			$ACC_3[$number]= $type;
 

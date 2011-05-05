@@ -1,10 +1,13 @@
-<?php function billsDue($allbills, &$accounts)
+<?php function billsDue($allbills, &$accounts, $months)
 {
 	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
 	if (!$allbills)
 	{
+		$month = (int)date("m", strtotime("+$months months"));
+		$year = (int)date("Y", strtotime("+$months months"));
 		$billsQ .= "WHERE `paid` = CONVERT(_utf8 'FALSE' "
-				. "USING latin1) COLLATE latin1_swedish_ci";
+				. "USING latin1) COLLATE latin1_swedish_ci "
+				. " && (( `". PREFIX . BILLS ."`.`year` < $year) || (`". PREFIX . BILLS ."`.`month` <= $month))";
 	}
 	
 	$billsQ .= " ORDER BY `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
@@ -54,7 +57,7 @@
 			echo  "<li class=\"ent3\">" . $temp . "</li>\n";
 
 			$disable = userIsAdmin() ? "" : "disabled='disabled'";
-				
+
 			echo "\n"
 				. "<li class=\"ent4\">"
 				. "<form action=\"" . $_SERVER['PHP_SELF']. "\" method=\"post\">"

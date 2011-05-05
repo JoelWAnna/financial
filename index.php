@@ -20,6 +20,10 @@ date_default_timezone_set('America/Los_Angeles');
 	}
 	require_once("f-config.php");
 	$page = $_GET['page'];
+	if (empty($page))
+	{
+		$page = 0;
+	}
 	$ACC_TYPE;
 	$ACC_1;
 	$ACC_2;
@@ -42,20 +46,20 @@ if (BrowserInfo() == "IE")
 	echo "<link href=\"resources/styles_main_ie.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 }
 echo "<link href=\"resources/styles_account.css\" rel=\"stylesheet\" type=\"text/css\">\n";
-if ($page < -1 && ($page != ""))
+if ($page < -1)
 {
-switch(BrowserInfo())
-{
-case "IE":
-	$browser = "_ie";
-	break;
-case "GC":
-case "FF":
-default:
-	$browser = "";
-	break;
-}
-	echo "<link href=\"resources/styles_-1$browser.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+	switch(BrowserInfo())
+	{
+	case "IE":
+		$browser = "_ie";
+		break;
+	case "GC":
+	case "FF":
+	default:
+		$browser = "";
+		break;
+	}
+		echo "<link href=\"resources/styles_-1$browser.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 }
 ?>
 </head>
@@ -63,7 +67,10 @@ default:
 <?php
 	global $authentication;
 	$authentication = Authentication();
-	if ($authentication == false || $authentication == "invalid" ) return;
+	if ($authentication == false || $authentication == "invalid" ) 
+	{
+		return;
+	}
 	if ($_GET['cleanup'] == "true" && $authentication == "Admin++")
 	{
 		Panic("cleanup");
@@ -71,6 +78,7 @@ default:
 		CleanupNumbers(PREFIX.BILLS);
 		reloadPHP("main");
 	}
+
 	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
 	if ($page > 0)
 	{
@@ -86,7 +94,11 @@ default:
 			if($REMOTE_ADDR != "127.0.0.1" && $REMOTE_ADDR !="::1")
 				echo "<right><a href=?logout=true>logout</a></right>";
 			echo "<center><a href=?page=-1>AccountSetup</a></center>";
-			billsDue($page, $ACC_2);
+
+			$num_months = $_GET['billmonths'];
+			if (empty($num_months))
+				$num_months = 1;
+			billsDue($page, $ACC_2, $num_months);
 		// Main Page Columns
 			if ($ACC_1)
 			{

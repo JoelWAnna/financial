@@ -5,8 +5,12 @@
 		return false;
 	}
  	
-	if (($type!= "Checking") && ($type != "Savings") &&
-		($type!= "Credit Card")/*&& ($type!= "Loan")*/)
+	if (	($type != "Checking")
+		&&	($type != "Savings")
+		&&	($type != "Credit Card")
+		&& 	($type != "Loan")
+		&&	($type != "Income")
+		)
 	{
 		return !$left;
 	}
