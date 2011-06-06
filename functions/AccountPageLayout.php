@@ -76,7 +76,7 @@
 		. "    <li class=\"AT_hdr hdr_funds\">amount</li>\n"
 		. "    <li class=\"AT_hdr hdr_funds\">balance</li>\n"
 		. "    <li class=\"AT_hdr submit\">\n"
-		. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey\" method=\"post\">\n"
+		. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey&subPage=$subPage\" method=\"post\">\n"
 		. "      <input type=\"submit\" name=\"$new\" value=\"Start new transaction\" $disable >\n"
 		. "      </form>\n"
 		. "    </li>\n";
@@ -91,7 +91,7 @@
 	{
 		if (isset($_POST[$new]))
 		{
-			editItem('transaction', $accountKey, $accounts, $new, true);
+			editItem('transaction', $accountKey, $subPage, $accounts, $new, true);
 		}
 	}
 
@@ -153,7 +153,7 @@
 		echo "    </li>\n";
 		
 		if (isset($_POST[$rowdata['number']])){
-			editItem('transaction',$accountKey,$accounts,$rowdata['number'],false,false,
+			editItem('transaction',$accountKey, $subPage, $accounts,$rowdata['number'],false,false,
 					(int)$rowdata['month'],$rowdata['day'],$rowdata['year'],
 					$rowdata['description'],$rowdata['from account'],
 					$rowdata['to account'],$rowdata['amount']);

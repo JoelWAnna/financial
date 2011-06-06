@@ -1,4 +1,4 @@
-<?php function editItem($type, &$page, &$accounts, $number, $newtrans, $noforms=false,
+<?php function editItem($type, &$page, $subPage, &$accounts, $number, $newtrans, $noforms=false,
 						$month="", $day="", $year="", $description="", $fromAcc="", $toAcc="", $amount="")
 {
 
@@ -9,8 +9,8 @@
 						
 	if (($type == 'transaction') && !$noforms)
 	{
-		echo "\n    <form action=\"" . $_SERVER['PHP_SELF']
-			. "?page=$page\" method=\"post\">\n";
+		echo "\n    <form name=\"form$number\" action=\"" . $_SERVER['PHP_SELF']
+			. "?page=$page&subPage=$subPage\" method=\"post\">\n";
 	}
 	echo  "    <li class=\"date\">"
 		. dropDownDate(m, $number, $month, 12)

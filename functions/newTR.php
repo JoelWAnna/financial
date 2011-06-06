@@ -24,7 +24,7 @@
 
 	for ($j = 0; $j < $nber; $j++)
 	{
-		editItem($billorTrans,$page,$accounts,($num+$j),true,true);
+		editItem($billorTrans,$page, 0,$accounts,($num+$j),true,true);
 	}
 	
 
