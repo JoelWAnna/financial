@@ -3,7 +3,7 @@
 	// ---------
 	// $page cannot be less than 1
 	// $subPage cannot be less than 1
-	
+
 	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a><br>";
 	if ($page < 1 || !$accounts[$page])
 	{
@@ -147,7 +147,7 @@
 		}
 		
 		echo  "    <li>\n"
-			. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey\" method=\"post\">\n"
+			. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey&subPage=$subPage\" method=\"post\">\n"
 			. "      <input type=\"submit\" name=\"" . $rowdata['number']. "\" value=\""
 			. "Edit transaction " . $rowdata['number'] . " \" $disable >\n      </form>\n";
 		echo "    </li>\n";
