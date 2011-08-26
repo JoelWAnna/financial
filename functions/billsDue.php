@@ -56,6 +56,7 @@
 			$total += $temp;
 			echo  "<li class=\"ent3\">" . $temp . "</li>\n";
 
+
 			$disable = userIsAdmin() ? "" : "disabled='disabled'";
 
 			echo "\n"
