@@ -6,7 +6,6 @@
 		echo "You have been logged out";
 		$_SESSION = array();
 	}
-$ver = 'Financial 0.9.8.0.1';
 define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
 define('TRo','\n  <tr');
@@ -39,7 +38,7 @@ date_default_timezone_set('America/Los_Angeles');
 <head>
 <?php
 FINinit();
-echo "<title> $ver </title>\n";
+echo "<title> ",VERSIONSTR," </title>\n";
 echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if (BrowserInfo() == "IE")
 {
