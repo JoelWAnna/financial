@@ -15,9 +15,9 @@ function	currentAmount($accNumber,$recent = false,$day=false,$month=false,$year=
 		}
 		mysql_free_result($resStartAmo);
 
-		$querySt = 'SELECT SUM( `Amount` ) FROM `'.PREFIX.TRANSACTIONS.'` WHERE `';		
+		$querySt = 'SELECT SUM( `Amount` ) FROM `'.PREFIX.TRANSACTIONS.'` WHERE `';
 		$queryEnd =' Account` ='. $accNumber;
-		$resMinus = mysql_query($querySt . 'From'. $queryEnd)	
+		$resMinus = mysql_query($querySt . 'From'. $queryEnd)
 			or die('Error in query: $resultMinus.'. mysql_error());
 		$resPlus = mysql_query($querySt . 'To'. $queryEnd)
 			or die('Error in query: $resultPlus.' . mysql_error());

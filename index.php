@@ -1,7 +1,7 @@
 <?php
 	extract($_SERVER);
 	session_start();
-	if ($_GET['logout'] == "true")
+	if (isset($_GET['logout']) && ($_GET['logout'] == "true"))
 	{
 		echo "You have been logged out";
 		$_SESSION = array();
@@ -18,11 +18,8 @@ date_default_timezone_set('America/Los_Angeles');
 		header('Location: setup/');
 	}
 	require_once("f-config.php");
-	$page = $_GET['page'];
-	if (empty($page))
-	{
-		$page = 0;
-	}
+	$page = isset($_GET['page']) ? $_GET['page'] : 0;
+
 	$ACC_TYPE;
 	$ACC_1;
 	$ACC_2;
@@ -70,7 +67,7 @@ if ($page < -1)
 	{
 		return;
 	}
-	if ($_GET['cleanup'] == "true" && $authentication == "Admin++")
+	if (isset($_GET['cleanup']) && $_GET['cleanup'] == "true" && $authentication == "Admin++")
 	{
 		Panic("cleanup");
 		CleanupNumbers(PREFIX.TRANSACTIONS);
@@ -94,9 +91,8 @@ if ($page < -1)
 				echo "<right><a href=?logout=true>logout</a></right>";
 			echo "<center><a href=?page=-1>AccountSetup</a></center>";
 
-			$num_months = $_GET['billmonths'];
-			if (empty($num_months))
-				$num_months = 1;
+			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
+
 			billsDue($page, $ACC_2, $num_months);
 		// Main Page Columns
 			if ($ACC_1)

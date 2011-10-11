@@ -4,13 +4,8 @@
 <div id="NewTransactions">
   <ul>
 <?php
-	$nber = $_POST['dayo'];
+	$nber = isset($_POST['dayo']) ? $_POST['dayo'] : 1;
 
-	if(!$nber)
-	{
-		$nber=1;
-	}
-	
 	$billorTrans = 'transaction';
 	if (isset($_POST['bills']) | isset($_POST['billsSubmit']))
 	{

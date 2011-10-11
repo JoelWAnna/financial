@@ -13,8 +13,8 @@
 			. "?page=$page&subPage=$subPage\" method=\"post\">\n";
 	}
 	echo  "    <li class=\"date\">"
-		. dropDownDate(m, $number, $month, 12)
-		. dropDownDate(d, $number, $day, 31)
+		. dropDownDate('m', $number, $month, 12)
+		. dropDownDate('d', $number, $day, 31)
 		. dropDownDate('Y',$number,$year, 2)
 		. "</li>\n"
 		. "    <li class=\"desc\">"

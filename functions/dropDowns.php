@@ -31,11 +31,11 @@ function textField($transNum, $current, $type='description', $iType="text")
 
 	if($type == 'amount')
 	{
-		$length .= "maxlength=\"10\" size=\"5\"";
+		$length = "maxlength=\"10\" size=\"5\"";
 	}
 	else
 	{
-		$length .= "maxlength=\"256\"";
+		$length = "maxlength=\"256\"";
 	}
 	return  "<input type=\"$iType\" name=\"$type"
 		. "$transNum\" $length value=\"$current\">\n";
@@ -61,9 +61,9 @@ function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 		break;
 	case 'm':
 		$type = 'month';
-		$months = array(0,Jan,Feb,Mar,Apr,
-						May,June,July,Aug,
-						Sep,Oct,Nov,Dec);
+		$months = array(0,'Jan','Feb','Mar','Apr',
+						'May','June','July','Aug',
+						'Sep','Oct','Nov','Dec');
 		if(!$max) $max=12;
 		break;
 	default:

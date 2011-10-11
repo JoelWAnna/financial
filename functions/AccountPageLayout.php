@@ -13,9 +13,9 @@
 	$accountKey = $page;
 	
 
-	$months = array(0,Jan,Feb,Mar,Apr,
-					May,June,July,Aug,
-					Sep,Oct,Nov,Dec);
+	$months = array(0,'Jan','Feb','Mar','Apr',
+						'May','June','July','Aug',
+						'Sep','Oct','Nov','Dec');
 
 	$new = newest('transaction');
 	$X = "X";
