@@ -29,7 +29,7 @@
 		}
 	}
 
-	echo  "<Br><B>".$accounts[$accountKey]."</B>";
+	echo  "<Br><B>".$accounts[$accountKey]->name."</B>";
 
 
 	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."`"
@@ -116,9 +116,9 @@
 		echo  "</li>\n"
 			. "    <li class=\"desc\">" . $rowdata['description'] . "</li>\n"
 			. "    <li class=\"account\">"
-			. $accounts[$rowdata['from account']] . "</li>\n"
+			. $accounts[$rowdata['from account']]->name . "</li>\n"
 			. "    <li class=\"account\">"
-			. $accounts[$rowdata['to account']]	. "</li>\n";
+			. $accounts[$rowdata['to account']]->name	. "</li>\n";
 
 
 		$neg = ($rowdata['from account'] == $accountKey) ? " negative" : "";

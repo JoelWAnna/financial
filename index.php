@@ -20,10 +20,6 @@ date_default_timezone_set('America/Los_Angeles');
 	require_once("f-config.php");
 	$page = isset($_GET['page']) ? $_GET['page'] : 0;
 
-	$ACC_TYPE;
-	$ACC_1;
-	$ACC_2;
-	$ACC_3;
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die("Unable to connect !\n is your database set up?".
 				"<a href=\"setup\">setup</a>");
@@ -74,13 +70,15 @@ if ($page < -1)
 		CleanupNumbers(PREFIX.BILLS);
 		reloadPHP("main");
 	}
-
-	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
+	//$account = new array();
+	$ACC_TYPE;
+	$accounts;
+	$all_Accounts;
+	setupAcc($page, $ACC_TYPE, $accounts, $all_Accounts);
 	if ($page > 0)
 	{
-		$subPage = $_GET['subPage'];
-		if ($subPage == "")	$subPage = 1;
-		AccountPageLayout($page, $ACC_TYPE, $ACC_1, $subPage);
+		$subPage = isset($_GET['subPage']) ? $_GET['subPage'] : 1;
+		AccountPageLayout($page, $ACC_TYPE, $accounts, $subPage);
 
 	}
 	else
@@ -95,15 +93,15 @@ if ($page < -1)
 
 			billsDue($page, $ACC_2, $num_months);
 		// Main Page Columns
-			if ($ACC_1)
+			if ($accounts)
 			{
-				ShowMainPageColumn(true, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
-				ShowMainPageColumn(false, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
-				totals($ACC_1,$ACC_3,$ACC_TYPE);
+				ShowMainPageColumn(true, $page, $ACC_TYPE, $accounts);
+				ShowMainPageColumn(false, $page, $ACC_TYPE, $accounts);
+				totals($accounts, $ACC_TYPE);
 			}
 			if(!$page)
 			{
-				newTR(0,$ACC_1);
+				newTR(0,$accounts);
 			}
 		}
 		else
@@ -116,7 +114,7 @@ if ($page < -1)
 		{
 			echo  "<table border=3 align=center>\n"
 				. "<tr>";
-			$i = editAcc('new',$ACC_TYPE);
+			$i = editAcc('new', $ACC_TYPE);
 			$foo = "account" . $i;
 			if (isset($_POST[$foo]))
 			{

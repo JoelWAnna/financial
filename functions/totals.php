@@ -1,47 +1,39 @@
-<?php function totals(&$accounts,&$accounts3,&$accounttype)
+<?php function totals(&$accounts,&$accounttype)
 {
-	$exit = true;
-	for ($index = 0; $exit && $accounttype[$index]; $index++)
+	$headerwritten = false;
+	foreach($accounttype as $type)
 	{
-		if (($accounttype[$index] != "Expense") &&
-			($accounttype[$index] != "Income") &&
-			($accounttype[$index] != "removed")&&
-			($accounttype[$index] != "Loan"))
+		if (($type != "Expense") &&
+			($type != "Income") &&
+			($type != "removed")&&
+			($type != "Loan"))
 		{
+			if (!$headerwritten)
+			{
 			echo "<div id=\"Totals\">\n"
 				. "  <ul>\n"
 				. "    <li class=\"hdr_ex\">&nbsp;</li>\n"
 				. "    <li class=\"hdr\">SubTotal</li>\n"
 				. "    <li class=\"hdr\">Total</li>\n";
-			$exit = false;
-		}
-	}
-	if ($exit) return;
-
-	for ($index = 0; $accounttype[$index]; $index++)
-	{
-		if (($accounttype[$index] != "Expense") &&
-			($accounttype[$index] != "Income") &&
-			($accounttype[$index] != "removed")&&
-			($accounttype[$index] != "Loan"))
-		{
-			$acc[$accounttype[$index]] = 0;
-			for ($i = 1; $accounts3[$i]; $i++)
+				$headerwritten=true;
+			}
+			$total = 0;
+			foreach ($accounts as $acct)
 			{
-				if($accounts3[$i] == $accounttype[$index])
+				if($acct->type == $type)
 				{
-					$acc[$accounttype[$index]] += currentAmount($i);
+					$total += currentAmount($acct->number);
 				}
 			}
-			if($acc[$accounttype[$index]])
+			if($total > 0)
 			{
-				echo "  <li class=\"name\">$accounttype[$index]</li>\n";
-				$total += $acc[$accounttype[$index]];
+				echo "  <li class=\"name\">" . $type . "</li>\n";
+				//$total = $acc[$type];
 
-				$neg = ($acc[$accounttype[$index]] < 0) ? " negative" : ""; 
+				$neg = ($total < 0) ? " negative" : ""; 
 
 				echo  "  <li class=\"funds$neg\">"
-					. $acc[$accounttype[$index]]
+					. $acc[$type]
 					. "</li>\n";
 
 

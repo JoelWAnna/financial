@@ -1,4 +1,4 @@
-<?php function setupAcc(&$page, &$ACC_TYPE, &$ACC_1, &$ACC_2, &$ACC_3){
+<?php function setupAcc(&$page, &$ACC_TYPE, &$accounts){
 	if (strcmp('setup', $page)==0)
 	{
 		$page = -1;
@@ -6,13 +6,11 @@
 	}
 	$text ="Your setup is incorrect or you have not added databases to your server\n<br>";
 	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
-	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."`";
 	$typeresult = mysql_query($querytype)
 	or die(mysql_error()."<br>".$text."<a href=\"setup\">setup</a>");
 
-	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	$index=0;
-
+	$accounts = array();
 	if (mysql_num_rows($typeresult) > 0)
 	{
 		while($row = mysql_fetch_row($typeresult))
@@ -21,22 +19,22 @@
 		}
 	}//else echo "<b>No account types found\n\n</b>";}
 	mysql_free_result($typeresult);
+	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."` SORT BY `type` DESC";
+	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	if (mysql_num_rows($resultname) > 0)
 	{
 		while ($row = mysql_fetch_assoc($resultname))
 		{	
-			$number = $row['number'];
-			$name = $row['name'];
-			$type = $row['type'];
-			$ACC_2[$number]= $name;
-			$ACC_1[$number]= $name;
-			if (validAccountforThisPage($type, true, false))
+			$foo = new Account;
+			$foo->number = $row['number'];
+			$foo->name = $row['name'];
+			$foo->type = $row['type'];
+			if (validAccountforThisPage($foo->type, true, false))
 			{
 				if (($type != "Income") && ($type != "Loan"))
-					$ACC_1[$number] .= " ". $type;
+					$foo->name .= " ". $foo->type;
 			}
-			$ACC_3[$number]= $type;
-
+			$accounts[$foo->number] = $foo;
 		}
 	}//else echo "<b>No accounts found\n</b>";
 	mysql_free_result($resultname);

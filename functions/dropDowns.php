@@ -1,11 +1,11 @@
-<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, $accountTypes)
+<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, $accounts)
 {
 	$returnString = "<select name=\"{$current}account{$transNumber}\">\n";
-	for ($i = 1; $accountTypes[$i]; $i++)
+	foreach ($accounts as $acct)
 	{
-		$returnString .= "\t<option value=\"".$i."\" ";
-		$returnString .= selectedString($i, $currentAccountPage, $transactionAccount);
-		$returnString .= $accountTypes[$i]."</option>\n";
+		$returnString .= "\t<option value=\"".$acct->number."\" ";
+		$returnString .= selectedString($acct->number, $currentAccountPage, $transactionAccount);
+		$returnString .= $acct->name."</option>\n";
 	}
 	$returnString .= "</select>\n";
 	return $returnString;
