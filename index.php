@@ -91,7 +91,7 @@ if ($page < -1)
 
 			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
 
-			billsDue($page, $ACC_2, $num_months);
+			billsDue($page, $accounts, $num_months);
 		// Main Page Columns
 			if ($accounts)
 			{

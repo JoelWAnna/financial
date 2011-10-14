@@ -39,7 +39,7 @@
 				. "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=" . $billRows['to account'] . "\">";
 			if ($billRows['to account'] > 0)
 			{
-				echo $accounts[$billRows['to account']];
+				echo $accounts[$billRows['to account']]->name;
 			}
 			else
 			{
