@@ -15,7 +15,8 @@
 	
 	$query_Start = "SELECT SUM( `Amount` ) FROM ("
 					. "SELECT * FROM `" . PREFIX.TRANSACTIONS . "` "
-					. "WHERE `From Account` = $accNumber OR `To Account` = $accNumber "
+					. "WHERE `From Account` = " . $accNumber
+					. " OR `To Account` = " . $accNumber
 					. "ORDER BY `"  . PREFIX.TRANSACTIONS . "`.`year` DESC, "
 								."`". PREFIX.TRANSACTIONS . "`.`month` DESC, "
 								."`". PREFIX.TRANSACTIONS . "`.`day` DESC "

@@ -1,8 +1,9 @@
-<?php function totals(&$accounts,&$accounttype)
+<?php function totals(&$all_Accounts)
 {
 	$headerwritten = false;
-	foreach($accounttype as $type)
+	foreach($all_Accounts as $accountGroup)
 	{
+		$type = $accountGroup->type;
 		if (($type != "Expense") &&
 			($type != "Income") &&
 			($type != "removed")&&
@@ -18,22 +19,18 @@
 				$headerwritten=true;
 			}
 			$total = 0;
-			foreach ($accounts as $acct)
+			foreach ($accountGroup->accounts as $acct)
 			{
-				if($acct->type == $type)
-				{
-					$total += currentAmount($acct->number);
-				}
+				$total += currentAmount($acct->number);
 			}
 			if($total > 0)
 			{
 				echo "  <li class=\"name\">" . $type . "</li>\n";
-				//$total = $acc[$type];
 
 				$neg = ($total < 0) ? " negative" : ""; 
 
 				echo  "  <li class=\"funds$neg\">"
-					. $acc[$type]
+					. $total
 					. "</li>\n";
 
 

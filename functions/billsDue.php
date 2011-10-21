@@ -1,4 +1,4 @@
-<?php function billsDue($allbills, &$accounts, $months)
+<?php function billsDue($allbills, &$all_Accounts, $months)
 {
 	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
 	if (!$allbills)
@@ -39,7 +39,8 @@
 				. "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=" . $billRows['to account'] . "\">";
 			if ($billRows['to account'] > 0)
 			{
-				echo $accounts[$billRows['to account']]->name;
+				$toaccount = GetAccountByNumber($all_Accounts, $billRows['to account']);
+				echo $toaccount->name;
 			}
 			else
 			{

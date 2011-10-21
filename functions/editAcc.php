@@ -1,4 +1,4 @@
-<?php function editAcc($number, &$accountTypes){
+<?php function editAcc($number, &$all_Accounts){
 	if($number == 'new')
 	{
 		$new =true;
@@ -14,29 +14,27 @@
 	echo  "\n<tr>"
 		. "<form action=\"" . $_SERVER['PHP_SELF'] . "?page=-1\" method=\"post\">"
 		. "<td align=\"center\">\n";
-		
-	if($new){
+
+	if($new)
+	{
 		$pQuery  = "Select `number` from `".PREFIX.ACCOUNTS."` ORDER BY `number` DESC ";
 		
 		$rQuery = mysql_query($pQuery)
 			or die("Error in query: $pQuery." . mysql_error());
 
+		$number = 1;
 		if(mysql_num_rows($rQuery) > 0)
 		{
 			$row = mysql_fetch_row($rQuery);
-			$number = $row[0];
-			$number++;
-			echo "<input type=text READONLY size=\"3\" value=$number></td>\n<td>";
+			$number += $row[0];
 		}
-		else
-		{
-			echo "<input type=text READONLY size=\"3\" value=1></td>\n<td>";
-		}
+		echo "<input type=text READONLY size=\"3\" value=" . $number . "></td>\n<td>";
+
 		mysql_free_result($rQuery);
 	}
 	
 	$pQuery2 = "Select * from `" . PREFIX.ACCOUNTS
-			 . "` WHERE `" . PREFIX.ACCOUNTS . "`.`number` =$number";
+			 . "` WHERE `" . PREFIX.ACCOUNTS . "`.`number` =" . $number;
 	$rQuery2 = mysql_query($pQuery2);
 	// or die("Error in query: $pQuery2." . mysql_error());
 	if ($rQuery2)
@@ -60,14 +58,14 @@
 		echo "</td>\n<td>";
 		if (!$new)
 		{
-			echo dropDownAccountType("Type$number", $type,$accountTypes);
+			echo dropDownAccountType("Type$number", $type, $all_Accounts);
 		}
 		else
 		{
 			echo "<input type=\"text\" size=12 name=\"Type".$number."\">\n<br>";
-			if ($accountTypes)
+			if ($all_Accounts)
 			{
-				echo dropDownAccountType("2Type$number", $type,$accountTypes);
+				echo dropDownAccountType("2Type$number", $type, $all_Accounts);
 				echo "<br>";
 			}
 			echo "<select name=\"3Type$number\">\n";

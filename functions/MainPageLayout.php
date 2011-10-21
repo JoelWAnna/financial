@@ -1,13 +1,13 @@
-<?php function ShowMainPageColumn($_leftColumn, $_page, $accounttype, &$accounts)
+<?php function ShowMainPageColumn($_leftColumn, $_page, &$all_Accounts)
 {
 	$page = $_page;
 	$leftColumn = $_leftColumn;
 	$EditAccount = $page ? true : false;
 
 	$headerwritten = false;
-	foreach($accounttype as $type)
+	foreach($all_Accounts as $accountGroup)
 	{
-		if(validAccountforThisPage($type, $leftColumn, $page))
+		if(validAccountforThisPage($accountGroup->type, $leftColumn, $page))
 		{
 			if (!$headerwritten)
 			{
@@ -21,11 +21,11 @@
 			}
 
 			echo "<li class=\"AccountHDR\">"
-				. $type . " Accounts</li>\n";
+				. $accountGroup->type . " Accounts</li>\n";
 
 			echo "<li class=\"empty\">&nbsp;</li>\n";
 
-			if($type== "Credit Card")
+			if($accountGroup->type== "Credit Card")
 			{
 				balanceRemainingHeader();
 			}
@@ -35,11 +35,8 @@
 					. "<li class=\"empty\">&nbsp;</li>\n";
 			}
 
-			foreach($accounts as $acct)
+			foreach($accountGroup->accounts as $acct)
 			{
-				if ($acct->type != $type)
-					continue;
-
 				$CurrentAccountNumber = $acct->number;
 
 				if($EditAccount)
@@ -55,7 +52,7 @@
 					. $acct->name
 					. "</a>" . "</li>\n";
 
-				if($type == "Income")
+				if($accountGroup->type == "Income")
 					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($CurrentAccountNumber, $leftColumn) * ($leftColumn ? -1 : 1), 2);
 				else
 					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($CurrentAccountNumber, !$leftColumn) * ($leftColumn ? 1 : -1), 2);
@@ -64,7 +61,7 @@
 
 				echo  "  <li class=\"funds$neg\">";
 				printf("%.2f</li>\n", $CurrentFunds[$CurrentAccountNumber]);
-				if($type == "Credit Card")
+				if($accountGroup->type == "Credit Card")
 				{
 					balanceRemaining($acct->name, $CurrentFunds[$CurrentAccountNumber]);
 				}
@@ -75,7 +72,7 @@
 				}
 				if(isset($_POST[$CurrentAccountNumber]))
 				{
-					editAcc($CurrentAccountNumber, $accounttype);
+					editAcc($CurrentAccountNumber, $all_Accounts);
 				}
 				$foo = "account" . $CurrentAccountNumber;
 				if(isset($_POST[$foo]))

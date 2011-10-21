@@ -1,4 +1,4 @@
-<?php function editItem($type, &$page, $subPage, &$accounts, $number, $newtrans, $noforms=false,
+<?php function editItem($type, &$page, $subPage, &$all_Accounts, $number, $newtrans, $noforms=false,
 						$month="", $day="", $year="", $description="", $fromAcc="", $toAcc="", $amount="")
 {
 
@@ -24,10 +24,10 @@
 	if ($type == 'transaction')
 	{
 		echo "    <li class=\"account\">"
-			. dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
+			. dropDownAccount($number, 'from', $fromAcc, $page, $all_Accounts);
 	}
 	echo  "    <li class=\"account\">"
-		. dropDownAccount($number, 'to', $toAcc, $page, $accounts)
+		. dropDownAccount($number, 'to', $toAcc, $page, $all_Accounts)
 		. "</li>\n"
 		. "    <li class=\"\" width=50>"
 		. textField($number, $amount, 'amount')

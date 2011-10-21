@@ -1,6 +1,6 @@
 <?php //Takes account number and returns start amount for account
 	  //plus transactions to account  minus transactions from account
-function	currentAmount($accNumber,$recent = false,$day=false,$month=false,$year=false)
+function	currentAmount($accNumber, $recent = false,$day=false,$month=false,$year=false)
 {
 	$returnAmount = 0;
 	if(!$recent){

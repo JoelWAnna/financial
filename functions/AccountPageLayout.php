@@ -1,16 +1,18 @@
-<?php function AccountPageLayout($page, &$accounttype, &$accounts, $subPage){
+<?php function AccountPageLayout($page, &$all_Accounts, $subPage){
 	// Main Page
 	// ---------
 	// $page cannot be less than 1
 	// $subPage cannot be less than 1
 
 	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a><br>";
-	if ($page < 1 || !$accounts[$page])
+	$this_account=GetAccountByNumber($all_Accounts, $page);
+	
+	if ($page < 1 || !$this_account)
 	{
 		echo "No account found with id = $page";
 		return;
 	}
-	$accountKey = $page;
+	$accountKey = $this_account->number;
 	
 
 	$months = array(0,'Jan','Feb','Mar','Apr',
@@ -29,11 +31,12 @@
 		}
 	}
 
-	echo  "<Br><B>".$accounts[$accountKey]->name."</B>";
+	echo  "<Br><B>".$this_account->name."</B>";
 
 
 	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."`"
-			.	" WHERE `From Account` =$accountKey OR `To Account` =$accountKey "
+			.	" WHERE `From Account` =" . $accountKey
+			.	"OR `To Account` =" . $accountKey 
 			.	"ORDER BY `". PREFIX.TRANSACTIONS ."`.`year` DESC, `"
 							. PREFIX.TRANSACTIONS ."`.`month` DESC, `"
 							. PREFIX.TRANSACTIONS ."`.`day` DESC ";
@@ -62,11 +65,11 @@
 			{
 				echo "</a>";
 			}
-			echo "&nbsp;";			
+			echo "&nbsp;";
 		}
 	}
 	$disable = userIsAdmin() ? "" : "disabled='disabled'";
-						
+
 	echo  "<div id=\"AccountTransactions\">\n"
 		. "  <ul>\n"
 		. "    <li class=\"AT_hdr hdr_date\">date</li>\n"
@@ -91,7 +94,7 @@
 	{
 		if (isset($_POST[$new]))
 		{
-			editItem('transaction', $accountKey, $subPage, $accounts, $new, true);
+			editItem('transaction', $accountKey, $subPage, $all_Accounts, $new, true);
 		}
 	}
 
@@ -110,15 +113,20 @@
 			unset($_POST[$X]);
 		}
 
+		$fromaccount = GetAccountByNumber($all_Accounts, $rowdata['from account']);
+		PanicIf(!$fromaccount, "Invalid Account number " . $rowdata['from account']);
+		$toaccount = GetAccountByNumber($all_Accounts, $rowdata['to account']);
+		PanicIf(!$toaccount, "Invalid Account number " . $rowdata['to account']);
 		echo "\n"
 			. "    <li class=\"date\">";
 			printf("%s %02d %s", $months[(int)$rowdata['month']], $rowdata['day'], $rowdata['year']);
 		echo  "</li>\n"
 			. "    <li class=\"desc\">" . $rowdata['description'] . "</li>\n"
 			. "    <li class=\"account\">"
-			. $accounts[$rowdata['from account']]->name . "</li>\n"
+			
+			. $fromaccount->name . "</li>\n"
 			. "    <li class=\"account\">"
-			. $accounts[$rowdata['to account']]->name	. "</li>\n";
+			. $toaccount->name	. "</li>\n";
 
 
 		$neg = ($rowdata['from account'] == $accountKey) ? " negative" : "";
@@ -153,13 +161,13 @@
 		echo "    </li>\n";
 		
 		if (isset($_POST[$rowdata['number']])){
-			editItem('transaction',$accountKey, $subPage, $accounts,$rowdata['number'],false,false,
+			editItem('transaction',$accountKey, $subPage, $all_Accounts, $rowdata['number'], false, false,
 					(int)$rowdata['month'],$rowdata['day'],$rowdata['year'],
 					$rowdata['description'],$rowdata['from account'],
 					$rowdata['to account'],$rowdata['amount']);
 		}
 	}
-	mysql_free_result($resultAcc);	
+	mysql_free_result($resultAcc);
 
 
 	echo  "  </ul>\n"

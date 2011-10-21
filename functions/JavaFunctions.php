@@ -12,6 +12,13 @@ echo "<script type=\"text/javascript\">\n"
 }
 ?>
 
+<?php function PanicIf($test, $message)
+{
+	if($test)
+		Panic($message);
+}
+?>
+
 <?php function reloadPHP($page = "")
 {
 	switch($page)

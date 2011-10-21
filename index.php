@@ -70,15 +70,13 @@ if ($page < -1)
 		CleanupNumbers(PREFIX.BILLS);
 		reloadPHP("main");
 	}
-	//$account = new array();
-	$ACC_TYPE;
-	$accounts;
+
 	$all_Accounts;
-	setupAcc($page, $ACC_TYPE, $accounts, $all_Accounts);
+	setupAcc($page, $all_Accounts);
 	if ($page > 0)
 	{
 		$subPage = isset($_GET['subPage']) ? $_GET['subPage'] : 1;
-		AccountPageLayout($page, $ACC_TYPE, $accounts, $subPage);
+		AccountPageLayout($page, $all_Accounts, $subPage);
 
 	}
 	else
@@ -91,17 +89,17 @@ if ($page < -1)
 
 			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
 
-			billsDue($page, $accounts, $num_months);
+			billsDue($page, $all_Accounts, $num_months);
 		// Main Page Columns
-			if ($accounts)
+			if ($all_Accounts)
 			{
-				ShowMainPageColumn(true, $page, $ACC_TYPE, $accounts);
-				ShowMainPageColumn(false, $page, $ACC_TYPE, $accounts);
-				totals($accounts, $ACC_TYPE);
+				ShowMainPageColumn(true, $page, $all_Accounts);
+				ShowMainPageColumn(false, $page, $all_Accounts);
+				totals($all_Accounts);
 			}
 			if(!$page)
 			{
-				newTR(0,$accounts);
+				newTR(0, $all_Accounts);
 			}
 		}
 		else
@@ -114,7 +112,7 @@ if ($page < -1)
 		{
 			echo  "<table border=3 align=center>\n"
 				. "<tr>";
-			$i = editAcc('new', $ACC_TYPE);
+			$i = editAcc('new', $all_Accounts);
 			$foo = "account" . $i;
 			if (isset($_POST[$foo]))
 			{

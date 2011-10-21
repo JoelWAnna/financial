@@ -1,4 +1,4 @@
-<?php function newTR($page,&$accounts)
+<?php function newTR($page, &$all_Accounts)
 {
 ?>
 <div id="NewTransactions">
@@ -19,7 +19,7 @@
 
 	for ($j = 0; $j < $nber; $j++)
 	{
-		editItem($billorTrans,$page, 0,$accounts,($num+$j),true,true);
+		editItem($billorTrans, $page, 0, $all_Accounts, ($num + $j), true, true);
 	}
 	
 

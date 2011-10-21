@@ -1,26 +1,29 @@
-<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, $accounts)
+<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, &$all_Accounts)
 {
 	$returnString = "<select name=\"{$current}account{$transNumber}\">\n";
-	foreach ($accounts as $acct)
+	foreach ($all_Accounts as $acccountGroup)
 	{
-		$returnString .= "\t<option value=\"".$acct->number."\" ";
-		$returnString .= selectedString($acct->number, $currentAccountPage, $transactionAccount);
-		$returnString .= $acct->name."</option>\n";
+		foreach ($acccountGroup->accounts as $acct)
+		{
+			$returnString .= "\t<option value=\"".$acct->number."\" ";
+			$returnString .= selectedString($acct->number, $currentAccountPage, $transactionAccount);
+			$returnString .= $acct->name."</option>\n";
+		}
 	}
 	$returnString .= "</select>\n";
 	return $returnString;
 }
 
-function dropDownAccountType($transNumber, $transactionType, $accountTypes)
+function dropDownAccountType($transNumber, $transactionType, &$all_Accounts)
 {
 	$returnString  = "<select name=\"" /* . $current . 'accounttype' */
 					. "$transNumber\">\n";
 	$returnString .= "\t<option value=\"\"></option>\n";
-	for ($i = 0; $accountTypes[$i]; $i++)
+	foreach ($all_Accounts as $accts)
 	{
-		$returnString .= "\t<option value=\"".$accountTypes[$i]."\" ";
-		$returnString .= selectedString($accountTypes[$i], $transactionType, '');
-		$returnString .= $accountTypes[$i]."</option>\n";
+		$returnString .= "\t<option value=\"". $accts->type ."\" ";
+		$returnString .= selectedString($accts->type, $transactionType, '');
+		$returnString .= $accts->type ."</option>\n";
 	}
 	$returnString .= "</select>\n";
 	return $returnString;

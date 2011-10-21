@@ -1,15 +1,4 @@
 <?php
-class Account
-{
-public $number;
-public $name;
-public $type;
-}
-class AccountType
-{
-public $type;
-public $accounts;
-}
 	include("functions/Authentication.php");
 	include("functions/balanceRemaining.php");
 	//Calls nothing, Called by pagelayout
