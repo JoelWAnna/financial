@@ -14,11 +14,11 @@ function GetAccountByNumber(&$all_accounts, $number)
 {
 	foreach ($all_accounts as $types)
 	{
-		foreach ($types->accounts as $fo)
+		foreach ($types->accounts as $acct)
 		{
-			if ($fo->number = $number)
+			if ($acct->number == $number)
 			{
-				return $fo;
+				return $acct;
 			}
 		}
 	}
@@ -51,7 +51,7 @@ function setupAcc(&$page, &$all_Accounts){
 	foreach ($all_Accounts as $accountgroup)
 	{
 		$queryname = "SELECT `number`, `name` FROM `".PREFIX.ACCOUNTS."` "
-				 	."Where `type` = \"" . $accountgroup->type . "\" Order BY `".PREFIX.ACCOUNTS."`.`name` DESC";
+				 	."Where `type` = \"" . $accountgroup->type . "\"";// Order BY `".PREFIX.ACCOUNTS."`.`name` ASC";
 		$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 
 		$foobar = "";

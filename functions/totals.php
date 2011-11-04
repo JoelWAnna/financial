@@ -1,6 +1,7 @@
 <?php function totals(&$all_Accounts)
 {
 	$headerwritten = false;
+	$total = 0;
 	foreach($all_Accounts as $accountGroup)
 	{
 		$type = $accountGroup->type;
@@ -18,35 +19,24 @@
 				. "    <li class=\"hdr\">Total</li>\n";
 				$headerwritten=true;
 			}
-			$total = 0;
+			$accountGroupTotal = 0;
 			foreach ($accountGroup->accounts as $acct)
 			{
-				$total += currentAmount($acct->number);
+				$accountGroupTotal += currentAmount($acct->number);
 			}
-			if($total > 0)
-			{
-				echo "  <li class=\"name\">" . $type . "</li>\n";
+			echo "  <li class=\"name\">" . $type . "</li>\n";
 
-				$neg = ($total < 0) ? " negative" : ""; 
+			$neg = ($accountGroupTotal < 0) ? " negative" : ""; 
 
-				echo  "  <li class=\"funds$neg\">"
-					. $total
-					. "</li>\n";
+			echo  "  <li class=\"funds$neg\">"
+				. $accountGroupTotal
+				. "</li>\n";
 
+			$total += round($accountGroupTotal,2);
+			$neg = ($total < 0) ? " negative" : ""; 
 
-				$total = round($total,2);
-				if($total<0)
-				{
-					echo "<li class=\"fundsneg\">";
-				}
-				else
-				{
-					echo "<li class=\"funds\">";
-				}
-
-				echo $total;
-				echo "</li>";
-			}
+			echo  "  <li class=\"funds$neg\">"
+				. $total . "</li>\n";
 		}
 	}
 	echo "</ul>\n</div>";
