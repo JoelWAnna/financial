@@ -1,16 +1,11 @@
-<?php function newTR($page,&$accounts)
+<?php function newTR($page, &$all_Accounts)
 {
 ?>
 <div id="NewTransactions">
   <ul>
 <?php
-	$nber = $_POST['dayo'];
+	$nber = isset($_POST['dayo']) ? $_POST['dayo'] : 1;
 
-	if(!$nber)
-	{
-		$nber=1;
-	}
-	
 	$billorTrans = 'transaction';
 	if (isset($_POST['bills']) | isset($_POST['billsSubmit']))
 	{
@@ -24,7 +19,7 @@
 
 	for ($j = 0; $j < $nber; $j++)
 	{
-		editItem($billorTrans,$page, 0,$accounts,($num+$j),true,true);
+		editItem($billorTrans, $page, 0, $all_Accounts, ($num + $j), true, true);
 	}
 	
 

@@ -1,12 +1,11 @@
 <?php
 	extract($_SERVER);
 	session_start();
-	if ($_GET['logout'] == "true")
+	if (isset($_GET['logout']) && ($_GET['logout'] == "true"))
 	{
 		echo "You have been logged out";
 		$_SESSION = array();
 	}
-$ver = 'Financial 0.9.8.0.1';
 define('TR','\n  <tr>');
 define('TR_','\n  </tr>');
 define('TRo','\n  <tr');
@@ -19,15 +18,8 @@ date_default_timezone_set('America/Los_Angeles');
 		header('Location: setup/');
 	}
 	require_once("f-config.php");
-	$page = $_GET['page'];
-	if (empty($page))
-	{
-		$page = 0;
-	}
-	$ACC_TYPE;
-	$ACC_1;
-	$ACC_2;
-	$ACC_3;
+	$page = isset($_GET['page']) ? $_GET['page'] : 0;
+
 	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
 		or die("Unable to connect !\n is your database set up?".
 				"<a href=\"setup\">setup</a>");
@@ -39,7 +31,7 @@ date_default_timezone_set('America/Los_Angeles');
 <head>
 <?php
 FINinit();
-echo "<title> $ver </title>\n";
+echo "<title> ",VERSIONSTR," </title>\n";
 echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if (BrowserInfo() == "IE")
 {
@@ -71,7 +63,7 @@ if ($page < -1)
 	{
 		return;
 	}
-	if ($_GET['cleanup'] == "true" && $authentication == "Admin++")
+	if (isset($_GET['cleanup']) && $_GET['cleanup'] == "true" && $authentication == "Admin++")
 	{
 		Panic("cleanup");
 		CleanupNumbers(PREFIX.TRANSACTIONS);
@@ -79,12 +71,12 @@ if ($page < -1)
 		reloadPHP("main");
 	}
 
-	setupAcc($page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
+	$all_Accounts;
+	setupAcc($page, $all_Accounts);
 	if ($page > 0)
 	{
-		$subPage = $_GET['subPage'];
-		if ($subPage == "")	$subPage = 1;
-		AccountPageLayout($page, $ACC_TYPE, $ACC_1, $subPage);
+		$subPage = isset($_GET['subPage']) ? $_GET['subPage'] : 1;
+		AccountPageLayout($page, $all_Accounts, $subPage);
 
 	}
 	else
@@ -95,20 +87,19 @@ if ($page < -1)
 				echo "<right><a href=?logout=true>logout</a></right>";
 			echo "<center><a href=?page=-1>AccountSetup</a></center>";
 
-			$num_months = $_GET['billmonths'];
-			if (empty($num_months))
-				$num_months = 1;
-			billsDue($page, $ACC_2, $num_months);
+			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
+
+			billsDue($page, $all_Accounts, $num_months);
 		// Main Page Columns
-			if ($ACC_1)
+			if ($all_Accounts)
 			{
-				ShowMainPageColumn(true, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
-				ShowMainPageColumn(false, $page, $ACC_TYPE, $ACC_1, $ACC_2, $ACC_3);
-				totals($ACC_1,$ACC_3,$ACC_TYPE);
+				ShowMainPageColumn(true, $page, $all_Accounts);
+				ShowMainPageColumn(false, $page, $all_Accounts);
+				totals($all_Accounts);
 			}
 			if(!$page)
 			{
-				newTR(0,$ACC_1);
+				newTR(0, $all_Accounts);
 			}
 		}
 		else
@@ -121,7 +112,7 @@ if ($page < -1)
 		{
 			echo  "<table border=3 align=center>\n"
 				. "<tr>";
-			$i = editAcc('new',$ACC_TYPE);
+			$i = editAcc('new', $all_Accounts);
 			$foo = "account" . $i;
 			if (isset($_POST[$foo]))
 			{

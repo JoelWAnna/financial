@@ -1,4 +1,4 @@
-<?php function editItem($type, &$page, $subPage, &$accounts, $number, $newtrans, $noforms=false,
+<?php function editItem($type, &$page, $subPage, &$all_Accounts, $number, $newtrans, $noforms=false,
 						$month="", $day="", $year="", $description="", $fromAcc="", $toAcc="", $amount="")
 {
 
@@ -13,8 +13,8 @@
 			. "?page=$page&subPage=$subPage\" method=\"post\">\n";
 	}
 	echo  "    <li class=\"date\">"
-		. dropDownDate(m, $number, $month, 12)
-		. dropDownDate(d, $number, $day, 31)
+		. dropDownDate('m', $number, $month, 12)
+		. dropDownDate('d', $number, $day, 31)
 		. dropDownDate('Y',$number,$year, 2)
 		. "</li>\n"
 		. "    <li class=\"desc\">"
@@ -24,10 +24,10 @@
 	if ($type == 'transaction')
 	{
 		echo "    <li class=\"account\">"
-			. dropDownAccount($number, 'from', $fromAcc, $page, $accounts);
+			. dropDownAccount($number, 'from', $fromAcc, $page, $all_Accounts);
 	}
 	echo  "    <li class=\"account\">"
-		. dropDownAccount($number, 'to', $toAcc, $page, $accounts)
+		. dropDownAccount($number, 'to', $toAcc, $page, $all_Accounts)
 		. "</li>\n"
 		. "    <li class=\"\" width=50>"
 		. textField($number, $amount, 'amount')

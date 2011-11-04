@@ -15,10 +15,11 @@
 	
 	$query_Start = "SELECT SUM( `Amount` ) FROM ("
 					. "SELECT * FROM `" . PREFIX.TRANSACTIONS . "` "
-					. "WHERE `From Account` = $accNumber OR `To Account` = $accNumber "
-					. "ORDER BY `"  . PREFIX.TRANSACTIONS . "`.`year` DESC, "
-								."`". PREFIX.TRANSACTIONS . "`.`month` DESC, "
-								."`". PREFIX.TRANSACTIONS . "`.`day` DESC "
+					. " WHERE `From Account` = \"" . $accNumber . "\" "
+					. " OR `To Account` = \"" . $accNumber . "\" "
+					. " ORDER BY `"  . PREFIX.TRANSACTIONS . "`.`year` DESC, "
+								."`" . PREFIX.TRANSACTIONS . "`.`month` DESC, "
+								."`" . PREFIX.TRANSACTIONS . "`.`day` DESC "
 					. "LIMIT " . (($subPage-1) * 100) . ", $BIGINTMAX ) AS tmp "
 				. "WHERE `";
 	$query_End = " Account` = $accNumber";

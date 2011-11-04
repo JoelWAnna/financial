@@ -1,26 +1,29 @@
-<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, $accountTypes)
+<?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, &$all_Accounts)
 {
 	$returnString = "<select name=\"{$current}account{$transNumber}\">\n";
-	for ($i = 1; $accountTypes[$i]; $i++)
+	foreach ($all_Accounts as $acccountGroup)
 	{
-		$returnString .= "\t<option value=\"".$i."\" ";
-		$returnString .= selectedString($i, $currentAccountPage, $transactionAccount);
-		$returnString .= $accountTypes[$i]."</option>\n";
+		foreach ($acccountGroup->accounts as $acct)
+		{
+			$returnString .= "\t<option value=\"".$acct->number."\" ";
+			$returnString .= selectedString($acct->number, $currentAccountPage, $transactionAccount);
+			$returnString .= $acct->name."</option>\n";
+		}
 	}
 	$returnString .= "</select>\n";
 	return $returnString;
 }
 
-function dropDownAccountType($transNumber, $transactionType, $accountTypes)
+function dropDownAccountType($transNumber, $transactionType, &$all_Accounts)
 {
 	$returnString  = "<select name=\"" /* . $current . 'accounttype' */
 					. "$transNumber\">\n";
 	$returnString .= "\t<option value=\"\"></option>\n";
-	for ($i = 0; $accountTypes[$i]; $i++)
+	foreach ($all_Accounts as $accts)
 	{
-		$returnString .= "\t<option value=\"".$accountTypes[$i]."\" ";
-		$returnString .= selectedString($accountTypes[$i], $transactionType, '');
-		$returnString .= $accountTypes[$i]."</option>\n";
+		$returnString .= "\t<option value=\"". $accts->type ."\" ";
+		$returnString .= selectedString($accts->type, $transactionType, '');
+		$returnString .= $accts->type ."</option>\n";
 	}
 	$returnString .= "</select>\n";
 	return $returnString;
@@ -31,11 +34,11 @@ function textField($transNum, $current, $type='description', $iType="text")
 
 	if($type == 'amount')
 	{
-		$length .= "maxlength=\"10\" size=\"5\"";
+		$length = "maxlength=\"10\" size=\"5\"";
 	}
 	else
 	{
-		$length .= "maxlength=\"256\"";
+		$length = "maxlength=\"256\"";
 	}
 	return  "<input type=\"$iType\" name=\"$type"
 		. "$transNum\" $length value=\"$current\">\n";
@@ -61,9 +64,9 @@ function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 		break;
 	case 'm':
 		$type = 'month';
-		$months = array(0,Jan,Feb,Mar,Apr,
-						May,June,July,Aug,
-						Sep,Oct,Nov,Dec);
+		$months = array(0,'Jan','Feb','Mar','Apr',
+						'May','June','July','Aug',
+						'Sep','Oct','Nov','Dec');
 		if(!$max) $max=12;
 		break;
 	default:

@@ -1,13 +1,20 @@
-<?php function billsDue($allbills, &$accounts, $months)
+<?php function billsDue($allbills, &$all_Accounts, $months)
 {
 	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
 	if (!$allbills)
 	{
 		$month = (int)date("m", strtotime("+$months months"));
 		$year = (int)date("Y", strtotime("+$months months"));
+		$day = (int)date("d", strtotime("+$months months"));
 		$billsQ .= "WHERE `paid` = CONVERT(_utf8 'FALSE' "
 				. "USING latin1) COLLATE latin1_swedish_ci "
-				. " && (( `". PREFIX . BILLS ."`.`year` < $year) || (`". PREFIX . BILLS ."`.`month` <= $month))";
+				. " && ("
+					. "( `". PREFIX . BILLS ."`.`year` < $year)"
+					. " || "
+					. "(( `". PREFIX . BILLS ."`.`year` = $year) && (`". PREFIX . BILLS ."`.`month` < $month))"
+					. " || "
+					. "((`". PREFIX . BILLS ."`.`year` = $year) && (`". PREFIX . BILLS ."`.`month` = $month) && (`". PREFIX . BILLS ."`.`day` <= $day))"
+				. ")";
 	}
 	
 	$billsQ .= " ORDER BY `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
@@ -39,7 +46,8 @@
 				. "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=" . $billRows['to account'] . "\">";
 			if ($billRows['to account'] > 0)
 			{
-				echo $accounts[$billRows['to account']];
+				$toaccount = GetAccountByNumber($all_Accounts, $billRows['to account']);
+				echo $toaccount->name;
 			}
 			else
 			{

@@ -1,63 +1,42 @@
-<?php function totals(&$accounts,&$accounts3,&$accounttype)
+<?php function totals(&$all_Accounts)
 {
-	$exit = true;
-	for ($index = 0; $exit && $accounttype[$index]; $index++)
+	$headerwritten = false;
+	$total = 0;
+	foreach($all_Accounts as $accountGroup)
 	{
-		if (($accounttype[$index] != "Expense") &&
-			($accounttype[$index] != "Income") &&
-			($accounttype[$index] != "removed")&&
-			($accounttype[$index] != "Loan"))
+		$type = $accountGroup->type;
+		if (($type != "Expense") &&
+			($type != "Income") &&
+			($type != "removed")&&
+			($type != "Loan"))
 		{
+			if (!$headerwritten)
+			{
 			echo "<div id=\"Totals\">\n"
 				. "  <ul>\n"
 				. "    <li class=\"hdr_ex\">&nbsp;</li>\n"
 				. "    <li class=\"hdr\">SubTotal</li>\n"
 				. "    <li class=\"hdr\">Total</li>\n";
-			$exit = false;
-		}
-	}
-	if ($exit) return;
-
-	for ($index = 0; $accounttype[$index]; $index++)
-	{
-		if (($accounttype[$index] != "Expense") &&
-			($accounttype[$index] != "Income") &&
-			($accounttype[$index] != "removed")&&
-			($accounttype[$index] != "Loan"))
-		{
-			$acc[$accounttype[$index]] = 0;
-			for ($i = 1; $accounts3[$i]; $i++)
-			{
-				if($accounts3[$i] == $accounttype[$index])
-				{
-					$acc[$accounttype[$index]] += currentAmount($i);
-				}
+				$headerwritten=true;
 			}
-			if($acc[$accounttype[$index]])
+			$accountGroupTotal = 0;
+			foreach ($accountGroup->accounts as $acct)
 			{
-				echo "  <li class=\"name\">$accounttype[$index]</li>\n";
-				$total += $acc[$accounttype[$index]];
-
-				$neg = ($acc[$accounttype[$index]] < 0) ? " negative" : ""; 
-
-				echo  "  <li class=\"funds$neg\">"
-					. $acc[$accounttype[$index]]
-					. "</li>\n";
-
-
-				$total = round($total,2);
-				if($total<0)
-				{
-					echo "<li class=\"fundsneg\">";
-				}
-				else
-				{
-					echo "<li class=\"funds\">";
-				}
-
-				echo $total;
-				echo "</li>";
+				$accountGroupTotal += currentAmount($acct->number);
 			}
+			echo "  <li class=\"name\">" . $type . "</li>\n";
+
+			$neg = ($accountGroupTotal < 0) ? " negative" : ""; 
+
+			echo  "  <li class=\"funds$neg\">"
+				. $accountGroupTotal
+				. "</li>\n";
+
+			$total += round($accountGroupTotal,2);
+			$neg = ($total < 0) ? " negative" : ""; 
+
+			echo  "  <li class=\"funds$neg\">"
+				. $total . "</li>\n";
 		}
 	}
 	echo "</ul>\n</div>";

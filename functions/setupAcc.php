@@ -1,45 +1,80 @@
-<?php function setupAcc(&$page, &$ACC_TYPE, &$ACC_1, &$ACC_2, &$ACC_3){
+<?php
+class Account
+{
+public $number;
+public $name;
+}
+class AccountType
+{
+public $type;
+public $accounts;
+}
+
+function GetAccountByNumber(&$all_accounts, $number)
+{
+	foreach ($all_accounts as $types)
+	{
+		foreach ($types->accounts as $acct)
+		{
+			if ($acct->number == $number)
+			{
+				return $acct;
+			}
+		}
+	}
+	return NULL;
+}
+
+function setupAcc(&$page, &$all_Accounts){
 	if (strcmp('setup', $page)==0)
 	{
 		$page = -1;
 		return;
 	}
+	
 	$text ="Your setup is incorrect or you have not added databases to your server\n<br>";
-	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
-	$queryname ="SELECT number, name, type FROM `".PREFIX.ACCOUNTS."`";
+	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` ";
 	$typeresult = mysql_query($querytype)
 	or die(mysql_error()."<br>".$text."<a href=\"setup\">setup</a>");
 
-	$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 	$index=0;
-
 	if (mysql_num_rows($typeresult) > 0)
 	{
 		while($row = mysql_fetch_row($typeresult))
 		{
-			$ACC_TYPE[$index++]=$row[0];
+			$all_Accounts[$index] = new AccountType;
+			$all_Accounts[$index++]->type = $row[0];
 		}
 	}//else echo "<b>No account types found\n\n</b>";}
 	mysql_free_result($typeresult);
-	if (mysql_num_rows($resultname) > 0)
+
+	foreach ($all_Accounts as $accountgroup)
 	{
-		while ($row = mysql_fetch_assoc($resultname))
-		{	
-			$number = $row['number'];
-			$name = $row['name'];
-			$type = $row['type'];
-			$ACC_2[$number]= $name;
-			$ACC_1[$number]= $name;
-			if (validAccountforThisPage($type, true, false))
-			{
-				if (($type != "Income") && ($type != "Loan"))
-					$ACC_1[$number] .= " ". $type;
-			}
-			$ACC_3[$number]= $type;
+		$queryname = "SELECT `number`, `name` FROM `".PREFIX.ACCOUNTS."` "
+				 	."Where `type` = \"" . $accountgroup->type . "\"";// Order BY `".PREFIX.ACCOUNTS."`.`name` ASC";
+		$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 
+		$foobar = "";
+		if (validAccountforThisPage($accountgroup->type, true, false))
+		{
+			if (($accountgroup->type != "Income") && ($accountgroup->type != "Loan"))
+				//$foobar = " ". $accountgroup->type
+				;
 		}
-	}//else echo "<b>No accounts found\n</b>";
-	mysql_free_result($resultname);
-
+		
+		if (mysql_num_rows($resultname) > 0)
+		{
+			$index=0;
+			while ($row = mysql_fetch_assoc($resultname))
+			{
+				$foo = new Account;
+				$foo->number = $row['number'];
+				$foo->name = $row['name'] . $foobar;
+				$accountgroup->accounts[$index++] = $foo;
+				
+			}
+		}
+		mysql_free_result($resultname);
+	}
 }
 ?>

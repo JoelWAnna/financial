@@ -1,4 +1,6 @@
 <?php
+require_once("../resources/version.php" );
+
 //define('WP_INSTALLING', true);
 //These three defines are required to allow us to use require_wp_db() to load the database class while being wp-content/wp-db.php aware
 /* define('ABSPATH', dirname(dirname(__FILE__)).'/');
@@ -19,7 +21,7 @@ if ( !is_writable('../')){
 	echo "Sorry, I can't write to the directory. You'll have to either change the permissions on your Financial directory or create your f-config.php manually.";
 	die;
 }
-// Check if wp-config.php has been created
+// Check if f-config.php has been created
 if (file_exists('../f-config.php')){
 	header('Location: install.php');
 	die;
@@ -36,7 +38,7 @@ function display_header(){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Financial Setup Configuration File</title>
+<title><?php echo VERSIONSTR?> Setup Configuration File</title>
 </head>
 <body>
 <?php
@@ -47,16 +49,16 @@ switch($step) {
 		display_header();
 ?>
 
-<p>Welcome to Financial. Before getting started, we need some information on the database. You will need to know the following items before proceeding.</p>
+<p>Welcome to <?php echo VERSIONSTR?>. Before getting started, we need some information on the database. You will need to know the following items before proceeding.</p>
 <ol>
 
 	<li>Database name</li>
 	<li>Database username</li>
 	<li>Database password</li>
 	<li>Database host</li>
-	<li>Table prefix (if you want to run more than one WordPress in a single database) </li>
+	<li>Table prefix (if you want to run more than one <?php echo VERSIONSTR?> in a single database) </li>
 </ol>
-<p><strong>If for any reason this automatic file creation doesn't work, don't worry. All this does is fill in the database information to a configuration file. You may also simply open <code>wp-config-sample.php</code> in a text editor, fill in your information, and save it as <code>wp-config.php</code>. </strong></p>
+<p><strong>If for any reason this automatic file creation doesn't work, don't worry. All this does is fill in the database information to a configuration file. You may also simply open <code>f-config-sample.php</code> in a text editor, fill in your information, and save it as <code>f-config.php</code>. </strong></p>
 <p>In all likelihood, these items were supplied to you by your ISP. If you do not have this information, then you will need to contact them before you can continue. If you&#8217;re all ready&hellip;</p>
 
 <p class="step"><a href="index.php?step=1" class="button">Let&#8217;s go!</a></p>
