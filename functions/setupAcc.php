@@ -33,7 +33,7 @@ function setupAcc(&$page, &$all_Accounts){
 	}
 	
 	$text ="Your setup is incorrect or you have not added databases to your server\n<br>";
-	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` LIMIT 0 , 30";
+	$querytype ="SELECT DISTINCT `Type` FROM `".PREFIX.ACCOUNTS."` ";
 	$typeresult = mysql_query($querytype)
 	or die(mysql_error()."<br>".$text."<a href=\"setup\">setup</a>");
 

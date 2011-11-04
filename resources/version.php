@@ -1,1 +1,1 @@
-<?php define('VERSIONSTR', 'Financial_0.9.8.0.1');?>
+<?php define('VERSIONSTR', 'Financial_0.9.8.0.5beta');?>
