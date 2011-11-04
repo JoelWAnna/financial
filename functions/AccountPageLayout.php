@@ -34,12 +34,12 @@
 	echo  "<Br><B>".$this_account->name."</B>";
 
 
-	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."`"
-			.	" WHERE `From Account` =" . $accountKey
-			.	"OR `To Account` =" . $accountKey 
-			.	"ORDER BY `". PREFIX.TRANSACTIONS ."`.`year` DESC, `"
-							. PREFIX.TRANSACTIONS ."`.`month` DESC, `"
-							. PREFIX.TRANSACTIONS ."`.`day` DESC ";
+	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` "
+			.	" WHERE `From Account` = \"" . $accountKey . "\" "
+			.	" OR `To Account` = \"" . $accountKey . "\" "
+			.	" ORDER BY `". PREFIX.TRANSACTIONS ."`.`year` DESC, `"
+							 . PREFIX.TRANSACTIONS ."`.`month` DESC, `"
+							 . PREFIX.TRANSACTIONS ."`.`day` DESC ";
 
 	$queryAcc2 = $queryAcc . "LIMIT " . (($subPage-1)*100) . ", " . 100 . ";"; 
 
