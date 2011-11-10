@@ -39,11 +39,11 @@
 		echo"<input type=\"submit\" name=\"X"
 			.$number. "\" value=\"";
 		if($newtrans){
-			echo "Add New Transaction ";
+			echo "Add New Transaction";
 		}else{
-			echo "Submit Changes to ";
+			echo "Submit Changes to " . $number;
 		}	
-		echo  $number . "\" style=\"background-color: "
+		echo "\" style=\"background-color: "
 			. "abcdef;\" ></td>\n  </form></tr>";
 	}
 }

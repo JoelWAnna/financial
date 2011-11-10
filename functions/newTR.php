@@ -12,14 +12,13 @@
 		$billorTrans = 'bill';
 	}
 	addMore($nber,'o');
-	$num = newest($billorTrans);
 	echo  "\n    <form action=\"" . $_SERVER['PHP_SELF']
 		. "?page=$page&num=$nber\" method=\"post\">";
 
 
 	for ($j = 0; $j < $nber; $j++)
 	{
-		editItem($billorTrans, $page, 0, $all_Accounts, ($num + $j), true, true);
+		editItem($billorTrans, $page, 0, $all_Accounts, $j, true, true);
 	}
 	
 
@@ -38,7 +37,7 @@
 		
 		for ($i = 0; $i < $previousSubmit; $i++)
 		{
-			submitItem($billorTrans,($num+$i));
+			submitItem($billorTrans, $i);
 		}
 		reloadPHP();
 	}

@@ -13,13 +13,11 @@
 		return;
 	}
 	$accountKey = $this_account->number;
-	
-
 	$months = array(0,'Jan','Feb','Mar','Apr',
 						'May','June','July','Aug',
 						'Sep','Oct','Nov','Dec');
 
-	$new = newest('transaction');
+	$new = 0;
 	$X = "X";
 	$X .= $new;
 	if (isset($_POST[$X]))
@@ -31,9 +29,9 @@
 		}
 	}
 
+
+
 	echo  "<Br><B>".$this_account->name."</B>";
-
-
 	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` "
 			.	" WHERE `From Account` = \"" . $accountKey . "\" "
 			.	" OR `To Account` = \"" . $accountKey . "\" "
@@ -84,18 +82,16 @@
 		. "      </form>\n"
 		. "    </li>\n";
 
-	if ($numTransactions <= 0)
+	if (isset($_POST[$new]))
 	{
-		echo '<b> - No transactions found</b>';
-		return;
+		editItem('transaction', $accountKey, $subPage, $all_Accounts, $new, true);
 	}
-
-	if($new > 0)
+	else if ($numTransactions <= 0)
 	{
-		if (isset($_POST[$new]))
-		{
-			editItem('transaction', $accountKey, $subPage, $all_Accounts, $new, true);
-		}
+		echo '<b>No transactions found</b>';
+		echo "  </ul>\n"
+			."</div>";
+		return;
 	}
 
 	$CurrentAm = currentAccountAmount($accountKey, $subPage);
@@ -106,7 +102,7 @@
 		$X .= $rowdata['number'];
 		if (isset($_POST[$X]))
 		{
-			if(submitItem('transaction', $rowdata['number']))
+			if(submitItem('transaction', $rowdata['number'], true))
 			{
 				reloadPHP();
 			}
@@ -126,7 +122,7 @@
 			
 			. $fromaccount->name . "</li>\n"
 			. "    <li class=\"account\">"
-			. $toaccount->name	. "</li>\n";
+			. $toaccount->name . "</li>\n";
 
 
 		$neg = ($rowdata['from account'] == $accountKey) ? " negative" : "";

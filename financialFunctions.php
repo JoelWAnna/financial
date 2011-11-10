@@ -16,8 +16,6 @@
 	//Calls to descriptionbox, accountdropdown, amountbox
 	//Called by newTR, pagelayout
 	include("functions/smallFunctions.php");
-	//Calls nothing, Called by pagelayout
-	include("functions/newest.php");
 	//Calls nothing, Called by newTR, pagelayout
 	include("functions/newTR.php");
 	//Calls to newestTransaction, edittrans, daydropdown, submitTransaction, reloadPHP
