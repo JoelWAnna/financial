@@ -17,8 +17,8 @@
 				. ")";
 	}
 	
-	$billsQ .= " ORDER BY `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
-			. BILLS . "`.`day`, `" . PREFIX . BILLS . "`.`year` ASC";
+	$billsQ .= " ORDER BY `" . PREFIX . BILLS . "`.`year`, `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
+			. BILLS . "`.`day` ASC";
 	
 	static $total = 0;
 	

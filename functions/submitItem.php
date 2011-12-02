@@ -13,11 +13,6 @@
 		Panic("You did not enter a valid amount");
 		return false;
 	}
-	if (!$_POST[$DESCRIPTION])
-	{
-		Panic("You did not enter a description");
-		return false;
-	}
 	if($type=='bill')
 	{
 		$insertQuery ="Insert Into `" . DATABASENAME . "`.`" . PREFIX.BILLS . "` "
@@ -27,6 +22,11 @@
 	}
 	else if ($type == 'transaction')
 	{
+		if (!$_POST[$DESCRIPTION])
+		{
+			Panic("You did not enter a description");
+			return false;
+		}
 		if ($_POST[$TOACCOUNT] == $_POST[$FROMACCOUNT])
 		{
 			Panic("Accounts cannot be the same");
