@@ -54,12 +54,11 @@ function setupAcc(&$page, &$all_Accounts){
 				 	."Where `type` = \"" . $accountgroup->type . "\"";// Order BY `".PREFIX.ACCOUNTS."`.`name` ASC";
 		$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 
-		$foobar = "";
+		$type = "";
 		if (validAccountforThisPage($accountgroup->type, true, false))
 		{
 			if (($accountgroup->type != "Income") && ($accountgroup->type != "Loan"))
-				//$foobar = " ". $accountgroup->type
-				;
+				$type = " ". $accountgroup->type;
 		}
 		
 		if (mysql_num_rows($resultname) > 0)
@@ -67,10 +66,10 @@ function setupAcc(&$page, &$all_Accounts){
 			$index=0;
 			while ($row = mysql_fetch_assoc($resultname))
 			{
-				$foo = new Account;
-				$foo->number = $row['number'];
-				$foo->name = $row['name'] . $foobar;
-				$accountgroup->accounts[$index++] = $foo;
+				$tempAccount = new Account;
+				$tempAccount->number = $row['number'];
+				$tempAccount->name = $row['name'] . $type;
+				$accountgroup->accounts[$index++] = $tempAccount;
 				
 			}
 		}

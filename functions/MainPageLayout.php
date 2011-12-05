@@ -49,7 +49,8 @@
 
 				echo  "\n    <li class=\"accountname\">"
 					. "<a href =\"" . $_SERVER['PHP_SELF'] . "?page=" . $CurrentAccountNumber . "\">"
-					. $acct->name
+                    // TODO fixme 
+					. substr($acct->name, 0, 26)
 					. "</a>" . "</li>\n";
 
 				if($accountGroup->type == "Income")
@@ -63,7 +64,7 @@
 				printf("%.2f</li>\n", $CurrentFunds[$CurrentAccountNumber]);
 				if($accountGroup->type == "Credit Card")
 				{
-					balanceRemaining($acct->name, $CurrentFunds[$CurrentAccountNumber]);
+					balanceRemaining($acct, $CurrentFunds[$CurrentAccountNumber]);
 				}
 				else if ($leftColumn)
 				{

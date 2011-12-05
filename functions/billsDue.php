@@ -47,7 +47,8 @@
 			if ($billRows['to account'] > 0)
 			{
 				$toaccount = GetAccountByNumber($all_Accounts, $billRows['to account']);
-				echo $toaccount->name;
+				// TODO fixme 
+				echo substr($toaccount->name, 0, 14);
 			}
 			else
 			{

@@ -9,10 +9,10 @@ function balanceRemainingHeader()
 		. "</li>";
 }
 
-function balanceRemaining($AccountName,$Amount)
+function balanceRemaining($acct,$Amount)
 {
 	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS
-		 . "` WHERE `name` = \"" . $AccountName . "\" LIMIT 1 ";
+		 . "` WHERE `number` = \"" . $acct->number . "\" LIMIT 1 ";
 
 	$resultbal = mysql_query($bal)
 		or die("Error in query: $bal." . mysql_error());
