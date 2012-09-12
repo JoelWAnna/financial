@@ -107,41 +107,50 @@
 
 	while ($rowdata = mysql_fetch_assoc($resultAcc))
 	{
+		$current_transaction = new Transaction($rowdata);
+
 		$X = "X";
-		$X .= $rowdata['number'];
+		$X .= $current_transaction->number;
+
 		if (isset($_POST[$X]))
 		{
-			if(submitItem('transaction', $rowdata['number'], true))
+			if(submitItem('transaction', $current_transaction->number, true))
 			{
 				reloadPHP();
 			}
 			unset($_POST[$X]);
 		}
 
-		$fromaccount = GetAccountByNumber($all_Accounts, $rowdata['from account']);
-		PanicIf(!$fromaccount, "Invalid Account number " . $rowdata['from account']);
-		$toaccount = GetAccountByNumber($all_Accounts, $rowdata['to account']);
-		PanicIf(!$toaccount, "Invalid Account number " . $rowdata['to account']);
+		$fromaccount = $current_transaction->fromAccount($all_Accounts);
+		$toaccount = $current_transaction->toAccount($all_Accounts);
+		$fromAccountText = $fromaccount->name;
+		$toAccountText = $toaccount->name;
+		if ($accountKey != $fromaccount->number)
+		{
+			$fromAccountText = "        <a href=?page=" . $fromaccount->number . ">" . $fromAccountText . "</a>\n";
+		}
+		else
+		{
+			$toAccountText = "        <a href=?page=" . $toaccount->number . ">" . $toAccountText . "</a>\n";
+		}
+
 		echo "\n"
-			. "    <li class=\"date\">";
-			printf("%s %02d %s", $months[(int)$rowdata['month']], $rowdata['day'], $rowdata['year']);
+			. "    <li class=\"date\">"
+			. $current_transaction->dateToString();
 		echo  "</li>\n"
-			. "    <li class=\"desc\">" . $rowdata['description'] . "</li>\n"
-			. "    <li class=\"account\">"
-			
-			. $fromaccount->name . "</li>\n"
-			. "    <li class=\"account\">"
-			. $toaccount->name . "</li>\n";
+			. "    <li class=\"desc\">" . $current_transaction->description . "</li>\n"
+			. "    <li class=\"account\">\n" . $fromAccountText . "    </li>\n"
+			. "    <li class=\"account\">\n" . $toAccountText . "    </li>\n";
 
 
-		$neg = ($rowdata['from account'] == $accountKey) ? " negative" : "";
+		$neg = ($current_transaction->from_Account_Number == $accountKey) ? " negative" : "";
 
 		echo "    <li class=\"hdr_funds$neg\">";
 		if ($neg != "")
 		{
 			echo "-";
 		}
-		echo $rowdata['amount'] . "</li>\n";
+		echo $current_transaction->amount . "</li>\n";
 
 		$CurrentAm = round($CurrentAm, 2);
 		$neg = ($CurrentAm < 0) ? " negative" : "";
@@ -150,26 +159,26 @@
 		printf("%.2f", $CurrentAm);
 		echo "</li>\n";
 
-		if ($rowdata['from account'] == $accountKey)
+		if ($current_transaction->from_Account_Number == $accountKey)
 		{
-			$CurrentAm += $rowdata['amount'];
+			$CurrentAm += $current_transaction->amount;
 		}
 		else
 		{
-			$CurrentAm	-= $rowdata['amount'];
+			$CurrentAm	-= $current_transaction->amount;
 		}
 		
 		echo  "    <li>\n"
 			. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey&subPage=$subPage\" method=\"post\">\n"
-			. "      <input type=\"submit\" name=\"" . $rowdata['number']. "\" value=\""
-			. "Edit transaction " . $rowdata['number'] . " \" $disable >\n      </form>\n";
+			. "      <input type=\"submit\" name=\"" . $current_transaction->number. "\" value=\""
+			. "Edit transaction " . $current_transaction->number . " \" $disable >\n      </form>\n";
 		echo "    </li>\n";
 		
-		if (isset($_POST[$rowdata['number']])){
-			editItem('transaction',$accountKey, $subPage, $all_Accounts, $rowdata['number'], false, false,
-					(int)$rowdata['month'],$rowdata['day'],$rowdata['year'],
-					$rowdata['description'],$rowdata['from account'],
-					$rowdata['to account'],$rowdata['amount']);
+		if (isset($_POST[$current_transaction->number])){
+			editItem('transaction',$accountKey, $subPage, $all_Accounts, $current_transaction->number, false, false, $current_transaction->month, $current_transaction->day,
+					$current_transaction->year, $current_transaction->description,
+					$current_transaction->from_Account_Number, $current_transaction->to_Account_Number,
+					$current_transaction->amount);
 		}
 	}
 	mysql_free_result($resultAcc);

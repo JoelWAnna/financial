@@ -6,9 +6,9 @@
 		echo "You have been logged out";
 		$_SESSION = array();
 	}
-define('TR','\n  <tr>');
-define('TR_','\n  </tr>');
-define('TRo','\n  <tr');
+//define('TR','\n  <tr>');
+//define('TR_','\n  </tr>');
+//define('TRo','\n  <tr');
 
 // TODO: Make user configurable
 date_default_timezone_set('America/Los_Angeles');

@@ -1,5 +1,6 @@
 <?php
 require_once("financialFunctions.php");
+require_once("financialClasses.php");
 require_once("resources/version.php");
 define('HOSTNAME','localhost');
 define('USERNAME','guest');
