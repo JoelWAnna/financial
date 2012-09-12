@@ -1,7 +1,7 @@
 <?php function editItem($type, &$page, $subPage, &$all_Accounts, $number, $newtrans, $noforms=false,
 						$month="", $day="", $year="", $description="", $fromAcc="", $toAcc="", $amount="")
 {
-
+	echo "<ul class=\"StartROW\">\n";
 	if (($type != 'bill') && ($type != 'transaction'))
 	{
 		return;
@@ -46,5 +46,6 @@
 		echo "\" style=\"background-color: "
 			. "abcdef;\" ></td>\n  </form></tr>";
 	}
+	echo "</ul>\n";
 }
 ?>

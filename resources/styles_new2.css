@@ -1,0 +1,233 @@
+#billsOLLLD 
+{
+	position:absolute;
+	width:210px;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+	Border:1px solid #000;
+}
+
+	
+#Main 
+{
+	position:absolute;
+	left:200px;
+	width:520px;
+}
+
+
+#leftColumnOLLLD
+{
+	position:absolute;
+	left:222px;
+	width:253px;
+	border:1px solid #000;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+}
+	
+#leftaccountcolumn ul
+{
+	width:253px;
+	margin:0;
+	padding:0;
+}
+
+#leftaccountcolumn ul li
+ {
+	width:42px;
+	height:17px;
+	display:block;
+	float:left;
+	list-style:none;
+	font-size:7pt;
+	margin:0;
+}
+
+#leftaccountcolumn ul li.AccountHDR 
+{
+	width:125px;
+}
+
+#leftaccountcolumn ul li.accountname
+ {
+	width:125px;
+}
+
+#leftaccountcolumn ul li.ccHdr 
+{
+	width:42px;
+	height:17px;
+	font-size:7pt;
+	text-align:right;
+}
+	
+#leftaccountcolumn ul li.small
+{
+	font-size:7px;
+}
+
+#leftaccountcolumn ul li.funds
+{
+}
+
+
+#rightaccountcolumn
+ {
+	//position:absolute;
+	//l/eft:480px;
+	//width:170px;
+	//border:1px solid #000;
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+	line-height:15px;
+}
+	
+#rightaccountcolumn ul 
+{
+	margin:0;
+	padding:0;
+}
+
+#rightaccountcolumn ul li 
+{
+	width:40px;
+	height:17px;
+	display:block;
+	float:left;
+	list-style:none;
+	font-size:7pt;
+	margin:0;
+}
+
+#rightaccountcolumn ul li.AccountHDR 
+{
+	width:120px;
+}
+	
+#rightaccountcolumn ul li.accountname
+ {
+	width:120px;
+}
+
+
+	
+#Totals 
+{
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	text-align:left;
+	line-height:15px;
+	float:left;
+}
+
+#Totals ul 
+{
+	width:150px;
+	margin:0;
+	padding:0;
+}
+
+#Totals ul li
+ {
+	width:40px;
+	display:block;
+	float:left;
+	list-style:none;
+	font-size:7pt;
+	text-align:left;
+	margin:0;
+
+}
+		
+		
+#Totals ul li.hdr_ex 
+{
+	width:70px;
+}
+#Totals ul li.hdr
+{
+}
+#Totals ul li.name 
+{
+	width:70px;
+	text-indent:4px;
+}
+
+.AccountHDR 
+{
+	font-size:10px;
+	font-weight:bold;
+	text-decoration:underline;
+	text-align:left;
+	text-indent:4px;
+}
+.accountname
+ {
+	text-indent:4px;
+	width:125px;
+}
+.negative
+{
+ color:#f00;
+}
+
+.funds
+{
+	text-align:right;
+}
+
+#NewTransactions
+{
+	font-family:arial, helvetica, sans-serif;
+	font-size:9pt;
+	color:#000;
+	text-align:left;
+}
+#NewTransactions ul 
+{
+
+	margin:0;
+	padding:1;
+}
+
+#NewTransactions ul li 
+{
+	display:block;
+	float:left;
+	list-style:none;
+	text-align:center;
+	margin:1px;
+	height:25px;
+}
+
+#NewTransactions ul li.date
+{
+	width:174px;
+}
+#NewTransactions ul li.desc
+{
+	width:200px;
+}
+#NewTransactions ul li.account
+{
+	width:240px;
+}
+
+#NewTransactions ul li.addMore
+{
+	width:100%;
+}
+
+#NewTransactions ul li.submitTrans
+{
+	width:900px;
+}

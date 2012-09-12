@@ -11,7 +11,9 @@
 		{
 			if (!$headerwritten)
 			{
-				$left = $leftColumn ? "leftColumn" : "rightColumn";
+				$left = $leftColumn ? "left" : "right";
+				$left .= "accountcolumn";
+				echo  "<div id=\"" . $left . "Wrapper\">\n";
 				echo  "<div id=\"" . $left . "\">\n" . "<ul>\n";
 				$headerwritten = true;
 			}
@@ -86,6 +88,6 @@
 			}
 		}
 	}
-	echo "</ul></div>";
+	echo "</ul></div></div>";
 }
 ?>

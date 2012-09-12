@@ -32,11 +32,11 @@ date_default_timezone_set('America/Los_Angeles');
 <?php
 FINinit();
 echo "<title> ",VERSIONSTR," </title>\n";
-echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
-if (BrowserInfo() == "IE")
-{
-	echo "<link href=\"resources/styles_main_ie.css\" rel=\"stylesheet\" type=\"text/css\">\n";
-}
+//echo "<link href=\"resources/styles_main.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+//if (BrowserInfo() == "IE")
+//{
+//	echo "<link href=\"resources/styles_main_ie.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+//}
 echo "<link href=\"resources/styles_account.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 if ($page < -1)
 {
@@ -51,9 +51,11 @@ if ($page < -1)
 		$browser = "";
 		break;
 	}
-		echo "<link href=\"resources/styles_-1$browser.css\" rel=\"stylesheet\" type=\"text/css\">\n";
+	//	echo "<link href=\"resources/styles_-1$browser.css\" rel=\"stylesheet\" type=\"text/css\">\n";
 }
 ?>
+<link rel="stylesheet" type="text/css" href="resources/styles_new.css" />
+<link rel="stylesheet" type="text/css" href="resources/styles_new2.css" />
 </head>
 <body>
 <?php
@@ -88,28 +90,63 @@ if ($page < -1)
 			echo "<center><a href=?page=-1>AccountSetup</a></center>";
 
 			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
-
+?>
+			 <div id="wrapper">
+        <div id="headerwrap">
+        <div id="header">
+            <p>This is the Header</p>
+        </div>
+        </div>
+        <div id="navigationwrap">
+        <div id="navigation">
+            <p>This is the Menu</p>
+        </div>
+        </div>
+        <div id="bills_wrap">
+		<?php
 			billsDue($page, $all_Accounts, $num_months);
-		// Main Page Columns
+?>
+        </div>
+		
+        <div id="contentwrap">
+        <div id="content">
+		<?php
+			// Main Page Columns
 			if ($all_Accounts)
 			{
 				ShowMainPageColumn(true, $page, $all_Accounts);
 				ShowMainPageColumn(false, $page, $all_Accounts);
+?> 
+        </div>
+        </div>
+        <div id="rightcolumnwrap">
+				<?php
 				totals($all_Accounts);
+				?>
+				</div>
+				<?php
 			}
+			?>
+		
+        <div id="footerwrap">
+		<?php
 			if(!$page)
 			{
 				newTR(0, $all_Accounts);
-			}
+			}?>
+		</div>
+		<?php
 		}
 		else
 		{
+
 				echo  "<div align=center>\n"
 					. "  <a href=\"". $_SERVER['PHP_SELF'] ."?page=0\">Go to the Main Page</a>\n"
 					. "</div>\n";
 		}
 		if ($page)
 		{
+				
 			echo  "<table border=3 align=center>\n"
 				. "<tr>";
 			$i = editAcc('new', $all_Accounts);
@@ -122,7 +159,11 @@ if ($page < -1)
 				}
 			}
 			echo "</tr></table>";
+					
 		}
+		?>
+		</div>
+		<?php
 	}
 	mysql_close($connection); 
 ?>
