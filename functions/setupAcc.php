@@ -3,6 +3,10 @@ class Account
 {
 public $number;
 public $name;
+public $type;
+public $interest;
+public $budget;
+private $start;
 }
 class AccountType
 {
@@ -50,7 +54,8 @@ function setupAcc(&$page, &$all_Accounts){
 
 	foreach ($all_Accounts as $accountgroup)
 	{
-		$queryname = "SELECT `number`, `name` FROM `".PREFIX.ACCOUNTS."` "
+		#$queryname = "SELECT `number`, `name` FROM `".PREFIX.ACCOUNTS."` "
+		$queryname = "SELECT * FROM `".PREFIX.ACCOUNTS."` "
 				 	."Where `type` = \"" . $accountgroup->type . "\"";// Order BY `".PREFIX.ACCOUNTS."`.`name` ASC";
 		$resultname = mysql_query($queryname) or die("Error in query: $queryname." . mysql_error());
 
@@ -68,7 +73,12 @@ function setupAcc(&$page, &$all_Accounts){
 			{
 				$tempAccount = new Account;
 				$tempAccount->number = $row['number'];
-				$tempAccount->name = $row['name'] . $type;
+				$tempAccount->name = $row['Name'] . $type;
+				$tempAccount->type = $row['Type'];
+				$tempAccount->interest = $row['Interest Rate'];
+				$tempAccount->budget = $row['Budget'];
+				#$tempAccount->start = $row['start'];
+				
 				$accountgroup->accounts[$index++] = $tempAccount;
 				
 			}

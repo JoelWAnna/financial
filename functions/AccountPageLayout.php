@@ -6,7 +6,7 @@
 
 	echo  "<a href=\"" . $_SERVER['PHP_SELF'] . "?page=0\">Back to main</a><br>";
 	$this_account=GetAccountByNumber($all_Accounts, $page);
-	
+
 	if ($page < 1 || !$this_account)
 	{
 		echo "No account found with id = $page";
@@ -31,7 +31,16 @@
 
 
 
-	echo  "<Br><B>".$this_account->name."</B>";
+	echo  "<B>".$this_account->name."</B>";
+	
+	if ($this_account->type == "Credit Card")
+	{
+		echo "&nbsp APR:".$this_account->interest*100 . "%";
+	
+	}
+	
+	
+	echo "<BR>";
 	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` "
 			.	" WHERE `From Account` = \"" . $accountKey . "\" "
 			.	" OR `To Account` = \"" . $accountKey . "\" "
