@@ -26,9 +26,9 @@ p {
 
 #header {
     height: 75px;
-    background: #FF6633;
+    background: #fff;
     border-radius: 10px;
-    border: 1px solid #eb521f;
+    border: 1px solid #fff;
     margin: 5px;
 }
 
@@ -40,14 +40,14 @@ p {
 
 #navigation {
     height: 40px;
-    background: #FFCC33;
+    background: #fff;
     border-radius: 10px;
-    border: 1px solid #ebb81f;
+    border: 1px solid #fff;
     margin: 5px;
 }
 
 #contentwrap {
-    width: 700px;
+    width: 530px;
     float: left;
     margin: 0 auto;
 }
@@ -56,14 +56,14 @@ p {
 	
     background: #FFFFFF;
     border-radius: 10px;
-    //border: 1px solid #ebebeb;
+    //border: 1px solid #fff;
     margin: 5px;
 }
 
 #leftaccountcolumn
 {
 	display:	table-column;
-	border:1px solid #000;
+	//border:1px solid #000;
 	border-radius: 10px;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
@@ -84,7 +84,7 @@ p {
 #rightaccountcolumn
  {
 	display: table-column;
-	border:1px solid #000;
+	//border:1px solid #000;
 
     border-radius: 10px;
 	font-family:arial, helvetica, sans-serif;
@@ -93,9 +93,9 @@ p {
 	text-align:left;
 	line-height:15px;
 	float: right;
-	background-color: #3FC;
+	background-color: #fff;
 	
-	width: 40%;
+	width: 35%;
 	padding:2px;
 	margin-top: 5px;
 	margin-right: 48px;
@@ -110,24 +110,24 @@ p {
 }
 
 #bills {
-    background: #33CCFF;
+    background: #fff;
     border-radius: 10px;
-    border: 1px solid #1fb8eb;
+    //border: 1px solid #fff;
     margin: 10px;
 	float: left;
 }
 
 
 #rightcolumnwrap {
-    width: 150px;
+    width: 100px;
     float: left;
-    margin: 0 auto;
+    margin:  auto;
 }
 
 #Totals {
-    background: #CC33FF;
+    background: #fff;
     border-radius: 10px;
-    border: 1px solid #b81feb;
+    //border: 1px solid #fff;
     margin: 5px;
 }
 
@@ -139,9 +139,18 @@ p {
 }
 
 #NewTransactions {
-    background: #33FF66;
+    background: #fff;
     border-radius: 10px;
-    border: 1px solid #1feb52;
+   // border: 1px solid #fff;
     margin: 5px;
 	float: left;
+}
+#billrow{
+margin: 5px;
+	width: 860px;
+}
+
+#transactionrow{
+margin: 5px;
+	width: 100%;
 }

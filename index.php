@@ -85,21 +85,27 @@ if ($page < -1)
 	{
 		if ($page != -1)
 		{
-			if($REMOTE_ADDR != "127.0.0.1" && $REMOTE_ADDR !="::1")
-				echo "<right><a href=?logout=true>logout</a></right>";
-			echo "<center><a href=?page=-1>AccountSetup</a></center>";
+			
 
 			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
 ?>
-			 <div id="wrapper">
+	<!--		 <div id="wrapper">
         <div id="headerwrap">
         <div id="header">
-            <p>This is the Header</p>
+           <p>
+				header
+			</p>
         </div>
         </div>
+		-->
+
         <div id="navigationwrap">
         <div id="navigation">
-            <p>This is the Menu</p>
+            <p><?php
+		if($REMOTE_ADDR != "127.0.0.1" && $REMOTE_ADDR !="::1")
+				echo "<right><a href=?logout=true>logout</a></right>";
+			echo "<a href=?page=-1>AccountSetup</a>";
+?></p>
         </div>
         </div>
         <div id="bills_wrap">
