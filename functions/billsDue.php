@@ -1,4 +1,4 @@
-<?php function billsDue($allbills, &$all_Accounts, $months)
+<?php function billsDue($allbills, &$all_Accounts, $months, $connection)
 {
 	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
 	if (!$allbills)
@@ -22,10 +22,10 @@
 	
 	static $total = 0;
 	
-	$billsR = mysql_query($billsQ)
-				or die("Error in query: $billsQ." . mysql_error());
+	$billsR = $connection->query($billsQ);
+				//or die("Error in query: $billsQ." . mysql_error());
 				
-	if (mysql_num_rows($billsR) > 0)
+	if ($billsR->rowCount() > 0)
 	{
 		echo  "<div id=\"Bills\">\n"
 			. "  <ul>\n"
@@ -38,7 +38,7 @@
 		{
 			echo "<li class=\"hdr_4\">&nbsp;</li>\n";
 		}
-		while ($billRows = mysql_fetch_assoc($billsR))
+		foreach ($billsR->fetchall() as $billRows)
 		{
 
 
@@ -101,7 +101,7 @@
 		printf("%.2f", $total);
 		echo "</li></ul>\n</div>";
 	}
-	mysql_free_result($billsR);
+	//mysql_free_result($billsR);
 
 
 }

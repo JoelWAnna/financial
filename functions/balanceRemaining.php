@@ -9,21 +9,21 @@ function balanceRemainingHeader()
 		. "</li>";
 }
 
-function balanceRemaining($acct,$Amount)
+function balanceRemaining($acct,$Amount, &$connection)
 {
 	$bal = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS
 		 . "` WHERE `number` = \"" . $acct->number . "\" LIMIT 1 ";
 
-	$resultbal = mysql_query($bal)
+	$resultbal = $connection->query($bal)
 		or die("Error in query: $bal." . mysql_error());
 
-	if (mysql_num_rows($resultbal) <= 0)
+	if ($resultbal->rowCount() <= 0)
 	{
 		die($bal);
 	}
 	else
 	{
-		$row = mysql_fetch_row($resultbal);
+		$row = $resultbal->fetch();
 		$neg = (($row[0] + $Amount) < 0) ? "negative" : "";
 		echo  "<li class=\"funds small $neg\">";
 		printf("%.2f", $row[0] + $Amount);
@@ -31,6 +31,6 @@ function balanceRemaining($acct,$Amount)
 		$neg = (($row[0]) < 0) ? "negative" : "";
 		echo "<li class=\"funds small $neg\">". $row[0] . "</li>";
 	}
-	mysql_free_result($resultbal);
+	//mysql_free_result($resultbal);
 }
 ?>

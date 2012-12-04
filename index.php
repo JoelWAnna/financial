@@ -19,13 +19,23 @@ date_default_timezone_set('America/Los_Angeles');
 	}
 	require_once("f-config.php");
 	$page = isset($_GET['page']) ? $_GET['page'] : 0;
-
-	$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-		or die("Unable to connect !\n is your database set up?".
+	global $connection;
+try {
+	$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF-8", USERNAME, PASSWORD );
+	$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
+	//	or die("Unable to connect !\n is your database set up?".
+	//			"<a href=\"setup\">setup</a>");
+	//mysql_select_db(DATABASENAME)
+	//	or die("Unable to select database! DATABASENAME\n is your".
+	//			"database set up?<a href=\"setup\">setup</a>");
+	}
+catch(PDOException $e) {
+    echo "Error!: " . $e->getMessage() . "<br/>\n";
+	 die("Unable to connect !\n is your database set up?".
 				"<a href=\"setup\">setup</a>");
-	mysql_select_db(DATABASENAME)
-		or die("Unable to select database! DATABASENAME\n is your".
-				"database set up?<a href=\"setup\">setup</a>");
+}
 ?>
 <html>
 <head>
@@ -72,11 +82,11 @@ if ($page < -1)
 	}
 
 	$all_Accounts;
-	setupAcc($page, $all_Accounts);
+	setupAcc($page, $all_Accounts, $connection);
 	if ($page > 0)
 	{
 		$subPage = isset($_GET['subPage']) ? $_GET['subPage'] : 1;
-		AccountPageLayout($page, $all_Accounts, $subPage);
+		AccountPageLayout($connection, $page, $all_Accounts, $subPage);
 
 	}
 	else
@@ -89,13 +99,13 @@ if ($page < -1)
 
 			$num_months = isset($_GET['billmonths']) ? $_GET['billmonths'] : 1;
 
-			billsDue($page, $all_Accounts, $num_months);
+			billsDue($page, $all_Accounts, $num_months, $connection);
 		// Main Page Columns
 			if ($all_Accounts)
 			{
-				ShowMainPageColumn(true, $page, $all_Accounts);
-				ShowMainPageColumn(false, $page, $all_Accounts);
-				totals($all_Accounts);
+				ShowMainPageColumn(true, $page, $all_Accounts, $connection);
+				ShowMainPageColumn(false, $page, $all_Accounts, $connection);
+				totals($all_Accounts, $connection);
 			}
 			if(!$page)
 			{
@@ -124,7 +134,7 @@ if ($page < -1)
 			echo "</tr></table>";
 		}
 	}
-	mysql_close($connection); 
+	$connection = null; 
 ?>
 </body>
 </html>
