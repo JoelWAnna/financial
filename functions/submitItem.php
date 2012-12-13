@@ -23,8 +23,8 @@
 	{
 	$insertQuery ="Insert Into `" . DATABASENAME . "`.`" . PREFIX.BILLS . "` "
 				. " (`number`, `month`, `day`, `year`, `description`, `amount`, `to account`) "
-				. " VALUES (NULL, ':month', ':day', ':year' "
-				.", ':description', ':amount', ':toaccount') ";
+				. " VALUES (NULL, :month, :day, :year "
+				.", :description, :amount, :toaccount) ";
 
 		$stmt = $connection->prepare($insertQuery);
 		$stmt->bindParam(":month", $_POST[$MONTH], PDO::PARAM_INT);
