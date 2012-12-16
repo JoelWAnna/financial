@@ -1,4 +1,4 @@
-<?php function ShowMainPageColumn($_leftColumn, $_page, &$all_Accounts)
+<?php function ShowMainPageColumn($_leftColumn, $_page, &$all_Accounts, &$connection)
 {
 	$page = $_page;
 	$leftColumn = $_leftColumn;
@@ -56,9 +56,9 @@
 					. "</a>" . "</li>\n";
 
 				if($accountGroup->type == "Income")
-					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($CurrentAccountNumber, $leftColumn) * ($leftColumn ? -1 : 1), 2);
+					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($connection, $CurrentAccountNumber, $leftColumn) * ($leftColumn ? -1 : 1), 2);
 				else
-					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($CurrentAccountNumber, !$leftColumn) * ($leftColumn ? 1 : -1), 2);
+					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($connection, $CurrentAccountNumber, !$leftColumn) * ($leftColumn ? 1 : -1), 2);
 
 				$neg = ($CurrentFunds[$CurrentAccountNumber]<0) ? " negative" : ""; 
 
@@ -66,7 +66,7 @@
 				printf("%.2f</li>\n", $CurrentFunds[$CurrentAccountNumber]);
 				if($accountGroup->type == "Credit Card")
 				{
-					balanceRemaining($acct, $CurrentFunds[$CurrentAccountNumber]);
+					balanceRemaining($acct, $CurrentFunds[$CurrentAccountNumber], $connection);
 				}
 				else if ($leftColumn)
 				{

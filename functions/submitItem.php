@@ -1,5 +1,11 @@
 <?php function submitItem($type, $number, $updating=false)
 {
+	$stmt;
+		
+	$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF-8", UPDATEUSER, UPDATEPASSWORD );
+	$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 	$AMOUNT = 'amount' . $number;
 	$DESCRIPTION = 'description' . $number;
 	$TOACCOUNT = 'toaccount'. $number;
@@ -15,10 +21,18 @@
 	}
 	if($type=='bill')
 	{
-		$insertQuery ="Insert Into `" . DATABASENAME . "`.`" . PREFIX.BILLS . "` "
+	$insertQuery ="Insert Into `" . DATABASENAME . "`.`" . PREFIX.BILLS . "` "
 				. " (`number`, `month`, `day`, `year`, `description`, `amount`, `to account`) "
-				. " VALUES (NULL, '" . $_POST[$MONTH] . "', '" . $_POST[$DAY] . "', '" . $_POST[$YEAR] . "' "
-				.", '" . $_POST[$DESCRIPTION] . "', '" . $_POST[$AMOUNT] . "', '" . $_POST[$TOACCOUNT] . "') ";
+				. " VALUES (NULL, ':month', ':day', ':year' "
+				.", ':description', ':amount', ':toaccount') ";
+
+		$stmt = $connection->prepare($insertQuery);
+		$stmt->bindParam(":month", $_POST[$MONTH], PDO::PARAM_INT);
+		$stmt->bindParam(":day", $_POST[$DAY], PDO::PARAM_INT);
+		$stmt->bindParam(":year", $_POST[$YEAR], PDO::PARAM_INT);
+		$stmt->bindParam(":description", $_POST[$DESCRIPTION], PDO::PARAM_STR);
+		$stmt->bindParam(":amount", $_POST[$AMOUNT]);
+		$stmt->bindParam(":toaccount", $_POST[$TOACCOUNT], PDO::PARAM_INT);
 	}
 	else if ($type == 'transaction')
 	{
@@ -43,11 +57,11 @@
 		{
 			$checkChanges = "SELECT * FROM `".PREFIX.TRANSACTIONS."` WHERE `"
 						. PREFIX.TRANSACTIONS."`.`number` =" . $number . " LIMIT 1";
-			$changesResult = mysql_query($checkChanges)
+			$changesResult = $connection->query($checkChanges)
 				or die('Error in query: $checkChanges.' . mysql_error());
-			if (mysql_num_rows($changesResult) > 0)
+			if ($changesResult->rowCount() > 0)
 			{
-				while($changesR = mysql_fetch_assoc($changesResult))
+				while($changesR = $changesResult->fetch())
 				{
 					if(($_POST[$MONTH] == $changesR['month'])
 						& ($_POST[$DAY] == $changesR['day'])
@@ -71,6 +85,7 @@
 								. "', `to account` = '" . $_POST[$TOACCOUNT]. "'"
 								. ", `from account` = '" . $_POST[$FROMACCOUNT] . "'"
 								. " WHERE `".PREFIX.TRANSACTIONS."`.`number` =". $number ." LIMIT 1";
+						$stmt = $connection->prepare($insertQuery);
 					}
 				}
 			}
@@ -79,19 +94,23 @@
 		else
 		{
 			$insertQuery = "Insert Into `" . DATABASENAME . "`.`" . PREFIX.TRANSACTIONS . "` "
-			. " (`number`, `month`, `day`, `year`, `description`, `amount`, `to account`, `from account`) "
-			. " VALUES (NULL, '" . $_POST[$MONTH] . "', '" . $_POST[$DAY] . "', '" . $_POST[$YEAR] . "' "
-			. ", '" . $_POST[$DESCRIPTION] . "', '" . $_POST[$AMOUNT] . "', '" . $_POST[$TOACCOUNT] . "', '" . $_POST[$FROMACCOUNT] . "') ";
+			. " (`month`, `day`, `year`, `description`, `amount`, `to account`, `from account`) "
+			. " VALUES (:month, :day, :year "
+			. ", :description, :amount, :toaccount, :fromaccount) ";
+
+			$stmt = $connection->prepare($insertQuery);
+			$stmt->bindParam(":month", $_POST[$MONTH], PDO::PARAM_INT);
+			$stmt->bindParam(":day", $_POST[$DAY], PDO::PARAM_INT);
+			$stmt->bindParam(":year", $_POST[$YEAR], PDO::PARAM_INT);
+			$stmt->bindParam(":description", $_POST[$DESCRIPTION], PDO::PARAM_STR);
+			$stmt->bindParam(":amount", $_POST[$AMOUNT]);
+			$stmt->bindParam(":toaccount", $_POST[$TOACCOUNT], PDO::PARAM_INT);
+			$stmt->bindParam(":fromaccount", $_POST[$FROMACCOUNT], PDO::PARAM_INT);
 		}
 	}
-	$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
-		or die('Unable to connect!');
-	mysql_select_db(DATABASENAME)
-		or die('Unable to select database! '.DATABASENAME);
-	$Result = mysql_query($insertQuery)
+	$Result = $stmt->execute()
 		or die("Error in query: $insertQuery." . mysql_error());
-	mysql_close($connect);
-	$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-		or die('Unable to connect!');
+
+	$connection = null;
 	return true;
 }?>

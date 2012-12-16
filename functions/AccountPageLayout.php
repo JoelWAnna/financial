@@ -1,4 +1,4 @@
-<?php function AccountPageLayout($page, &$all_Accounts, $subPage){
+<?php function AccountPageLayout(&$connection, $page, &$all_Accounts, $subPage){
 	// Main Page
 	// ---------
 	// $page cannot be less than 1
@@ -50,15 +50,15 @@
 
 	$queryAcc2 = $queryAcc . "LIMIT " . (($subPage-1)*100) . ", " . 100 . ";"; 
 
-	$resultAcc = mysql_query($queryAcc)
+	$resultAcc = $connection->query($queryAcc)
 		or die("Error in query: $queryAcc." . mysql_error());
 	
-	$numTransactions = mysql_num_rows($resultAcc);
+	$numTransactions = $resultAcc->rowCount();
 
 	if ($numTransactions > 100)
 	{
-		mysql_free_result($resultAcc);
-		$resultAcc = mysql_query($queryAcc2)
+		$resultAcc = null;
+		$resultAcc = $connection->query($queryAcc2)
 			or die("Error in query: $queryAcc2." . mysql_error());
 		
 		for ($i = 1; $i < ($numTransactions / 100)+1; $i++)
@@ -103,9 +103,9 @@
 		return;
 	}
 
-	$CurrentAm = currentAccountAmount($accountKey, $subPage);
+	$CurrentAm = currentAccountAmount($connection, $accountKey, $subPage);
 
-	while ($rowdata = mysql_fetch_assoc($resultAcc))
+	while ($rowdata = $resultAcc->fetch())
 	{
 		$current_transaction = new Transaction($rowdata);
 

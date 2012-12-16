@@ -1,16 +1,16 @@
-<?php function	currentAccountAmount($accNumber, $subPage)
+<?php function	currentAccountAmount(&$connection, $accNumber, $subPage)
 {
 	$BIGINTMAX = "18446744073709551610";
 
 	$queryStartAmo = "SELECT ROUND(start,2) as `start` FROM `".PREFIX.ACCOUNTS."` "
 				. "Where `number` =$accNumber";
-	$resStartAmo = mysql_query($queryStartAmo)
+	$resStartAmo = $connection->query($queryStartAmo)
 		or die("Error in query: $queryStartAmo." . mysql_error());
-	if (mysql_num_rows($resStartAmo) > 0)
+	if ($resStartAmo->rowCount() > 0)
 	{
-		$returnAmount = mysql_result($resStartAmo, 0);
+		$row = $resStartAmo->fetch();
+		$returnAmount = $row[0];
 	}
-	mysql_free_result($resStartAmo);
 	
 	
 	$query_Start = "SELECT SUM( `Amount` ) FROM ("
@@ -27,21 +27,21 @@
 	$queryMinus = $query_Start . 'From'. $query_End;
 	$queryPlus  = $query_Start .  'To' . $query_End;
 
-	$resMinus = mysql_query($queryMinus)	
+	$resMinus = $connection->query($queryMinus)	
 		or die("Error in query: \n$queryMinus\n" . mysql_error());
-	$resPlus = mysql_query($queryPlus)
+	$resPlus = $connection->query($queryPlus)
 		or die("Error in query: \n$queryPlus\n" . mysql_error());
 
-	if (mysql_num_rows($resPlus) > 0)
+	if ($resPlus->rowCount() > 0)
 	{
-		$returnAmount += mysql_result($resPlus, 0);
+		$row = $resPlus->fetch();
+		$returnAmount += $row[0];
 	}
-	if (mysql_num_rows($resMinus) > 0)
+	if ($resMinus->rowCount() > 0)
 	{
-		$returnAmount -= mysql_result($resMinus, 0);
+		$row = $resMinus->fetch();
+		$returnAmount -=  $row[0];
 	}
-	mysql_free_result($resPlus);
-	mysql_free_result($resMinus);
 	
 	return $returnAmount;
 }
