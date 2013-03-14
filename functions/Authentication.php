@@ -40,7 +40,7 @@ catch(PDOException $e) {
 			loginForm();
 			return $ret;
 	}
-	$rowdata = $login_result;
+	$rowdata = $stmt->fetch();
 
 	switch($rowdata['privileges'])
 	{
@@ -76,3 +76,4 @@ function loginForm() {
 	return ($GLOBALS['authentication'] != "guest" && $GLOBALS['authentication'] !="invalid");
 }
 ?>
+
