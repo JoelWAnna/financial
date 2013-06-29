@@ -59,5 +59,11 @@
 #AccountTransactions ul li.account
 {
 	width:200px;
+	color:black;
+}
+#AccountTransactions ul li.account a
+{
+	color:black;
+	text-decoration: none
 }
 

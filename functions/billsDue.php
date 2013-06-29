@@ -27,7 +27,7 @@
 				
 	if ($billsR->rowCount() > 0)
 	{
-		echo  "<div id=\"Bills\">\n"
+		echo  "<div id=\"bills\">\n"
 			. "  <ul>\n"
 			. "    <li class=\"hdr1\">Account</li>\n"
 		 	. "   <li class=\"hdr2\">Date</li>\n"

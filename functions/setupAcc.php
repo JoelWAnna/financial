@@ -1,14 +1,4 @@
 <?php
-class Account
-{
-public $number;
-public $name;
-}
-class AccountType
-{
-public $type;
-public $accounts;
-}
 
 function GetAccountByNumber(&$all_accounts, $number)
 {
@@ -54,7 +44,8 @@ function setupAcc(&$page, &$all_Accounts, $connection){
 
 	foreach ($all_Accounts as $accountgroup)
 	{
-		$queryname = "SELECT `number`, `name` FROM `".PREFIX.ACCOUNTS."` "
+		#$queryname = "SELECT `number`, `name` FROM `".PREFIX.ACCOUNTS."` "
+		$queryname = "SELECT * FROM `".PREFIX.ACCOUNTS."` "
 				 	."Where `type` = \"" . $accountgroup->type . "\"";// Order BY `".PREFIX.ACCOUNTS."`.`name` ASC";
 		$resultname = $connection->prepare($queryname);
 		if (!$resultname->execute())
@@ -71,7 +62,12 @@ function setupAcc(&$page, &$all_Accounts, $connection){
 		{
 			$tempAccount = new Account;
 			$tempAccount->number = $row['number'];
-			$tempAccount->name = $row['name'] . $type;
+				$tempAccount->name = $row['Name'] . $type;
+				$tempAccount->type = $row['Type'];
+				$tempAccount->interest = $row['Interest Rate'];
+				$tempAccount->budget = $row['Budget'];
+				#$tempAccount->start = $row['start'];
+				
 			$accountgroup->accounts[$index++] = $tempAccount;
 			
 		}

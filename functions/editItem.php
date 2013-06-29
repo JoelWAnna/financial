@@ -6,7 +6,7 @@
 	{
 		return;
 	}
-						
+	echo "<div id=\"" . $type . "row\">\n<ul>\n";			
 	if (($type == 'transaction') && !$noforms)
 	{
 		echo "\n    <form name=\"form$number\" action=\"" . $_SERVER['PHP_SELF']
@@ -46,5 +46,6 @@
 		echo "\" style=\"background-color: "
 			. "abcdef;\" ></td>\n  </form></tr>";
 	}
+	echo "</ul>\n</div>";
 }
 ?>

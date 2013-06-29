@@ -2,10 +2,10 @@
 {
 	$stmt;
 		
-	try {
-		$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF8", UPDATEUSER, UPDATEPASSWORD );
-		$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF-8", UPDATEUSER, UPDATEPASSWORD );
+	$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 	}
 	catch(PDOException $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>\n";

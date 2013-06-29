@@ -1,0 +1,84 @@
+
+#bills ul
+{
+	width:220px;
+	margin:0;
+	padding:0;
+}
+
+#bills ul li
+{
+	border:1px none #000;
+	display:block;
+	//border-top-style:solid;
+	width:50px;
+	float:left;
+	list-style:none;
+	font-size:7pt;
+	text-align:center;
+	margin:0;
+}
+	
+#bills ul li.hdr1
+{
+	border-top-style:none;
+	width:70px;
+}
+	
+#bills ul li.hdr2
+ {
+	border-top-style:none;
+	font-size:7pt;
+	text-align:center;
+}
+
+#bills ul li.hdr3
+{
+	border-top-style:none;
+}
+	
+#bills ul li.hdr_4
+{
+	border-top-style:none;
+}
+
+#bills ul li.ftr 
+{
+	width:120px;
+}
+#bills ul li.ftr_total
+{
+	width:90px;
+	text-align:left;
+	text-indent:14px;
+}
+
+#bills ul li form
+{
+	margin:0px 20px 2px 0px;
+	align:center;
+}
+
+#bills ul li.ent1
+{
+	width:70px;
+}
+
+#bills ul li.ent2
+{
+}
+
+#bills ul li.ent3
+{
+}
+#bills ul li.ent4
+{
+	width:40px;
+}
+
+#bills input 
+{
+	font-size: 6pt;
+	height: 2em;
+	width: 30px;
+}
