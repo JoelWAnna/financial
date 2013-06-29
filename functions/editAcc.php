@@ -1,4 +1,7 @@
-<?php function editAcc($number, &$all_Accounts){
+<?php
+function editAcc($number, &$all_Accounts)
+{
+	$connection =  ConnectToDB(USERNAME, PASSWORD);
 	if($number == 'new')
 	{
 		$new =true;
@@ -18,29 +21,28 @@
 	if($new)
 	{
 		$pQuery  = "Select `number` from `".PREFIX.ACCOUNTS."` ORDER BY `number` DESC ";
-		
-		$rQuery = mysql_query($pQuery)
+		$rQuery = $connection->query($pQuery)
 			or die("Error in query: $pQuery." . mysql_error());
 
 		$number = 1;
-		if(mysql_num_rows($rQuery) > 0)
+		if($rQuery > 0)
 		{
-			$row = mysql_fetch_row($rQuery);
-			$number += $row[0];
+			$row = $rQuery->fetch();
+			$number += (int)$row[0];
 		}
 		echo "<input type=text READONLY size=\"3\" value=" . $number . "></td>\n<td>";
 
-		mysql_free_result($rQuery);
 	}
 	
 	$pQuery2 = "Select * from `" . PREFIX.ACCOUNTS
 			 . "` WHERE `" . PREFIX.ACCOUNTS . "`.`number` =" . $number;
-	$rQuery2 = mysql_query($pQuery2);
+
+	$rQuery2 = $connection->query($pQuery2);
 	// or die("Error in query: $pQuery2." . mysql_error());
 	if ($rQuery2)
 	{
-		$rowResults = mysql_fetch_assoc($rQuery2);
-		mysql_free_result($rQuery2);
+		$rowResults = $rQuery2->fetch();
+		
 	}
 	else
 	$rowResults = "";

@@ -181,7 +181,6 @@
 					$current_transaction->amount);
 		}
 	}
-	mysql_free_result($resultAcc);
 
 
 	echo  "  </ul>\n"

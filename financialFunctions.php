@@ -44,4 +44,7 @@
 	//Called by currentAmount
 	include("functions/JavaFunctions.php");
 	include("functions/CleanupFunctions.php");
+	
+	
+	include("functions/ConnectToDB.php");
 ?>

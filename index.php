@@ -20,22 +20,7 @@ date_default_timezone_set('America/Los_Angeles');
 	require_once("f-config.php");
 	$page = isset($_GET['page']) ? $_GET['page'] : 0;
 	global $connection;
-try {
-	$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF8", USERNAME, PASSWORD );
-	$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//$connection = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-	//	or die("Unable to connect !\n is your database set up?".
-	//			"<a href=\"setup\">setup</a>");
-	//mysql_select_db(DATABASENAME)
-	//	or die("Unable to select database! DATABASENAME\n is your".
-	//			"database set up?<a href=\"setup\">setup</a>");
-	}
-catch(PDOException $e) {
-    echo "Error!: " . $e->getMessage() . "<br/>\n";
-	 die("Unable to connect !\n is your database set up?".
-				"<a href=\"setup\">setup</a>");
-}
+	$connection = ConnectToDB(USERNAME, PASSWORD);
 ?>
 <html>
 <head>

@@ -52,16 +52,18 @@ $START = "amountstart".$number;
 	}
 
 	
-	mysql_close($connect);
-	$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
-		or die('Unable to connect!');
-	mysql_select_db(DATABASENAME)
-		or die('Unable to select database! DATABASENAME');	
-	$Rquery = mysql_query($query)
+	//mysql_close($connect);
+	//$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
+//		or die('Unable to connect!');
+//	mysql_select_db(DATABASENAME)
+		//or die('Unable to select database! DATABASENAME');
+	$connection = ConnectToDB(UPDATEUSER, UPDATEPASSWORD);
+	$stmt = $connection->prepare($query);
+	$Rquery = $stmt->execute()
 		or die("Error in query: $query." . mysql_error());
-	mysql_close($connect);
-	$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-		or die('Unable to connect!');
+	//mysql_close($connect);
+	//$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
+//		or die('Unable to connect!');
 	return true;
 	
 }?>
