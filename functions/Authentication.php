@@ -1,4 +1,4 @@
-<?php function Authentication()
+<?php function Authentication(&$connection)
 {
 	extract($_SERVER);
 	if ($REMOTE_ADDR == "127.0.0.1" || $REMOTE_ADDR =="::1") return "Admin++";
