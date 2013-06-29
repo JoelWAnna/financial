@@ -16,20 +16,22 @@
 			return $ret;
 		}
 	}
-		
-	$login_query =	" Select `privileges` from " . PREFIX. "users" . 
-					" Where `login` = '" . $_SESSION['login'] . "'" . 
-					" AND `pwd` = '" . $_SESSION['pwd'] . "';";
-	$login_result = mysql_query($login_query)
-	or die ("Error in query: line $login_result" . mysql_error());;
-	if (mysql_num_rows($login_result) != 1)
+	$login_query = " Select `privileges` from " . PREFIX. "users" .
+					" Where `login` =:login" .
+					" AND `pwd` =:pwd;";
+	$stmt = $connection->prepare($login_query);
+	$stmt->bindParam(":login", $_SESSION['login']);
+	$stmt->bindParam(":pwd", $_SESSION['pwd']);
+
+
+	if (!$stmt->execute())
 	{
 		echo "login failed";
 			loginForm();
 			return $ret;
 	}
-	$rowdata = mysql_fetch_assoc($login_result);
-	
+	$rowdata = $stmt->fetch();
+
 	switch($rowdata['privileges'])
 	{
 	case 0:
@@ -45,7 +47,6 @@
 	default:
 		break;
 	}
-	mysql_free_result($login_result);
 	return $ret;
 }
 

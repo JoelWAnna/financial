@@ -6,6 +6,12 @@
 	$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+	}
+	catch(PDOException $e) {
+		echo "Error!: " . $e->getMessage() . "<br/>\n";
+		die("Unable to connect !\n is your database set up?".
+                                "<a href=\"setup\">setup</a>");
+	}
 	$AMOUNT = 'amount' . $number;
 	$DESCRIPTION = 'description' . $number;
 	$TOACCOUNT = 'toaccount'. $number;

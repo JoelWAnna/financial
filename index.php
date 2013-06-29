@@ -70,7 +70,7 @@ if ($page < -1)
 <body>
 <?php
 	global $authentication;
-	$authentication = Authentication();
+	$authentication = Authentication($connection);
 	if ($authentication == false || $authentication == "invalid" ) 
 	{
 		return;
