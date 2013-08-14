@@ -1,31 +1,31 @@
 <?php function dropDownAccount($transNumber, $current, $transactionAccount, $currentAccountPage, &$all_Accounts)
 {
-	$returnString = "<select name=\"{$current}account{$transNumber}\">\n";
+	$returnString = "<select name=\"{$current}account{$transNumber}\">\n\t";
 	foreach ($all_Accounts as $acccountGroup)
 	{
 		foreach ($acccountGroup->accounts as $acct)
 		{
 			$returnString .= "\t<option value=\"".$acct->number."\" ";
 			$returnString .= selectedString($acct->number, $currentAccountPage, $transactionAccount);
-			$returnString .= $acct->name."</option>\n";
+			$returnString .= $acct->name."</option>\n\t";
 		}
 	}
-	$returnString .= "</select>\n";
+	$returnString .= "</select>\n\t";
 	return $returnString;
 }
 
 function dropDownAccountType($transNumber, $transactionType, &$all_Accounts)
 {
 	$returnString  = "<select name=\"" /* . $current . 'accounttype' */
-					. "$transNumber\">\n";
-	$returnString .= "\t<option value=\"\"></option>\n";
+					. "$transNumber\">\n\t";
+	$returnString .= "\t<option value=\"\"></option>\n\t";
 	foreach ($all_Accounts as $accts)
 	{
 		$returnString .= "\t<option value=\"". $accts->type ."\" ";
 		$returnString .= selectedString($accts->type, $transactionType, '');
-		$returnString .= $accts->type ."</option>\n";
+		$returnString .= $accts->type ."</option>\n\t";
 	}
-	$returnString .= "</select>\n";
+	$returnString .= "</select>\n\t";
 	return $returnString;
 }
 
@@ -41,7 +41,7 @@ function textField($transNum, $current, $type='description', $iType="text")
 		$length = "maxlength=\"256\"";
 	}
 	return  "<input type=\"$iType\" name=\"$type"
-		. "$transNum\" $length value=\"$current\">\n";
+		. "$transNum\" $length value=\"$current\">\n\t";
 }
 function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 {
@@ -49,6 +49,8 @@ function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 //$current == $day/$year/$month
 	$i = 1;
 	$J = (int)date($type);
+	$OnChange = " OnChange=\"jsDateSelector(document.New_Item, $transNumber)\" ";
+	$onfocus = " onfocus=\"jsDateSelector(document.New_Item, $transNumber)\" ";
 
 	switch ($type)
 	{
@@ -61,6 +63,7 @@ function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 	case 'd':
 		$type = 'day';
 		if (!$max) $max=31;
+		//$OnChange = "";
 		break;
 	case 'm':
 		$type = 'month';
@@ -73,18 +76,17 @@ function dropDownDate($type, $transNumber, $current, $max, $numPrevYears=1)
 		return;
 	}
 
-	$returnString = "<select name=\"{$type}{$transNumber}\">\n";
-	
+	$returnString = "<select id=\"{$type}{$transNumber}\" name=\"{$type}{$transNumber}\" $OnChange$onfocus>\n\t";
+
 	for (;$i <= $max; $i++)
 	{
 		$returnString .= "\t<option value=\"$i\" ";
 		$returnString .= selectedString($i,$J,$current);
 		$returnString .= ($type=='month') ? $months[$i] : $i;
-		$returnString .= "</option>\n";
+		$returnString .= "</option>\n\t";
 	}
-	$returnString .=  "</select>\n";
+	$returnString .=  "</select>\n\t";
 	return $returnString;
 }
-
 
 ?>
