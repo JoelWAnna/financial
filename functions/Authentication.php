@@ -28,19 +28,19 @@ catch(PDOException $e) {
 	}
 	$login_query = " Select `privileges` from " . PREFIX. "users" .
 					" Where `login` = :login" .
-					" AND `pwd` = :pwd;";
+					" AND `pwd` = :pwd ;";
 	$stmt = $connection->prepare($login_query);
 	$stmt->bindParam(":login", $_SESSION['login'], PDO::PARAM_STR);
 	$stmt->bindParam(":pwd", $_SESSION['pwd'], PDO::PARAM_STR);
-	$login_result = $stmt->query()
+	$login_result = $stmt->execute()
 	or die ("Error in query: line $login_result" . mysql_error());
-	if ($login_result->rowCount() != 1)
+	if (!$login_result)
 	{
 		echo "login failed";
 			loginForm();
 			return $ret;
 	}
-	$rowdata = $login_result->fetch();
+	$rowdata = $login_result;
 
 	switch($rowdata['privileges'])
 	{
