@@ -1,15 +1,6 @@
 <?php function Authentication(&$connection)
 {
-	try {
-	$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF8", USERNAME, PASSWORD );
-	$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-catch(PDOException $e) {
-    echo "Error!: " . $e->getMessage() . "<br/>\n";
-	 die("Unable to connect !\n is your database set up?".
-				"<a href=\"setup\">setup</a>");
-}
+	$connection = Queries::ConnectToDB(false);
 	extract($_SERVER);
 	if ($REMOTE_ADDR == "127.0.0.1" || $REMOTE_ADDR =="::1" || $REMOTE_ADDR=="192.168.1.100") return "Admin++";
 	$ret = "invalid";
@@ -26,12 +17,7 @@ catch(PDOException $e) {
 			return $ret;
 		}
 	}
-	$login_query = " Select `privileges` from " . PREFIX. "users" .
-					" Where `login` = :login" .
-					" AND `pwd` = :pwd ;";
-	$stmt = $connection->prepare($login_query);
-	$stmt->bindParam(":login", $_SESSION['login'], PDO::PARAM_STR);
-	$stmt->bindParam(":pwd", $_SESSION['pwd'], PDO::PARAM_STR);
+	$stmt = Queries::login($connection,  $_SESSION['login'], $_SESSION['pwd']);
 	$login_result = $stmt->execute()
 	or die ("Error in query: line $login_result" . mysql_error());
 	if (!$login_result)

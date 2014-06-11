@@ -20,7 +20,7 @@ date_default_timezone_set('America/Los_Angeles');
 	require_once("f-config.php");
 	$page = isset($_GET['page']) ? $_GET['page'] : 0;
 	global $connection;
-	$connection = ConnectToDB(USERNAME, PASSWORD);
+	$connection = Queries::ConnectToDB(true);
 ?>
 <html>
 <head>

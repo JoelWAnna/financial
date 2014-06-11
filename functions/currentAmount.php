@@ -35,7 +35,7 @@ function	currentAmount( &$connection, $accNumber, $recent = false, $day=false,$m
 		
 		return $returnAmount;
 	}
-	$queryto = sumMonth("to",$accNumber,$day,$month,$year);
+	$queryto = Queries::sumMonth("to",$accNumber,$day,$month,$year);
 	$resPlus = $connection->query($queryto)
 		or die('Error in query: $resultPlus.' . mysql_error());
 	if ($resPlus->rowCount() > 0)

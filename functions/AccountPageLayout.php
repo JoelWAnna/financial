@@ -41,14 +41,7 @@
 	
 	
 	echo "<BR>";
-	$queryAcc = " SELECT * FROM `".PREFIX.TRANSACTIONS."` "
-			.	" WHERE `From Account` = \"" . $accountKey . "\" "
-			.	" OR `To Account` = \"" . $accountKey . "\" "
-			.	" ORDER BY `". PREFIX.TRANSACTIONS ."`.`year` DESC, `"
-					     . PREFIX.TRANSACTIONS ."`.`month` DESC, `"
-				             . PREFIX.TRANSACTIONS ."`.`day` DESC, `"
-                                             . PREFIX.TRANSACTIONS ."`.`description` DESC ";
-
+	$queryAcc = Queries::GetTransactions($accountKey, $subPage);
 	$queryAcc2 = $queryAcc . "LIMIT " . (($subPage-1)*100) . ", " . 100 . ";"; 
 
 	$resultAcc = $connection->query($queryAcc)
@@ -104,7 +97,7 @@
 		return;
 	}
 
-	$CurrentAm = currentAccountAmount($connection, $accountKey, $subPage);
+	$CurrentAm = Queries::currentAccountAmount($connection, $accountKey, $subPage);
 
 	while ($rowdata = $resultAcc->fetch())
 	{

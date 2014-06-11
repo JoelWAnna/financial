@@ -57,7 +57,7 @@ $START = "amountstart".$number;
 //		or die('Unable to connect!');
 //	mysql_select_db(DATABASENAME)
 		//or die('Unable to select database! DATABASENAME');
-	$connection = ConnectToDB(UPDATEUSER, UPDATEPASSWORD);
+	$connection = ConnectToDB(true);
 	$stmt = $connection->prepare($query);
 	$Rquery = $stmt->execute()
 		or die("Error in query: $query." . mysql_error());

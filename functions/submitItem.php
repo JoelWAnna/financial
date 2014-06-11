@@ -2,7 +2,7 @@
 function submitItem($type, $number, $updating=false)
 {
 	$stmt;
-	$connection = ConnectToDB(UPDATEUSER, UPDATEPASSWORD);
+	$connection = ConnectToDB(true);
 	
 	$AMOUNT = 'amount' . $number;
 	$DESCRIPTION = 'description' . $number;
