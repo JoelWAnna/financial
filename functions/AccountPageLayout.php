@@ -45,8 +45,9 @@
 			.	" WHERE `From Account` = \"" . $accountKey . "\" "
 			.	" OR `To Account` = \"" . $accountKey . "\" "
 			.	" ORDER BY `". PREFIX.TRANSACTIONS ."`.`year` DESC, `"
-							 . PREFIX.TRANSACTIONS ."`.`month` DESC, `"
-							 . PREFIX.TRANSACTIONS ."`.`day` DESC ";
+					     . PREFIX.TRANSACTIONS ."`.`month` DESC, `"
+				             . PREFIX.TRANSACTIONS ."`.`day` DESC, `"
+                                             . PREFIX.TRANSACTIONS ."`.`description` DESC ";
 
 	$queryAcc2 = $queryAcc . "LIMIT " . (($subPage-1)*100) . ", " . 100 . ";"; 
 
