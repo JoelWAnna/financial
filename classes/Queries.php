@@ -33,8 +33,21 @@ class Queries
 	$stmt = $connection->prepare($query);
 	$stmt->bindParam(":login", $username, PDO::PARAM_STR);
 	$stmt->bindParam(":pwd", $password, PDO::PARAM_STR);
-        return $stmt;
+	return $stmt->execute()
+		or die ("Error in query: line $login_result" . mysql_error());
     }
+
+	public static function GetAccountBudget($number, &$connection)
+	{
+		$query = "SELECT `Budget` FROM `".PREFIX.ACCOUNTS
+			. "` WHERE `number` = :acctNumber LIMIT 1 ";
+		$stmt = $connection->prepare($query);
+		$stmt->bindParam(":acctNumber", $number, PDO::PARAM_INT);
+
+		$row = $stmt->execute();
+		$row = $stmt->fetch();
+		return $row['Budget'];
+	}
 
     public static function GetTransactions($accountKey, $subPage)
     {

@@ -17,9 +17,8 @@
 			return $ret;
 		}
 	}
-	$stmt = Queries::login($connection,  $_SESSION['login'], $_SESSION['pwd']);
-	$login_result = $stmt->execute()
-	or die ("Error in query: line $login_result" . mysql_error());
+	$login_result = Queries::login($connection,  $_SESSION['login'], $_SESSION['pwd']);
+	
 	if (!$login_result)
 	{
 		echo "login failed";
