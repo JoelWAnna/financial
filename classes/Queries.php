@@ -108,36 +108,60 @@ class Queries
 	
 	return $returnAmount;
 }
- public static function sumMonth($toOrFrom, $account, $month = 0, $day = 0, $year = 0)
-{
- 	if(!$month)
+	 public static function sumMonth($toOrFrom, $account, $month = 0, $day = 0, $year = 0)
 	{
-		$month = (int)date("m");
-	}
-	if(!$day)
-	{
-		$day = (int)date("d");
-	}
-	if(!$year)
-	{
-		$year = (int)date("Y");
-	}
+		if(!$month)
+		{
+			$month = (int)date("m");
+		}
+		if(!$day)
+		{
+			$day = (int)date("d");
+		}
+		if(!$year)
+		{
+			$year = (int)date("Y");
+		}
 
-	if ($month == 1)
-	{
-		$month2 = 12;
-		$year2 = $year -1;
-	}
-	else
-	{
-		$month2 = $month-1;
-		$year2=$year;
+		if ($month == 1)
+		{
+			$month2 = 12;
+			$year2 = $year -1;
+		}
+		else
+		{
+			$month2 = $month-1;
+			$year2=$year;
+		}
+		
+		return "SELECT SUM( `amount` ) FROM `".PREFIX.TRANSACTIONS."` "
+			.  "WHERE (((`month` = $month && `day` <= $day && `year` = $year ) "
+			.  "OR (`month` = $month2 && `day` > $day && `year` = $year2 )) "
+			.  "&& ( `$toOrFrom account` = $account ))";
 	}
 	
-	return "SELECT SUM( `amount` ) FROM `".PREFIX.TRANSACTIONS."` "
-		.  "WHERE (((`month` = $month && `day` <= $day && `year` = $year ) "
-		.  "OR (`month` = $month2 && `day` > $day && `year` = $year2 )) "
-		.  "&& ( `$toOrFrom account` = $account ))";
-}
+	public static function GetBills($showAllBills, $months, &$connection)
+	{
+		$billsQuery = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
+		if (!$showAllBills)
+		{
+			$month = (int)date("m", strtotime("+$months months"));
+			$year = (int)date("Y", strtotime("+$months months"));
+			$day = (int)date("d", strtotime("+$months months"));
+			$billsQuery .= "WHERE `paid` = CONVERT(_utf8 'FALSE' "
+					. "USING latin1) COLLATE latin1_swedish_ci "
+					. " && ("
+						. "( `". PREFIX . BILLS ."`.`year` < $year)"
+						. " || "
+						. "(( `". PREFIX . BILLS ."`.`year` = $year) && (`". PREFIX . BILLS ."`.`month` < $month))"
+						. " || "
+						. "((`". PREFIX . BILLS ."`.`year` = $year) && (`". PREFIX . BILLS ."`.`month` = $month) && (`". PREFIX . BILLS ."`.`day` <= $day))"
+					. ")";
+		}
+		$billsQuery .= " ORDER BY `" . PREFIX . BILLS . "`.`year`, `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
+			. BILLS . "`.`day` ASC";
+		$stmt = $connection->prepare($billsQuery);
+		return $stmt;
+	}
 }
 ?>

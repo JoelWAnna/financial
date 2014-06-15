@@ -1,31 +1,9 @@
 <?php function billsDue($allbills, &$all_Accounts, $months, $connection)
 {
-	$billsQ = 'SELECT * FROM `'.PREFIX.BILLS.'` ';
-	if (!$allbills)
-	{
-		$month = (int)date("m", strtotime("+$months months"));
-		$year = (int)date("Y", strtotime("+$months months"));
-		$day = (int)date("d", strtotime("+$months months"));
-		$billsQ .= "WHERE `paid` = CONVERT(_utf8 'FALSE' "
-				. "USING latin1) COLLATE latin1_swedish_ci "
-				. " && ("
-					. "( `". PREFIX . BILLS ."`.`year` < $year)"
-					. " || "
-					. "(( `". PREFIX . BILLS ."`.`year` = $year) && (`". PREFIX . BILLS ."`.`month` < $month))"
-					. " || "
-					. "((`". PREFIX . BILLS ."`.`year` = $year) && (`". PREFIX . BILLS ."`.`month` = $month) && (`". PREFIX . BILLS ."`.`day` <= $day))"
-				. ")";
-	}
-	
-	$billsQ .= " ORDER BY `" . PREFIX . BILLS . "`.`year`, `" . PREFIX . BILLS . "`.`month`, `" . PREFIX
-			. BILLS . "`.`day` ASC";
-	
+	$stmt = Queries::GetBills($allbills, $months, $connection);
+	$stmt->execute();
 	static $total = 0;
-	
-	$billsR = $connection->query($billsQ);
-				//or die("Error in query: $billsQ." . mysql_error());
-				
-	if ($billsR->rowCount() > 0)
+	if ($stmt->rowCount() > 0)
 	{
 		echo  "<div id=\"bills\">\n"
 			. "  <ul>\n"
@@ -38,7 +16,7 @@
 		{
 			echo "<li class=\"hdr_4\">&nbsp;</li>\n";
 		}
-		foreach ($billsR->fetchall() as $billRows)
+		foreach ($stmt->fetchall() as $billRows)
 		{
 
 
