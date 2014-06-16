@@ -22,7 +22,7 @@
 			$accountGroupTotal = 0;
 			foreach ($accountGroup->accounts as $acct)
 			{
-				$accountGroupTotal += round(currentAmount($connection, $acct->number), 2);
+				$accountGroupTotal += round(Queries::currentAmount($connection, $acct->number), 2);
 			}
 			echo "  <li class=\"name\">" . $type . "</li>\n";
 

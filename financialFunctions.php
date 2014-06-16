@@ -2,13 +2,6 @@
 	include("functions/Authentication.php");
 	include("functions/balanceRemaining.php");
 	//Calls nothing, Called by pagelayout
-	include("functions/currentAmount.php");
-	include("functions/currentAccountAmount.php");
-	//function	currentAmount($accountNumber) 
-	//Takes account number and returns start amount for account
-	//plus transactions to account  minus transactions from account
-	//Calls to sumMonth
-	//Called by pagelayout
 	include("functions/dropDowns.php");
 	//Calls to Selected, Called By edittrans, newTR
 	include("functions/editItem.php");
@@ -44,7 +37,4 @@
 	//Called by currentAmount
 	include("functions/JavaFunctions.php");
 	include("functions/CleanupFunctions.php");
-	
-	
-	include("functions/ConnectToDB.php");
 ?>

@@ -163,5 +163,80 @@ class Queries
 		$stmt = $connection->prepare($billsQuery);
 		return $stmt;
 	}
+	
+	//Takes account number and returns start amount for account
+	  //plus transactions to account  minus transactions from account
+	//include("functions/currentAmount.php");
+	//function	currentAmount($accountNumber)
+	//Takes account number and returns start amount for account
+	//plus transactions to account  minus transactions from account
+	//Calls to sumMonth
+	//Called by pagelayout
+	
+	public static function currentAmount(&$connection, $accNumber, $recent = false, $day=false,$month=false,$year=false)
+	{ 
+			try
+			{$returnAmount = 0;
+		if(!$recent)
+		{
+			$query = "SELECT ROUND(start,2) as `start` "
+					."FROM `".PREFIX.ACCOUNTS."` "
+					."Where number = :acctNumber";
+			$stmt = $connection->prepare($query);
+			$stmt->bindParam(":acctNumber", $accNumber, PDO::PARAM_INT);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0)
+			{
+				$start = $stmt->fetch();
+				$returnAmount = $start[0];
+			}
+			$query = "SELECT SUM( `Amount` ) FROM `".PREFIX.TRANSACTIONS."` "
+					 . "WHERE ACCTYPE = :acctNumber";
+			
+		
+			$plusStmt = $connection->prepare(str_replace("ACCTYPE", "`To Account`", $query));
+			$plusStmt->bindParam(":acctNumber", $accNumber, PDO::PARAM_INT);
+			
+			$minusStmt = $connection->prepare(str_replace("ACCTYPE", "`From Account`", $query));
+			$minusStmt->bindParam(":acctNumber", $accNumber, PDO::PARAM_INT);
+			
+			$plusStmt->execute();
+			$minusStmt->execute();
+			
+			if ($plusStmt->rowCount() > 0)
+			{
+				$sum = $plusStmt->fetch();
+				$returnAmount += $sum[0];
+			}
+			if ($minusStmt->rowCount() > 0)
+			{
+				$sum = $minusStmt->fetch();
+				$returnAmount -= $sum[0];
+			}
+			
+			return $returnAmount;
+		}
+		
+		$queryto = Queries::sumMonth("to",$accNumber,$day,$month,$year);
+		$resPlus = $connection->query($queryto)
+			or die('Error in query: $resultPlus.' . mysql_error());
+		if ($resPlus->rowCount() > 0)
+		{
+			while($rPlus = $resPlus->fetch())
+			{
+				$returnAmount += $rPlus[0];
+			}
+		}else
+		{
+			echo 'error no rows in $resPlus';
+		}
+
+		return $returnAmount;
+		}
+		catch(PDOException $e) {
+			echo "Error!: " . $e->getMessage() . "<br/>\n";
+			die("");
+		}
+	}
 }
 ?>

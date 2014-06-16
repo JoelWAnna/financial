@@ -54,11 +54,12 @@
                     // TODO fixme 
 					. substr($acct->name, 0, 26)
 					. "</a>" . "</li>\n";
-
+				$currentAmount = Queries::currentAmount($connection, $CurrentAccountNumber, $leftColumn);
+	
 				if($accountGroup->type == "Income")
-					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($connection, $CurrentAccountNumber, $leftColumn) * ($leftColumn ? -1 : 1), 2);
+					$CurrentFunds[$CurrentAccountNumber] = round($currentAmount * ($leftColumn ? -1 : 1), 2);
 				else
-					$CurrentFunds[$CurrentAccountNumber] = round(currentAmount($connection, $CurrentAccountNumber, !$leftColumn) * ($leftColumn ? 1 : -1), 2);
+					$CurrentFunds[$CurrentAccountNumber] = round(Queries::currentAmount($connection, $CurrentAccountNumber, !$leftColumn) * ($leftColumn ? 1 : -1), 2);
 
 				$neg = ($CurrentFunds[$CurrentAccountNumber]<0) ? " negative" : ""; 
 
