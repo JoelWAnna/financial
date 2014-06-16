@@ -2,8 +2,8 @@
 function submitItem($type, $number, $updating=false)
 {
 	$stmt;
-	$connection = ConnectToDB(true);
-	
+	$connection = Queries::ConnectToDB(true);
+
 	$AMOUNT = 'amount' . $number;
 	$DESCRIPTION = 'description' . $number;
 	$TOACCOUNT = 'toaccount'. $number;
@@ -87,7 +87,7 @@ function submitItem($type, $number, $updating=false)
 					}
 				}
 			}
-			mysql_free_result($changesResult);
+			//mysql_free_result($changesResult);
 		}
 		else
 		{
@@ -106,8 +106,7 @@ function submitItem($type, $number, $updating=false)
 			$stmt->bindParam(":fromaccount", $_POST[$FROMACCOUNT], PDO::PARAM_INT);
 		}
 	}
-	$Result = $stmt->execute()
-		or die("Error in query: $insertQuery." . mysql_error());
+	$Result = $stmt->execute();
 
 	$connection = null;
 	return true;

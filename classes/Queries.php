@@ -12,10 +12,10 @@ class Queries
 		}
 		try
 		{
-		$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF8", $dbUser,  $dbPasswd);
-		$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		return $connection;
+			$connection = new PDO("mysql:host=" . HOSTNAME . ";port=3306;dbname=" . DATABASENAME . ";charset=UTF8", $dbUser,  $dbPasswd);
+			$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			return $connection;
 		}
 		catch(PDOException $e) {
 			echo "Error!: " . $e->getMessage() . "<br/>\n";

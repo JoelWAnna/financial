@@ -1,7 +1,7 @@
 <?php
 function editAcc($number, &$all_Accounts)
 {
-	$connection =  Queries::ConnectToDB(false);
+	$connection = Queries::ConnectToDB(false);
 	if($number == 'new')
 	{
 		$new =true;
