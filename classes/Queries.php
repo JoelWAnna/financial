@@ -61,8 +61,9 @@ class Queries
 
 	return $query;// . "LIMIT " . (($subPage-1)*100) . ", " . 100 . ";"; 
     }
+
     public static function	currentAccountAmount(&$connection, $accNumber, $subPage)
-{
+	{
 	$BIGINTMAX = "18446744073709551610";
 
 	$queryStartAmo = "SELECT ROUND(start,2) as `start` FROM `".PREFIX.ACCOUNTS."` "
@@ -191,13 +192,13 @@ class Queries
 				$returnAmount = $start[0];
 			}
 			$query = "SELECT SUM( `Amount` ) FROM `".PREFIX.TRANSACTIONS."` "
-					 . "WHERE ACCTYPE = :acctNumber";
+					 . "WHERE %%ACCTYPE%% = :acctNumber";
 			
 		
-			$plusStmt = $connection->prepare(str_replace("ACCTYPE", "`To Account`", $query));
+			$plusStmt = $connection->prepare(str_replace("%%ACCTYPE%%", "`To Account`", $query));
 			$plusStmt->bindParam(":acctNumber", $accNumber, PDO::PARAM_INT);
 			
-			$minusStmt = $connection->prepare(str_replace("ACCTYPE", "`From Account`", $query));
+			$minusStmt = $connection->prepare(str_replace("%%ACCTYPE%%", "`From Account`", $query));
 			$minusStmt->bindParam(":acctNumber", $accNumber, PDO::PARAM_INT);
 			
 			$plusStmt->execute();
@@ -237,6 +238,41 @@ class Queries
 			echo "Error!: " . $e->getMessage() . "<br/>\n";
 			die("");
 		}
+	}
+	
+	public static function GetNextAccountNumber(&$connection)
+	{
+		$pQuery  = "Select `number` from `".PREFIX.ACCOUNTS."` ORDER BY `number` DESC Limit 1";
+		$rQuery = $connection->query($pQuery)
+			or die("Error in query: $pQuery." . mysql_error());
+
+		$number = 1;
+		if($rQuery > 0)
+		{
+			$row = $rQuery->fetch();
+			$number += (int)$row[0];
+		}
+		return $number;
+	}
+
+	public static function GetAccountInfo($number, &$connection)
+	{
+		$query = "Select * from `" . PREFIX.ACCOUNTS
+			 . "` WHERE `" . PREFIX.ACCOUNTS . "`.`number` = :number";
+		$stmt = $connection->prepare($query);
+		$stmt->bindParam(":number", $number, PDO::PARAM_INT);
+		$stmt->execute();
+		$account = $stmt->fetch();
+		$fetchedAccount = new Account();
+
+		$fetchedAccount->number = $account['number'];
+		$fetchedAccount->name = $account['Name'];
+		$fetchedAccount->type = $account['Type'];
+		$fetchedAccount->interest = $account['Interest Rate'];
+		$fetchedAccount->budget = $account['Budget'];
+		$fetchedAccount->start = $account['start'];
+
+		return $fetchedAccount;
 	}
 }
 ?>

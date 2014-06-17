@@ -20,35 +20,15 @@ function editAcc($number, &$all_Accounts)
 
 	if($new)
 	{
-		$pQuery  = "Select `number` from `".PREFIX.ACCOUNTS."` ORDER BY `number` DESC ";
-		$rQuery = $connection->query($pQuery)
-			or die("Error in query: $pQuery." . mysql_error());
+		$number = Queries::GetNextAccountNumber($connection);
 
-		$number = 1;
-		if($rQuery > 0)
-		{
-			$row = $rQuery->fetch();
-			$number += (int)$row[0];
-		}
 		echo "<input type=text READONLY size=\"3\" value=" . $number . "></td>\n<td>";
 
 	}
-	
-	$pQuery2 = "Select * from `" . PREFIX.ACCOUNTS
-			 . "` WHERE `" . PREFIX.ACCOUNTS . "`.`number` =" . $number;
+	$fetchedAccount = Queries::GetAccountInfo($number, $connection);
 
-	$rQuery2 = $connection->query($pQuery2);
-	// or die("Error in query: $pQuery2." . mysql_error());
-	if ($rQuery2)
-	{
-		$rowResults = $rQuery2->fetch();
 		
-	}
-	else
-	$rowResults = "";
-//if (mysql_num_rows($rQuery2) > 0){
-		
-		$type = $rowResults['Type'];
+		$type = $fetchedAccount->type;
 /*		for ($i=0;$i < 100;$i++)
 		{
 			if($accountTypes[$i] == $type){break;}
@@ -56,7 +36,7 @@ function editAcc($number, &$all_Accounts)
 */		
 		
 
-		echo textField("Name$number", $rowResults['Name']);
+		echo textField("Name$number", $fetchedAccount->name);
 		echo "</td>\n<td>";
 		if (!$new)
 		{
@@ -82,13 +62,13 @@ function editAcc($number, &$all_Accounts)
 
 		echo  "</td>\n"
 			. "<td align=\"center\">\n\t";
-		echo textField("IRate$number", $rowResults['Interest Rate'], 'amount');
+		echo textField("IRate$number", $fetchedAccount->interest, 'amount');
 		echo  "</td>\n"
 			. "<td align=\"center\">\n\t";
-		echo textField("Budget$number", $rowResults['Budget'], 'amount');
+		echo textField("Budget$number", $fetchedAccount->budget, 'amount');
 		echo "</td>\n"
 			. "<td>\n\t";
-		echo textField("start$number", $rowResults['start'], 'amount');	
+		echo textField("start$number", $fetchedAccount->start, 'amount');	
 		
 		echo  "</td>\n"
 			. "<td>\n\t";
