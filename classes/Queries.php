@@ -247,7 +247,7 @@ class Queries
 			or die("Error in query: $pQuery." . mysql_error());
 
 		$number = 1;
-		if($rQuery > 0)
+		if($rQuery->rowCount() > 0)
 		{
 			$row = $rQuery->fetch();
 			$number += (int)$row[0];
@@ -275,7 +275,7 @@ class Queries
 		return $fetchedAccount;
 	}
 	
-	public static function Queries::paid($billNum,$paid)
+	public static function paid($billNum,$paid)
 	{
 		$connect3 = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
 			or die('Unable to connect!');

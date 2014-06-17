@@ -56,7 +56,7 @@
 			if ($allbills)
 			{
 				$disable = userIsAdmin() ? "" : "disabled='disabled'";
-				echo "\n    <li class=\"ent4\"><form action=\"" . $_SERVER['PHP_SELF']. "?page=-1\""
+				echo "\n    <li class=\"ent4\"><form action=\"" . $_SERVER['PHP_SELF']. "?page=-2\""
 					. " method=\"post\">\n      <input type=\"submit\" name="
 					. "\"unpaid" . $billRows['number'] . "\" value=\"Not paid\""
 					. "  style=\" width: 4.5em\" $disable >\n    </form></li>";
