@@ -36,34 +36,14 @@ $START = "amountstart".$number;
 	}else{$type = $_POST[$TYPE];}
 	}
 
-	if($new == 'new'){
-	$query ="Insert Into `".DATABASENAME
-			."`.`".PREFIX.ACCOUNTS."` SET `"
-			.PREFIX.ACCOUNTS."`.`number` ='"
-			. $number . "', ";
-	}else{
-		$query = "UPDATE `" . DATABASENAME. "`.`" . PREFIX . ACCOUNTS. "` SET ";
-	}
-	$query .= "`Name` = '" . $_POST[$NAME]	. "', `Type` = '" . $type
-		. "', `Interest Rate` = '" . $_POST[$IRATE]	. "', `Budget` = '" . $_POST[$BUDGET]
-		. "', `start` = '" . $_POST[$START] ."'";
-	if(!($new == 'new')){
-		$query .= " WHERE `".PREFIX.ACCOUNTS."`.`number` =". $number ." LIMIT 1";
-	}
-
-	
-	//mysql_close($connect);
-	//$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
-//		or die('Unable to connect!');
-//	mysql_select_db(DATABASENAME)
-		//or die('Unable to select database! DATABASENAME');
-	$connection = Queries::ConnectToDB(true);
-	$stmt = $connection->prepare($query);
-	$Rquery = $stmt->execute()
-		or die("Error in query: $query." . mysql_error());
-	//mysql_close($connect);
-	//$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
-//		or die('Unable to connect!');
+	$UpdatedAccount = new Account();
+	$UpdatedAccount->number = $number;
+	$UpdatedAccount->name = $_POST[$NAME];
+	$UpdatedAccount->type =  $type;
+	$UpdatedAccount->interest = $_POST[$IRATE];
+	$UpdatedAccount->budget = $_POST[$BUDGET];
+	$UpdatedAccount->start = $_POST[$START];
+	Queries::SubmitAccount($new, $UpdatedAccount);
 	return true;
 	
 }?>

@@ -292,5 +292,49 @@ class Queries
 		mysql_select_db(DATABASENAME)
 			or die('Unable to select database! '.DATABASENAME);	
 	}
+	
+	public static function SubmitAccount($new, &$account)
+	{
+		if($new == 'new'){
+		$query ="Insert Into `".DATABASENAME
+				."`.`".PREFIX.ACCOUNTS."` SET `"
+				.PREFIX.ACCOUNTS."`.`number` = :number, ";
+		}else{
+			$query = "UPDATE `" . DATABASENAME. "`.`" . PREFIX . ACCOUNTS. "` SET ";
+		}
+		$query .= "`Name` = :name, "
+				. "`Type` = :type, "
+				. "`Interest Rate` = :interestRate, "
+				. "`Budget` = :budget, "
+				. "`start` = :start ";
+		if(!($new == 'new')){
+			$query .= " WHERE `".PREFIX.ACCOUNTS."`.`number` = :number LIMIT 1";
+		}
+try{
+		$connection = Queries::ConnectToDB(true);
+		$stmt = $connection->prepare($query);
+		$stmt->bindParam(":number", $account->number, PDO::PARAM_INT);
+		$stmt->bindParam(":name", $account->name, PDO::PARAM_STR);
+		$stmt->bindParam(":type", $account->type, PDO::PARAM_STR);
+		$stmt->bindParam(":interestRate", $account->interest);//, PDO::PARAM_INT);
+		$stmt->bindParam(":budget", $account->budget);//, PDO::PARAM_INT);
+		$stmt->bindParam(":start", $account->start);//, PDO::PARAM_INT);
+		//mysql_close($connect);
+		//$connect = mysql_connect(HOSTNAME, UPDATEUSER, UPDATEPASSWORD)
+	//		or die('Unable to connect!');
+	//	mysql_select_db(DATABASENAME)
+			//or die('Unable to select database! DATABASENAME');
+		$Rquery = $stmt->execute()
+			or die("Error in query: $query." . mysql_error());
+		//mysql_close($connect);
+		//$connect = mysql_connect(HOSTNAME, USERNAME, PASSWORD)
+	//		or die('Unable to connect!');
+	}	
+		catch(PDOException $e) {
+			echo "Error!: " . $e->getMessage() . "<br/>\n";
+			die("Unable to connect !\n is your database set up?".
+									"<a href=\"setup\">setup</a>");
+		}
+		}
 }
 ?>

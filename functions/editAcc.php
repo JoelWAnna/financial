@@ -2,6 +2,7 @@
 function editAcc($number, &$all_Accounts)
 {
 	$connection = Queries::ConnectToDB(false);
+	$new = false;
 	if($number == 'new')
 	{
 		$new =true;

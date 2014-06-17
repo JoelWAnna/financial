@@ -21,7 +21,6 @@
 	//Calls to newTR, newestTransaction, submitTransaction
 	//Calls to reloadPHP, edittrans, isZero, billsDue
 	//Called by index
-	include("functions/paid.php");
 	include("functions/setupAcc.php");
 	//Calls nothing
 	//Called by index
