@@ -65,12 +65,12 @@
 			$unpaidQ = 'un'.$paidQ;
 			if (ISSET($_POST[$paidQ]))
 			{
-				paid($billRows['number'], 'true');
+				Queries::paid($billRows['number'], 'true');
 				reloadPHP();
 			}
 			if (ISSET($_POST[$unpaidQ]))
 			{
-				paid($billRows['number'], 'false');
+				Queries::paid($billRows['number'], 'false');
 				reloadPHP();
 			}
 		}
