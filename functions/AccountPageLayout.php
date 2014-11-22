@@ -75,11 +75,11 @@
 		. "  <ul>\n"
 		. "    <li class=\"AT_hdr hdr_date\">date</li>\n"
 		. "    <li class=\"AT_hdr \">description</li>\n"
-		. "    <li class=\"AT_hdr \">from account</li>\n"
-		. "    <li class=\"AT_hdr \">to account</li>\n"
+		. "    <li class=\"AT_hdr account\">from account</li>\n"
+		. "    <li class=\"AT_hdr account\">to account</li>\n"
 		. "    <li class=\"AT_hdr hdr_funds\">amount</li>\n"
 		. "    <li class=\"AT_hdr hdr_funds\">balance</li>\n"
-		. "    <li class=\"AT_hdr submit\">\n"
+		. "    <li class=\"AT_hdr submit no_border\">\n"
 		. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey&subPage=$subPage\" method=\"post\">\n"
 		. "      <input type=\"submit\" name=\"$new\" value=\"Start new transaction\" $disable >\n"
 		. "      </form>\n"
@@ -162,7 +162,7 @@
 			$CurrentAm	-= $current_transaction->amount;
 		}
 		
-		echo  "    <li>\n"
+		echo  "    <li class=\"submit no_border\">\n"
 			. "      <form action=\"" . $_SERVER['PHP_SELF'] . "?page=$accountKey&subPage=$subPage\" method=\"post\">\n"
 			. "      <input type=\"submit\" name=\"" . $current_transaction->number. "\" value=\""
 			. "Edit transaction " . $current_transaction->number . " \" $disable >\n      </form>\n";

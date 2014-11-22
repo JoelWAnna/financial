@@ -131,19 +131,18 @@
 
 #Totals ul 
 {
-	width:150px;
+	width: 180px;
 	margin:0;
 	padding:0;
 }
 
 #Totals ul li
  {
-	width:40px;
+	width: 50px;
 	display:block;
 	float:left;
 	list-style:none;
 	font-size:7pt;
-	text-align:left;
 	margin:0;
 
 }
@@ -151,10 +150,12 @@
 		
 #Totals ul li.hdr_ex 
 {
-	width:70px;
+	width: 78px;
 }
 #Totals ul li.hdr
 {
+    text-align: center;
+    text-decoration: underline;
 }
 #Totals ul li.name 
 {
@@ -197,6 +198,10 @@
 
 	margin:0;
 	padding:1;
+	
+
+	width: 937px;
+
 }
 
 #NewTransactions ul li 

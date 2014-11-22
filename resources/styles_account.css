@@ -2,7 +2,7 @@
 {
 	position:absolute;
 	top:75px;
-	width:1072px;
+	width: 1184px;
 	font-family:arial, helvetica, sans-serif;
 	font-size:9pt;
 	color:#000;
@@ -36,6 +36,7 @@
 #AccountTransactions ul li.submit
 {
 	width:150px;
+	margin-top: 2;
 }
 
 #AccountTransactions ul li.hdr_date
@@ -45,7 +46,15 @@
 
 #AccountTransactions ul li.hdr_funds
 {
-	width:55px;
+	width: 68px;
+}
+
+li .no_border {
+    border: 0;
+}
+
+#AccountTransactions .no_border {
+    border: 1px solid transparent;
 }
 
 #AccountTransactions ul li.date
@@ -58,7 +67,7 @@
 }
 #AccountTransactions ul li.account
 {
-	width:200px;
+	width: 241px;
 	color:black;
 }
 #AccountTransactions ul li.account a
